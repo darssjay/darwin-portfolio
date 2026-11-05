@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import './Theme.css'
 import { Analytics } from '@vercel/analytics/react'
+import { trackVisit } from './analytics'
 
 const skills = [
   { name: 'C', level: 75 },
@@ -136,6 +137,10 @@ const education = [
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [visitorStats, setVisitorStats] = useState({
+    visitors: 0,
+    page_views: 0
+  })
 
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     const savedTheme = localStorage.getItem('portfolio-theme')
@@ -145,6 +150,19 @@ function App() {
   useEffect(() => {
     localStorage.setItem('portfolio-theme', theme)
   }, [theme])
+
+  useEffect(() => {
+    let active = true
+    trackVisit().then((stats) => {
+      if (active && stats) {
+        setVisitorStats({
+          visitors: Number(stats.visitors),
+          page_views: Number(stats.page_views)
+        })
+      }
+    })
+    return () => { active = false }
+  }, [])
 
   const closeMenu = () => setMenuOpen(false)
 
@@ -595,6 +613,31 @@ function App() {
             </div>
           </div>
         </section>
+
+        <section id="web-analytics" className="section-container section-block">
+          <div className="section-heading">
+            <span className="section-number">08 / WEBSITE STATISTICS</span>
+            <h2>WEB <span>ANALYTICS</span></h2>
+            <p>LIVE VISITOR STATISTICS FROM MY PORTFOLIO</p>
+          </div>
+          <div className="skills-layout">
+            <div className="panel" style={{ padding: '28px', textAlign: 'center' }}>
+              <span className="panel-tag">TOTAL VISITORS</span>
+              <h3 style={{ fontSize: 'clamp(2rem, 6vw, 3.5rem)', margin: '15px 0' }}>
+                {visitorStats.visitors.toLocaleString()}
+              </h3>
+              <p>Unique browser visits</p>
+            </div>
+            <div className="panel" style={{ padding: '28px', textAlign: 'center' }}>
+              <span className="panel-tag">TOTAL PAGE VIEWS</span>
+              <h3 style={{ fontSize: 'clamp(2rem, 6vw, 3.5rem)', margin: '15px 0' }}>
+                {visitorStats.page_views.toLocaleString()}
+              </h3>
+              <p>Total portfolio page loads</p>
+            </div>
+          </div>
+        </section>
+
       </main>
 
       <footer className="footer">
