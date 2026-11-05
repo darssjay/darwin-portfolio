@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import './Theme.css'
+import { Analytics } from '@vercel/analytics/react'
 
 const skills = [
   { name: 'C', level: 75 },
@@ -605,6 +606,8 @@ function App() {
         <p>DESIGNED & BUILT BY DARWIN JOHN RICARTE</p>
         <a href="#home" className="back-to-top">BACK TO TOP ↑</a>
       </footer>
+
+      <Analytics />
     </div>
   )
 }
