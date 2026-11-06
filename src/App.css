@@ -3045,3 +3045,16 @@ main,
     font-size: 11px !important;
   }
 }
+
+
+.footer-secret-logo {
+  display: inline-block;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}

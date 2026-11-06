@@ -1623,11 +1623,7 @@ function App() {
       )}
 
       <footer className="footer">
-        <a
-          role="button"
-          tabIndex={0}
-          className="logo"
-          title="Secret?"
+        <button type="button" className="logo footer-secret-logo" title="Secret?"
           onClick={(event) => {
             event.preventDefault()
             setLogoClickCount(count => {
@@ -1643,7 +1639,7 @@ function App() {
           <span className="logo-bracket">{'<'}</span>
           DJR<span className="logo-dot">.DEV</span>
           <span className="logo-bracket">{'/>'}</span>
-        </a>
+        </button>
         <p>DESIGNED & BUILT BY DARWIN JOHN RICARTE</p>
         <a href="#home" className="back-to-top">BACK TO TOP ↑</a>
       </footer>
