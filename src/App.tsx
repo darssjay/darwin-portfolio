@@ -136,6 +136,217 @@ const education = [
 ]
 
 function App() {
+  const [secretRoomOpen, setSecretRoomOpen] = useState(false)
+  const [logoClickCount, setLogoClickCount] = useState(0)
+
+  const loadRpgSave = () => {
+    try {
+      const saved = window.localStorage.getItem("darwin-rpg-save")
+      return saved ? JSON.parse(saved) : {}
+    } catch {
+      return {}
+    }
+  }
+
+  const [rpgPlayer, setRpgPlayer] = useState(() => {
+    const save = loadRpgSave()
+    return save.player &&
+      Number.isInteger(save.player.x) &&
+      Number.isInteger(save.player.y) &&
+      save.player.x >= 0 && save.player.x <= 9 &&
+      save.player.y >= 0 && save.player.y <= 5
+      ? save.player : { x: 1, y: 1 }
+  })
+  const [rpgCoins, setRpgCoins] = useState(() => {
+    const save = loadRpgSave()
+    return Number.isInteger(save.coins) ? Math.max(0, Math.min(5, save.coins)) : 0
+  })
+  const [rpgXp, setRpgXp] = useState(() => {
+    const save = loadRpgSave()
+    return Number.isFinite(save.xp) ? Math.max(0, save.xp) : 0
+  })
+  const [rpgCollected, setRpgCollected] = useState<string[]>(() => {
+    const save = loadRpgSave()
+    return Array.isArray(save.collected) ? save.collected : []
+  })
+  const [rpgVictory, setRpgVictory] = useState(() => loadRpgSave().victory === true)
+  const [rpgConfettiVisible, setRpgConfettiVisible] = useState(false)
+  const [rpgTreasureCollected, setRpgTreasureCollected] = useState(() => loadRpgSave().treasure === true)
+  const [rpgNpcQuestStarted, setRpgNpcQuestStarted] = useState(() => loadRpgSave().npcStarted === true)
+  const [rpgNpcQuestComplete, setRpgNpcQuestComplete] = useState(() => loadRpgSave().npcComplete === true)
+  const [rpgNpcMessage, setRpgNpcMessage] = useState(() => {
+    const save = loadRpgSave()
+    return typeof save.npcMessage === "string" ? save.npcMessage : "Find me in the pixel world!"
+  })
+
+  const [rpgSaveStatus, setRpgSaveStatus] = useState("SAVED")
+  const [rpgResetConfirmOpen, setRpgResetConfirmOpen] = useState(false)
+  const [rpgLevelUpMessage, setRpgLevelUpMessage] = useState("")
+
+  const resetRpgGame = () => {
+    setRpgPlayer({ x: 1, y: 1 })
+    setRpgCoins(0)
+    setRpgXp(0)
+    setRpgCollected([])
+    setRpgVictory(false)
+    setRpgTreasureCollected(false)
+    setRpgNpcQuestStarted(false)
+    setRpgNpcQuestComplete(false)
+    setRpgNpcMessage("Find me in the pixel world!")
+    setRpgAchievementNotice("")
+    setRpgLevelUpMessage("")
+    setRpgResetConfirmOpen(false)
+    setRpgSaveStatus("RESET!")
+  }
+
+  const rpgLevel = Math.min(5, Math.floor(rpgXp / 50) + 1)
+  const rpgLevelProgress = rpgLevel >= 5 ? 100 : (rpgXp % 50) * 2
+  const [rpgAchievementNotice, setRpgAchievementNotice] = useState("")
+
+  const rpgAchievements = [
+    { id: "first-coin", icon: "🪙", name: "FIRST COIN", description: "Collect your first coin", unlocked: rpgCollected.length >= 1 },
+    { id: "treasure", icon: "💎", name: "TREASURE HUNTER", description: "Find the hidden diamond", unlocked: rpgTreasureCollected },
+    { id: "coin-master", icon: "🤑", name: "COIN MASTER", description: "Collect all 5 coins", unlocked: rpgCollected.length >= 5 },
+    { id: "quest-hero", icon: "🤖", name: "QUEST HERO", description: "Complete the NPC quest", unlocked: rpgNpcQuestComplete },
+    { id: "champion", icon: "👑", name: "LEVEL 5 CHAMPION", description: "Reach the maximum level", unlocked: rpgLevel >= 5 }
+  ]
+
+  const unlockedRpgAchievements = rpgAchievements
+    .filter(item => item.unlocked)
+    .map(item => item.id)
+
+  const previousRpgAchievements = useRef(unlockedRpgAchievements)
+
+  useEffect(() => {
+    const newlyUnlocked = rpgAchievements.find(
+      item => item.unlocked && !previousRpgAchievements.current.includes(item.id)
+    )
+
+    previousRpgAchievements.current = unlockedRpgAchievements
+
+    if (newlyUnlocked) {
+      setRpgAchievementNotice(`🏆 ACHIEVEMENT UNLOCKED: ${newlyUnlocked.name}!`)
+      const timer = window.setTimeout(() => setRpgAchievementNotice(""), 3000)
+      return () => window.clearTimeout(timer)
+    }
+  }, [unlockedRpgAchievements.join(",")])
+
+  const previousRpgLevel = useRef(rpgLevel)
+
+  useEffect(() => {
+    if (rpgLevel > previousRpgLevel.current) {
+      setRpgLevelUpMessage(`LEVEL UP! LEVEL ${rpgLevel}`)
+      const timer = window.setTimeout(() => setRpgLevelUpMessage(""), 2500)
+      previousRpgLevel.current = rpgLevel
+      return () => window.clearTimeout(timer)
+    }
+    previousRpgLevel.current = rpgLevel
+  }, [rpgLevel])
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem("darwin-rpg-save", JSON.stringify({
+        player: rpgPlayer,
+        coins: rpgCoins,
+        xp: rpgXp,
+        collected: rpgCollected,
+        victory: rpgVictory,
+        treasure: rpgTreasureCollected,
+        npcStarted: rpgNpcQuestStarted,
+        npcComplete: rpgNpcQuestComplete,
+        npcMessage: rpgNpcMessage
+      }))
+      setRpgSaveStatus("SAVED")
+    } catch {
+      setRpgSaveStatus("SAVE FAILED")
+      console.warn("RPG progress could not be saved.")
+    }
+  }, [
+    rpgPlayer,
+    rpgCoins,
+    rpgXp,
+    rpgCollected,
+    rpgVictory,
+    rpgTreasureCollected,
+    rpgNpcQuestStarted,
+    rpgNpcQuestComplete,
+    rpgNpcMessage
+  ])
+
+  const rpgWalls = ["5,2", "5,3", "5,4", "2,3", "3,3"]
+  const rpgCoinSpots = ["3,1", "7,1", "4,3", "8,4", "1,5"]
+
+  const moveRpgPlayer = (dx: number, dy: number) => {
+    const nextX = Math.max(0, Math.min(9, rpgPlayer.x + dx))
+    const nextY = Math.max(0, Math.min(5, rpgPlayer.y + dy))
+    const nextTile = `${nextX},${nextY}`
+
+    if (rpgWalls.includes(nextTile)) return
+
+    setRpgPlayer({ x: nextX, y: nextY })
+
+    if (rpgCoinSpots.includes(nextTile) && !rpgCollected.includes(nextTile)) {
+      const totalCollected = rpgCollected.length + 1
+      setRpgCollected(previous => [...previous, nextTile])
+      setRpgCoins(previous => previous + 1)
+      playPixelSound(760)
+      setRpgXp(previous => previous + 10 + (totalCollected === 5 ? 10 : 0))
+    }
+
+    if (nextTile === "8,2" && !rpgTreasureCollected) {
+      setRpgTreasureCollected(true)
+      playPixelSound(980)
+      setRpgXp(previous => previous + 100)
+    }
+
+    if (nextTile === "9,5" && rpgCollected.length === 5 && !rpgVictory) {
+      setRpgVictory(true)
+      setRpgConfettiVisible(true)
+      playPixelSound(1100)
+      setRpgXp(previous => previous + 50)
+    }
+  }
+
+  const talkToRpgNpc = () => {
+    setRpgNpcQuestStarted(true)
+
+    if (rpgTreasureCollected && !rpgNpcQuestComplete) {
+      setRpgNpcQuestComplete(true)
+      playPixelSound(880)
+      setRpgNpcMessage("NPC: Amazing! You found the treasure! +25 XP!")
+      setRpgXp(previous => previous + 25)
+    } else if (!rpgTreasureCollected) {
+      setRpgNpcMessage("NPC: Find the hidden diamond and bring it back to me!")
+    } else {
+      setRpgNpcMessage("NPC: Thank you, hero! Quest completed!")
+    }
+  }
+
+  useEffect(() => {
+    if (!secretRoomOpen) return
+
+    const handleRpgKeys = (event: KeyboardEvent) => {
+      const moves: Record<string, [number, number]> = {
+        ArrowUp: [0, -1],
+        ArrowDown: [0, 1],
+        ArrowLeft: [-1, 0],
+        ArrowRight: [1, 0],
+        w: [0, -1],
+        s: [0, 1],
+        a: [-1, 0],
+        d: [1, 0]
+      }
+
+      const move = moves[event.key]
+      if (move) {
+        event.preventDefault()
+        moveRpgPlayer(move[0], move[1])
+      }
+    }
+
+    window.addEventListener("keydown", handleRpgKeys)
+    return () => window.removeEventListener("keydown", handleRpgKeys)
+  }, [secretRoomOpen, rpgPlayer, rpgCollected])
   const [currentTime, setCurrentTime] = useState(new Date())
 
   useEffect(() => {
@@ -175,14 +386,66 @@ function App() {
     const music = portfolioBackgroundMusic.current
     if (!music) return
 
-    if (pixelSoundEnabled) {
+    if (pixelSoundEnabled && !secretRoomOpen) {
       music.play().catch(error => {
         console.warn('Background music playback needs user interaction:', error)
       })
     } else {
       music.pause()
     }
-  }, [pixelSoundEnabled])
+  }, [pixelSoundEnabled, secretRoomOpen])
+
+  // Original 8-bit Hidden Room theme
+  useEffect(() => {
+    if (!secretRoomOpen || !pixelSoundEnabled) return
+
+    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext
+    const audio = new AudioContextClass()
+    const notes = [
+      523, 659, 784, 1047, 784, 659, 587, 698,
+      880, 1047, 880, 698, 659, 784, 988, 784
+    ]
+    let index = 0
+
+    const playNote = () => {
+      if (audio.state === 'closed') return
+
+      const oscillator = audio.createOscillator()
+      const gain = audio.createGain()
+      const now = audio.currentTime
+
+      oscillator.type = 'square'
+      oscillator.frequency.setValueAtTime(notes[index % notes.length], now)
+      gain.gain.setValueAtTime(0.0001, now)
+      gain.gain.exponentialRampToValueAtTime(0.035, now + 0.015)
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.16)
+
+      oscillator.connect(gain)
+      gain.connect(audio.destination)
+      oscillator.start(now)
+      oscillator.stop(now + 0.17)
+      index++
+    }
+
+    audio.resume().then(playNote).catch(() => {})
+    const timer = window.setInterval(playNote, 190)
+
+    return () => {
+      window.clearInterval(timer)
+      audio.close().catch(() => {})
+    }
+  }, [secretRoomOpen, pixelSoundEnabled])
+
+  // Automatically stop confetti after four seconds
+  useEffect(() => {
+    if (!rpgConfettiVisible) return
+
+    const timer = window.setTimeout(() => {
+      setRpgConfettiVisible(false)
+    }, 4000)
+
+    return () => window.clearTimeout(timer)
+  }, [rpgConfettiVisible])
 
   const playPixelSound = (frequency = 520) => {
     if (!pixelSoundEnabled) return
@@ -204,6 +467,15 @@ function App() {
       console.warn('Audio unavailable:', error)
     }
   }
+
+  useEffect(() => {
+    if (rpgLevelUpMessage) playPixelSound(1040)
+  }, [rpgLevelUpMessage])
+
+  useEffect(() => {
+    if (rpgAchievementNotice) playPixelSound(920)
+  }, [rpgAchievementNotice])
+
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeProject, setActiveProject] = useState<number | null>(null)
@@ -1112,8 +1384,261 @@ function App() {
 
       </main>
 
+      {secretRoomOpen && (
+        <div className="secret-room-overlay" role="dialog" aria-modal="true">
+          {rpgConfettiVisible && (
+            <div className="rpg-confetti" aria-hidden="true">
+              {Array.from({ length: 90 }, (_, i) => (
+                <span
+                  key={i}
+                  style={{
+                    left: `${(i * 37) % 100}%`,
+                    animationDelay: `${(i % 15) * -0.35}s`,
+                    animationDuration: `${3 + (i % 5) * 0.6}s`
+                  }}
+                />
+              ))}
+            </div>
+          )}
+          <div className="secret-room-panel">
+            <div className="secret-room-header">
+              <span>◆ SECRET DEVELOPER ROOM</span>
+              <button
+                className="secret-room-close"
+                onClick={() => setSecretRoomOpen(false)}
+              >
+                ✕ CLOSE
+              </button>
+            </div>
+
+            <div className="secret-room-content">
+              <div className="secret-room-status">
+                <span>● SYSTEM UNLOCKED</span>
+                <span>PLAYER: DEVELOPER</span>
+              </div>
+
+              <h1>WELCOME TO THE <span>HIDDEN WORLD</span></h1>
+              <p>You discovered a secret area inside my portfolio.</p>
+
+              <div className="secret-room-scene">
+                <div className="secret-room-computer">🖥️</div>
+                <div className="secret-room-character">🧙</div>
+                <div className="secret-room-portal">🌀</div>
+                <div className="secret-room-floor">✦　◆　✦　◆　✦</div>
+              </div>
+
+              <div className="secret-room-console">
+                <span>DEVELOPER LOG</span>
+                <p>Access granted. Welcome, player.</p>
+                <p>Next mission: Explore the RPG world.</p>
+              </div>
+
+              <div className="secret-room-game">
+                <div className="rpg-hud">
+                  <div>🪙 COINS: {rpgCoins}</div>
+                  <div>⭐ XP: {rpgXp}</div>
+                  <div>🏆 LEVEL: {rpgLevel}</div>
+                </div>
+
+                <div className="rpg-level-progress">
+                  <div className="rpg-level-label">
+                    <span>LEVEL {rpgLevel}</span>
+                    <span>{rpgLevel >= 5 ? "MAX LEVEL" : `${rpgXp % 50}/50 XP`}</span>
+                  </div>
+                  <div className="rpg-level-track">
+                    <div className="rpg-level-fill" style={{ width: `${rpgLevelProgress}%` }} />
+                  </div>
+                </div>
+
+                {rpgLevelUpMessage && (
+                  <div className="rpg-level-up">{rpgLevelUpMessage} 🎉</div>
+                )}
+
+                <div className="rpg-inventory">
+                  <div className="rpg-inventory-header">
+                    <span>🎒 PLAYER INVENTORY</span>
+                    <span>ITEMS: {rpgCollected.length + (rpgTreasureCollected ? 1 : 0) + (rpgNpcQuestComplete ? 1 : 0)}</span>
+                  </div>
+                  <div className="rpg-inventory-items">
+                    <div className="rpg-inventory-item">
+                      <span>🪙</span>
+                      <small>COINS</small>
+                      <strong>{rpgCoins}/5</strong>
+                    </div>
+                    <div className="rpg-inventory-item">
+                      <span>{rpgTreasureCollected ? "💎" : "🔒"}</span>
+                      <small>DIAMOND</small>
+                      <strong>{rpgTreasureCollected ? "FOUND" : "LOCKED"}</strong>
+                    </div>
+                    <div className="rpg-inventory-item">
+                      <span>{rpgNpcQuestComplete ? "🏅" : "📜"}</span>
+                      <small>NPC BADGE</small>
+                      <strong>{rpgNpcQuestComplete ? "EARNED" : "PENDING"}</strong>
+                    </div>
+                  </div>
+                  <div className="rpg-inventory-xp">⭐ TOTAL EXPERIENCE: {rpgXp} XP</div>
+                  <div className={`rpg-save-status ${rpgSaveStatus === "SAVED" ? "saved" : "failed"}`}>
+                    {rpgSaveStatus === "SAVED" ? "💾 GAME SAVED ✓" : "⚠ SAVE FAILED"}
+                  </div>
+                </div>
+
+                <div className="rpg-achievements">
+                  <h3>🏆 ACHIEVEMENTS ({unlockedRpgAchievements.length}/5)</h3>
+                  <div className="rpg-achievement-grid">
+                    {rpgAchievements.map(item => (
+                      <div
+                        key={item.id}
+                        className={`rpg-achievement-card ${item.unlocked ? "unlocked" : "locked"}`}
+                      >
+                        <span>{item.unlocked ? item.icon : "🔒"}</span>
+                        <strong>{item.name}</strong>
+                        <small>{item.description}</small>
+                        <small>{item.unlocked ? "UNLOCKED ✓" : "LOCKED"}</small>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {rpgAchievementNotice && (
+                  <div className="rpg-achievement-notice">
+                    {rpgAchievementNotice}
+                  </div>
+                )}
+
+                <div className="rpg-quest">
+                  📜 QUEST: Collect the coins and find the portal at the bottom-right!
+                  <p>Coins collected: {rpgCollected.length} / 5</p>
+                  <p>🤖 NPC QUEST: {rpgNpcQuestComplete ? "COMPLETE! +25 XP" : rpgNpcQuestStarted ? "Find the diamond and return to the NPC" : "Find the robot at 6,1 and talk to it"}</p>
+                  <p className="rpg-npc-dialogue">💬 {rpgNpcMessage}</p>
+
+                  <p>
+                    {rpgTreasureCollected
+                      ? "💎 RARE TREASURE FOUND! +100 XP"
+                      : "💎 Hidden treasure: Find the diamond!"}
+                  </p>
+                  {rpgCollected.length === 5 && <strong>⭐ ALL COINS COLLECTED! PORTAL UNLOCKED!</strong>}
+                  {rpgVictory && (
+                    <div className="rpg-victory">
+                      <h3>🏆 QUEST COMPLETE!</h3>
+                      <p>You conquered the Secret Developer World!</p>
+                      <p>Reward: +50 XP</p>
+                      <button onClick={() => {
+                        setRpgPlayer({ x: 1, y: 1 })
+                        setRpgCoins(0)
+                        setRpgXp(0)
+                        setRpgCollected([])
+                        setRpgVictory(false)
+                        setRpgTreasureCollected(false)
+                        setRpgNpcQuestStarted(false)
+                        setRpgNpcQuestComplete(false)
+                        setRpgNpcMessage("Find me in the pixel world!")
+                        setRpgTreasureCollected(false)
+                      }}>
+                        ↻ PLAY AGAIN
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                <h2>PIXEL ADVENTURE</h2>
+                <p>Find all 5 coins and reach the portal!</p>
+
+                <div className="rpg-map">
+                  {Array.from({ length: 6 }, (_, y) =>
+                    Array.from({ length: 10 }, (_, x) => {
+                      const tile = `${x},${y}`
+                      const isWall = rpgWalls.includes(tile)
+                      const isPlayer = rpgPlayer.x === x && rpgPlayer.y === y
+                      const isCoin = rpgCoinSpots.includes(tile) && !rpgCollected.includes(tile)
+                      const isPortal = x === 9 && y === 5
+                      const isNpc = x === 6 && y === 1
+
+                      return (
+                        <div
+                          key={tile}
+                          className={`rpg-tile ${isWall ? "rpg-wall" : ""} ${isPlayer ? "rpg-player-tile" : ""} ${isNpc ? "rpg-npc-tile" : ""}`}
+                        >
+                          {isPlayer ? "🧙" : isWall ? "🧱" : isPortal ? "🌀" : isCoin ? "🪙" : (x === 8 && y === 2 && !rpgTreasureCollected) ? "💎" : isNpc ? "🤖" : ""}
+                        </div>
+                      )
+                    })
+                  )}
+                </div>
+
+                
+
+                <div className="rpg-controls">
+                  <button onClick={() => moveRpgPlayer(0, -1)}>▲</button>
+                  <div>
+                    <button onClick={() => moveRpgPlayer(-1, 0)}>◀</button>
+                    <button onClick={() => moveRpgPlayer(0, 1)}>▼</button>
+                    <button onClick={() => moveRpgPlayer(1, 0)}>▶</button>
+                  </div>
+                
+<button
+                  className="rpg-npc-prompt"
+                  disabled={Math.abs(rpgPlayer.x - 6) + Math.abs(rpgPlayer.y - 1) > 1}
+                  onClick={talkToRpgNpc}
+                >
+                  {Math.abs(rpgPlayer.x - 6) + Math.abs(rpgPlayer.y - 1) <= 1
+                    ? "🤖 TALK TO NPC"
+                    : "🤖 MOVE NEAR NPC TO TALK"}
+                </button>
+</div>
+
+
+                <p className="rpg-hint">PC: Arrow keys or WASD · Mobile: Use the buttons</p>
+
+                <button
+                  className="rpg-reset-button"
+                  onClick={() => setRpgResetConfirmOpen(true)}
+                >
+                  ↻ RESET GAME
+                </button>
+
+                {rpgResetConfirmOpen && (
+                  <div className="rpg-reset-overlay">
+                    <div className="rpg-reset-modal">
+                      <div className="rpg-reset-icon">⚠️</div>
+                      <h2>RESET GAME?</h2>
+                      <p>Are you sure you want to reset your adventure?</p>
+                      <p className="rpg-reset-warning">
+                        Your coins, XP, treasure and quest progress will be cleared.
+                      </p>
+                      <div className="rpg-reset-actions">
+                        <button onClick={() => setRpgResetConfirmOpen(false)}>
+                          CANCEL
+                        </button>
+                        <button onClick={resetRpgGame}>
+                          ↻ RESET PROGRESS
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <footer className="footer">
-        <a href="#home" className="logo">
+        <a
+          href="#home"
+          className="logo"
+          title="Secret?"
+          onClick={(event) => {
+            event.preventDefault()
+            setLogoClickCount(count => {
+              const nextCount = count + 1
+              if (nextCount >= 5) {
+                setSecretRoomOpen(true)
+                return 0
+              }
+              return nextCount
+            })
+          }}
+        >
           <span className="logo-bracket">{'<'}</span>
           DJR<span className="logo-dot">.DEV</span>
           <span className="logo-bracket">{'/>'}</span>
