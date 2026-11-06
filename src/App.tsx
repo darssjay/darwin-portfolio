@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import './Theme.css'
 import { Analytics } from '@vercel/analytics/react'
@@ -136,7 +136,142 @@ const education = [
 ]
 
 function App() {
+  const [currentTime, setCurrentTime] = useState(new Date())
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setCurrentTime(new Date())
+    }, 1000)
+
+    return () => window.clearInterval(timer)
+  }, [])
+
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setIsLoading(false)
+    }, 2200)
+
+    return () => window.clearTimeout(timer)
+  }, [])
+  const [pixelSoundEnabled, setPixelSoundEnabled] = useState(false)
+
+  const portfolioBackgroundMusic = useRef<HTMLAudioElement | null>(null)
+
+  useEffect(() => {
+    const music = new Audio('/music/background.mp3')
+    music.loop = true
+    music.volume = 0.18
+    portfolioBackgroundMusic.current = music
+
+    return () => {
+      music.pause()
+      portfolioBackgroundMusic.current = null
+    }
+  }, [])
+
+  useEffect(() => {
+    const music = portfolioBackgroundMusic.current
+    if (!music) return
+
+    if (pixelSoundEnabled) {
+      music.play().catch(error => {
+        console.warn('Background music playback needs user interaction:', error)
+      })
+    } else {
+      music.pause()
+    }
+  }, [pixelSoundEnabled])
+
+  const playPixelSound = (frequency = 520) => {
+    if (!pixelSoundEnabled) return
+    try {
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext
+      const audio = new AudioContextClass()
+      const oscillator = audio.createOscillator()
+      const gain = audio.createGain()
+      oscillator.type = 'square'
+      oscillator.frequency.setValueAtTime(frequency, audio.currentTime)
+      gain.gain.setValueAtTime(0.035, audio.currentTime)
+      gain.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + 0.09)
+      oscillator.connect(gain)
+      gain.connect(audio.destination)
+      oscillator.start()
+      oscillator.stop(audio.currentTime + 0.09)
+      oscillator.onended = () => audio.close()
+    } catch (error) {
+      console.warn('Audio unavailable:', error)
+    }
+  }
+
   const [menuOpen, setMenuOpen] = useState(false)
+  const [activeProject, setActiveProject] = useState<number | null>(null)
+  const [closingProject, setClosingProject] = useState(false)
+
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const [cursorPixels, setCursorPixels] = useState<{id:number,x:number,y:number}[]>([])
+  const cursorId = useRef(0)
+
+  useEffect(() => {
+    if (window.matchMedia('(hover: none)').matches) return
+    const move = (e: MouseEvent) => {
+      const id = ++cursorId.current
+      setCursorPixels(old => [...old.slice(-8), {id, x:e.clientX, y:e.clientY}])
+      window.setTimeout(() => {
+        setCursorPixels(old => old.filter(p => p.id !== id))
+      }, 500)
+    }
+    window.addEventListener('mousemove', move)
+    return () => window.removeEventListener('mousemove', move)
+  }, [])
+
+
+  useEffect(() => {
+    const updateProgress = () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+      const progress = maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0
+      const safeProgress = Math.min(100, Math.max(0, progress))
+      setScrollProgress(safeProgress)
+
+      const companion = document.querySelector('.pixel-companion') as HTMLElement | null
+      if (companion) {
+        const topPosition = 22 + (safeProgress * 0.48)
+        companion.style.top = `${topPosition}%`
+        companion.style.bottom = 'auto'
+      }
+    }
+
+    updateProgress()
+    window.addEventListener('scroll', updateProgress, { passive: true })
+    window.addEventListener('resize', updateProgress)
+
+    return () => {
+      window.removeEventListener('scroll', updateProgress)
+      window.removeEventListener('resize', updateProgress)
+    }
+  }, [])
+
+
+  useEffect(() => {
+    const elements = document.querySelectorAll(
+      '#about, #skills, #experience, #education, #projects, #resume, #contact, #web-analytics'
+    )
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('scroll-revealed')
+          observer.unobserve(entry.target)
+        }
+      })
+    }, { threshold: 0.12 })
+
+    elements.forEach((element) => observer.observe(element))
+
+    return () => observer.disconnect()
+  }, [])
+
   const [visitorStats, setVisitorStats] = useState({
     visitors: 0,
     page_views: 0
@@ -172,7 +307,191 @@ function App() {
 
   return (
     <div className={`app ${theme === 'light' ? 'light-mode' : ''}`}>
+      {isLoading && (
+        <div className="pixel-loading-screen">
+          <div className="loading-character">
+            <div className="loading-pixel-face">
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          <h2>DARWIN.EXE</h2>
+          <p>INITIALIZING PORTFOLIO...</p>
+          <div className="loading-bar">
+            <div className="loading-bar-fill"></div>
+          </div>
+          <span className="loading-percent">LOADING...</span>
+        </div>
+      )}
+      <div className="game-progress" aria-label={`Page progress ${Math.round(scrollProgress)} percent`}>
+        <div className="game-progress-fill" style={{ width: `${scrollProgress}%` }}></div>
+      </div>
       <div className="background-grid"></div>
+      <div className="cursor-pixel-layer" aria-hidden="true">
+        {cursorPixels.map(p => <span key={p.id} className="cursor-pixel" style={{left:p.x,top:p.y}} />)}
+      </div>
+      <div className="pixel-world" aria-hidden="true">
+        <div className="shooting-star" style={{ top: "15%", left: "85%" }}></div>
+        <div className="shooting-star" style={{ top: "45%", left: "65%", animationDelay: "-2s" }}></div>
+        <div className="shooting-star" style={{ top: "80%", left: "75%", animationDelay: "-4s" }}></div>
+
+        <div className="pixel-portal" style={{ top: "38%", right: "3%" }}></div>
+        <div className="pixel-portal" style={{ top: "76%", left: "3%", animationDelay: "-1.5s" }}></div>
+
+        <div className="pixel-sprite pixel-enderman">
+          <svg viewBox="0 0 16 24" shapeRendering="crispEdges">
+            <rect x="4" y="1" width="8" height="8" fill="#29203f"/>
+            <rect x="5" y="5" width="2" height="2" fill="#d78aff"/>
+            <rect x="9" y="5" width="2" height="2" fill="#d78aff"/>
+            <rect x="5" y="10" width="6" height="9" fill="#542a91"/>
+            <rect x="5" y="19" width="2" height="5" fill="#30204e"/>
+            <rect x="9" y="19" width="2" height="5" fill="#30204e"/>
+            <rect x="3" y="11" width="2" height="8" fill="#542a91"/>
+            <rect x="11" y="11" width="2" height="8" fill="#542a91"/>
+          </svg>
+        </div>
+
+        <div className="pixel-sprite pixel-creeper">
+          <svg viewBox="0 0 16 18" shapeRendering="crispEdges">
+            <rect x="4" y="1" width="8" height="8" fill="#54b84b"/>
+            <rect x="5" y="3" width="2" height="2" fill="#173b26"/>
+            <rect x="9" y="3" width="2" height="2" fill="#173b26"/>
+            <rect x="7" y="5" width="2" height="3" fill="#173b26"/>
+            <rect x="5" y="8" width="6" height="5" fill="#398e42"/>
+            <rect x="3" y="13" width="4" height="4" fill="#398e42"/>
+            <rect x="9" y="13" width="4" height="4" fill="#398e42"/>
+          </svg>
+        </div>
+
+        <div className="pixel-sprite pixel-chomper">
+          <svg viewBox="0 0 16 16" shapeRendering="crispEdges">
+            <rect x="5" y="1" width="6" height="2" fill="#ffe45c"/>
+            <rect x="2" y="3" width="10" height="10" fill="#ffd52e"/>
+            <rect x="5" y="13" width="6" height="2" fill="#ffe45c"/>
+            <rect x="10" y="6" width="5" height="2" fill="#10091c"/>
+          </svg>
+        </div>
+
+        <div className="pixel-sprite pixel-ghost">
+          <svg viewBox="0 0 16 16" shapeRendering="crispEdges">
+            <rect x="5" y="1" width="6" height="2" fill="#bd83ff"/>
+            <rect x="3" y="3" width="10" height="9" fill="#9c59e8"/>
+            <rect x="2" y="7" width="12" height="5" fill="#9c59e8"/>
+            <rect x="2" y="12" width="3" height="3" fill="#9c59e8"/>
+            <rect x="7" y="12" width="3" height="3" fill="#9c59e8"/>
+            <rect x="12" y="12" width="2" height="3" fill="#9c59e8"/>
+            <rect x="5" y="5" width="2" height="3" fill="#fff"/>
+            <rect x="9" y="5" width="2" height="3" fill="#fff"/>
+            <rect x="5" y="6" width="1" height="2" fill="#281442"/>
+            <rect x="9" y="6" width="1" height="2" fill="#281442"/>
+          </svg>
+        </div>
+
+        <div className="pixel-sprite pixel-slime">
+          <svg viewBox="0 0 16 12" shapeRendering="crispEdges">
+            <rect x="4" y="1" width="8" height="2" fill="#9bff9b"/>
+            <rect x="2" y="3" width="12" height="7" fill="#55d68a"/>
+            <rect x="5" y="5" width="2" height="2" fill="#173b35"/>
+            <rect x="10" y="5" width="2" height="2" fill="#173b35"/>
+            <rect x="4" y="10" width="8" height="1" fill="#35a96d"/>
+          </svg>
+        </div>
+        <div className="pixel-sprite pixel-enderman-two">
+          <svg viewBox="0 0 16 24" shapeRendering="crispEdges">
+            <rect x="4" y="1" width="8" height="8" fill="#382052"/>
+            <rect x="5" y="5" width="2" height="2" fill="#ed9aff"/>
+            <rect x="9" y="5" width="2" height="2" fill="#ed9aff"/>
+            <rect x="5" y="10" width="6" height="9" fill="#7134b5"/>
+            <rect x="5" y="19" width="2" height="5" fill="#382052"/>
+            <rect x="9" y="19" width="2" height="5" fill="#382052"/>
+            <rect x="3" y="11" width="2" height="8" fill="#7134b5"/>
+            <rect x="11" y="11" width="2" height="8" fill="#7134b5"/>
+          </svg>
+        </div>
+        <div className="pixel-sprite pixel-creeper-two">
+          <svg viewBox="0 0 16 18" shapeRendering="crispEdges">
+            <rect x="4" y="1" width="8" height="8" fill="#75e85b"/>
+            <rect x="5" y="3" width="2" height="2" fill="#17462a"/>
+            <rect x="9" y="3" width="2" height="2" fill="#17462a"/>
+            <rect x="7" y="5" width="2" height="3" fill="#17462a"/>
+            <rect x="5" y="9" width="6" height="4" fill="#4ab94e"/>
+            <rect x="3" y="13" width="4" height="4" fill="#4ab94e"/>
+            <rect x="9" y="13" width="4" height="4" fill="#4ab94e"/>
+          </svg>
+        </div>
+        <div className="pixel-sprite pixel-ghost-two">
+          <svg viewBox="0 0 16 16" shapeRendering="crispEdges">
+            <rect x="5" y="1" width="6" height="2" fill="#ff9adf"/>
+            <rect x="3" y="3" width="10" height="9" fill="#e56acb"/>
+            <rect x="2" y="7" width="12" height="5" fill="#e56acb"/>
+            <rect x="2" y="12" width="3" height="3" fill="#e56acb"/>
+            <rect x="7" y="12" width="3" height="3" fill="#e56acb"/>
+            <rect x="12" y="12" width="2" height="3" fill="#e56acb"/>
+            <rect x="5" y="5" width="2" height="3" fill="#fff"/>
+            <rect x="9" y="5" width="2" height="3" fill="#fff"/>
+          </svg>
+        </div>
+        <div className="pixel-sprite pixel-slime-two">
+          <svg viewBox="0 0 16 12" shapeRendering="crispEdges">
+            <rect x="4" y="1" width="8" height="2" fill="#d4a0ff"/>
+            <rect x="2" y="3" width="12" height="7" fill="#a56bdf"/>
+            <rect x="5" y="5" width="2" height="2" fill="#32154c"/>
+            <rect x="10" y="5" width="2" height="2" fill="#32154c"/>
+            <rect x="4" y="10" width="8" height="1" fill="#7542b0"/>
+          </svg>
+        </div>
+      </div>
+
+
+
+        <div className="pixel-sprite pixel-bat">
+          <svg viewBox="0 0 20 14" shapeRendering="crispEdges">
+            <rect x="8" y="3" width="4" height="8" fill="#b45cff"/>
+            <rect x="1" y="2" width="7" height="7" fill="#873ed1"/>
+            <rect x="12" y="2" width="7" height="7" fill="#873ed1"/>
+            <rect x="4" y="9" width="5" height="3" fill="#63309e"/>
+            <rect x="11" y="9" width="5" height="3" fill="#63309e"/>
+            <rect x="5" y="5" width="2" height="2" fill="#fff"/>
+            <rect x="13" y="5" width="2" height="2" fill="#fff"/>
+          </svg>
+        </div>
+
+        <div className="pixel-sprite pixel-knight">
+          <svg viewBox="0 0 16 22" shapeRendering="crispEdges">
+            <rect x="4" y="1" width="8" height="7" fill="#b8c5df"/>
+            <rect x="5" y="4" width="2" height="2" fill="#873ed1"/>
+            <rect x="9" y="4" width="2" height="2" fill="#873ed1"/>
+            <rect x="4" y="8" width="8" height="8" fill="#63309e"/>
+            <rect x="2" y="9" width="2" height="7" fill="#b8c5df"/>
+            <rect x="12" y="9" width="2" height="7" fill="#b8c5df"/>
+            <rect x="4" y="16" width="3" height="5" fill="#b8c5df"/>
+            <rect x="9" y="16" width="3" height="5" fill="#b8c5df"/>
+            <rect x="14" y="3" width="1" height="13" fill="#d9a0ff"/>
+          </svg>
+        </div>
+
+        <div className="pixel-sprite pixel-diamond">
+          <svg viewBox="0 0 16 18" shapeRendering="crispEdges">
+            <rect x="5" y="1" width="6" height="2" fill="#a5f3ff"/>
+            <rect x="2" y="3" width="12" height="4" fill="#45cfff"/>
+            <rect x="4" y="7" width="8" height="4" fill="#258ee8"/>
+            <rect x="6" y="11" width="4" height="4" fill="#45cfff"/>
+            <rect x="7" y="3" width="2" height="5" fill="#fff"/>
+          </svg>
+        </div>
+      <div className="pixel-companion" aria-hidden="true">
+        <svg viewBox="0 0 24 24" shapeRendering="crispEdges">
+          <rect x="7" y="2" width="10" height="3" fill="#d9a0ff"/>
+          <rect x="4" y="5" width="16" height="12" fill="#873ed1"/>
+          <rect x="2" y="9" width="20" height="7" fill="#a65bea"/>
+          <rect x="7" y="8" width="3" height="3" fill="#ffffff"/>
+          <rect x="14" y="8" width="3" height="3" fill="#ffffff"/>
+          <rect x="8" y="9" width="2" height="2" fill="#27103d"/>
+          <rect x="14" y="9" width="2" height="2" fill="#27103d"/>
+          <rect x="6" y="17" width="4" height="3" fill="#63309e"/>
+          <rect x="14" y="17" width="4" height="3" fill="#63309e"/>
+        </svg>
+      </div>
 
       <nav className="navbar">
         <a href="#home" className="logo" onClick={closeMenu}>
@@ -180,6 +499,18 @@ function App() {
           DJR<span className="logo-dot">.DEV</span>
           <span className="logo-bracket">{'/>'}</span>
         </a>
+
+        <div className="pixel-clock">
+          <span className="clock-label">LOCAL TIME</span>
+          <span className="clock-time">
+            {currentTime.toLocaleTimeString('en-PH', {
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+              hour12: true
+            })}
+          </span>
+        </div>
 
         <button
           className="menu-toggle"
@@ -200,6 +531,14 @@ function App() {
           <a href="#contact" onClick={closeMenu} className="nav-contact">CONTACT</a>
         </div>
 
+        <button
+          className="sound-toggle"
+          onClick={() => setPixelSoundEnabled(value => !value)}
+          aria-label={pixelSoundEnabled ? 'Mute sound' : 'Enable sound'}
+          title={pixelSoundEnabled ? 'Mute sound' : 'Enable sound'}
+        >
+          {pixelSoundEnabled ? '🔊' : '🔇'}
+        </button>
         <button
           className="theme-toggle"
           onClick={toggleTheme}
@@ -400,6 +739,27 @@ function App() {
           </div>
         </section>
 
+          <div className="pixel-achievements">
+            <span className="panel-tag">UNLOCKED ACHIEVEMENTS</span>
+            <div className="achievement-list">
+              <div className="achievement-badge">
+                <span>💻</span>
+                <div><strong>CODE LEARNER</strong><small>Learning programming</small></div>
+              </div>
+              <div className="achievement-badge">
+                <span>🌐</span>
+                <div><strong>WEB CREATOR</strong><small>Building web projects</small></div>
+              </div>
+              <div className="achievement-badge">
+                <span>🗄️</span>
+                <div><strong>DATA EXPLORER</strong><small>Working with SQL</small></div>
+              </div>
+              <div className="achievement-badge">
+                <span>🎮</span>
+                <div><strong>PROJECT MAKER</strong><small>Creating applications</small></div>
+              </div>
+            </div>
+          </div>
         <section id="experience" className="section-container section-block">
           <div className="section-heading">
             <span className="section-number">03 / WORK HISTORY</span>
@@ -464,6 +824,11 @@ function App() {
                     src={project.image}
                     alt={`${project.title} project preview`}
                     className="project-image"
+                    onClick={() => {
+                      playPixelSound(720)
+                      setActiveProject(index)
+                      setClosingProject(false)
+                    }}
                     onError={(event) => {
                       event.currentTarget.style.display = 'none'
                     }}
@@ -487,6 +852,61 @@ function App() {
             ))}
           </div>
         </section>
+
+
+        {activeProject !== null && (
+          <div
+            className={`pixel-lightbox ${closingProject ? 'pixel-closing' : ''}`}
+            onClick={() => {
+              playPixelSound(380)
+              setClosingProject(true)
+              setTimeout(() => setActiveProject(null), 650)
+            }}
+          >
+            <div
+              className="pixel-lightbox-content"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <button
+                className="pixel-close"
+                onClick={() => {
+                  playPixelSound(380)
+                  setClosingProject(true)
+                  setTimeout(() => setActiveProject(null), 650)
+                }}
+                aria-label="Close image"
+              >
+                ×
+              </button>
+
+              <div className="pixel-image-grid">
+                {Array.from({ length: 216 }, (_, i) => {
+                  const col = i % 18
+                  const row = Math.floor(i / 18)
+
+                  return (
+                    <div
+                      key={i}
+                      className="pixel-tile"
+                      style={{
+                        backgroundImage: `url(${projects[activeProject].image})`,
+                        backgroundSize: '1800% 1200%',
+                        backgroundPosition: `${(col / 17) * 100}% ${(row / 11) * 100}%`,
+                        animationDelay: `${((i * 13) % 45) * 12}ms`
+                      }}
+                    />
+                  )
+                })}
+              </div>
+
+              <div className="pixel-image-info">
+                <span>{projects[activeProject].category}</span>
+                <h2>{projects[activeProject].title}</h2>
+                <p>{projects[activeProject].description}</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         <section id="resume" className="section-container section-block">
           <div className="section-heading">
