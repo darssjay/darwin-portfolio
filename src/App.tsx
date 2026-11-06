@@ -440,7 +440,6 @@ function App() {
             <rect x="4" y="10" width="8" height="1" fill="#7542b0"/>
           </svg>
         </div>
-      </div>
 
 
 
@@ -479,7 +478,60 @@ function App() {
             <rect x="7" y="3" width="2" height="5" fill="#fff"/>
           </svg>
         </div>
-      <div className="pixel-companion" aria-hidden="true">
+        </div>
+        <div className="pixel-sprite pixel-dragon">
+          <svg viewBox="0 0 24 24" shapeRendering="crispEdges">
+            <rect x="7" y="3" width="10" height="9" fill="#9b55e8"/>
+            <rect x="4" y="6" width="4" height="5" fill="#b77aff"/>
+            <rect x="16" y="6" width="4" height="5" fill="#b77aff"/>
+            <rect x="9" y="6" width="2" height="2" fill="#fff"/>
+            <rect x="14" y="6" width="2" height="2" fill="#fff"/>
+            <rect x="10" y="10" width="5" height="2" fill="#42205f"/>
+            <rect x="7" y="12" width="10" height="7" fill="#7136b5"/>
+            <rect x="3" y="13" width="5" height="3" fill="#9b55e8"/>
+            <rect x="16" y="13" width="5" height="3" fill="#9b55e8"/>
+            <rect x="8" y="19" width="3" height="3" fill="#54278b"/>
+            <rect x="14" y="19" width="3" height="3" fill="#54278b"/>
+          </svg>
+        </div>
+        <div className="pixel-sprite pixel-alien">
+          <svg viewBox="0 0 20 20" shapeRendering="crispEdges">
+            <rect x="5" y="2" width="10" height="3" fill="#8dff9c"/>
+            <rect x="2" y="5" width="16" height="9" fill="#50d978"/>
+            <rect x="5" y="7" width="3" height="4" fill="#172d3a"/>
+            <rect x="12" y="7" width="3" height="4" fill="#172d3a"/>
+            <rect x="7" y="14" width="6" height="2" fill="#8dff9c"/>
+            <rect x="4" y="16" width="4" height="3" fill="#36a95d"/>
+            <rect x="12" y="16" width="4" height="3" fill="#36a95d"/>
+          </svg>
+        </div>
+        <div className="pixel-sprite pixel-robot">
+          <svg viewBox="0 0 20 22" shapeRendering="crispEdges">
+            <rect x="8" y="1" width="4" height="3" fill="#d9a0ff"/>
+            <rect x="4" y="4" width="12" height="10" fill="#a8b4d0"/>
+            <rect x="6" y="7" width="3" height="3" fill="#8c55d9"/>
+            <rect x="11" y="7" width="3" height="3" fill="#8c55d9"/>
+            <rect x="7" y="12" width="6" height="2" fill="#55416f"/>
+            <rect x="5" y="14" width="10" height="5" fill="#7443b2"/>
+            <rect x="2" y="15" width="3" height="3" fill="#a8b4d0"/>
+            <rect x="15" y="15" width="3" height="3" fill="#a8b4d0"/>
+            <rect x="6" y="19" width="3" height="2" fill="#a8b4d0"/>
+            <rect x="11" y="19" width="3" height="2" fill="#a8b4d0"/>
+          </svg>
+        </div>
+        <div className="pixel-sprite pixel-cat">
+          <svg viewBox="0 0 20 18" shapeRendering="crispEdges">
+            <rect x="3" y="1" width="4" height="5" fill="#d9a0ff"/>
+            <rect x="13" y="1" width="4" height="5" fill="#d9a0ff"/>
+            <rect x="3" y="5" width="14" height="9" fill="#a56bdf"/>
+            <rect x="6" y="8" width="2" height="2" fill="#fff"/>
+            <rect x="12" y="8" width="2" height="2" fill="#fff"/>
+            <rect x="9" y="11" width="2" height="2" fill="#42205f"/>
+            <rect x="5" y="14" width="3" height="3" fill="#7542b0"/>
+            <rect x="12" y="14" width="3" height="3" fill="#7542b0"/>
+          </svg>
+        </div>
+        <div className="pixel-companion" aria-hidden="true">
         <svg viewBox="0 0 24 24" shapeRendering="crispEdges">
           <rect x="7" y="2" width="10" height="3" fill="#d9a0ff"/>
           <rect x="4" y="5" width="16" height="12" fill="#873ed1"/>

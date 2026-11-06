@@ -1925,3 +1925,252 @@ button:active,
     animation: none;
   }
 }
+
+/* NEW PIXEL CHARACTERS */
+.pixel-dragon {
+  top: 9%;
+  right: 18%;
+  width: 48px;
+  color: #b66aff;
+  animation: pixel-dragon-fly 6s ease-in-out infinite;
+}
+
+.pixel-alien {
+  top: 35%;
+  left: 14%;
+  width: 42px;
+  color: #55d68a;
+  animation: pixel-alien-float 4s ease-in-out infinite;
+}
+
+.pixel-robot {
+  top: 59%;
+  right: 17%;
+  width: 44px;
+  color: #b8c5df;
+  animation: pixel-robot-move 7s ease-in-out infinite;
+}
+
+.pixel-cat {
+  top: 86%;
+  right: 20%;
+  width: 42px;
+  color: #d9a0ff;
+  animation: pixel-cat-hop 3s ease-in-out infinite;
+}
+
+@keyframes pixel-dragon-fly {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-18px, -14px); }
+}
+
+@keyframes pixel-alien-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes pixel-robot-move {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-14px); }
+}
+
+@keyframes pixel-cat-hop {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@media (max-width: 600px) {
+  .pixel-dragon, .pixel-alien,
+  .pixel-robot, .pixel-cat {
+    width: 28px;
+    opacity: 0.38;
+  }
+}
+
+
+/* PIXEL WORLD LAYER FIX */
+.app {
+  isolation: isolate;
+}
+
+.background-grid {
+  z-index: -2;
+}
+
+.pixel-world {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.navbar,
+main,
+.footer {
+  position: relative;
+  z-index: 2;
+}
+
+.pixel-sprite {
+  pointer-events: none;
+}
+
+.pixel-companion {
+  pointer-events: none;
+}
+
+
+/* FINAL PIXEL WORLD LAYERING */
+.app {
+  isolation: isolate;
+}
+
+.background-grid {
+  z-index: 0;
+}
+
+.pixel-world {
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.pixel-sprite {
+  opacity: 0.42;
+  max-width: 44px;
+  pointer-events: none;
+}
+
+.navbar {
+  position: sticky;
+  z-index: 20;
+}
+
+main,
+.footer {
+  position: relative;
+  z-index: 2;
+}
+
+.pixel-companion {
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  .pixel-sprite {
+    opacity: 0.32;
+    max-width: 32px;
+  }
+
+  .pixel-companion {
+    opacity: 0.4;
+  }
+}
+
+
+/* BIG PIXEL WORLD MOVEMENTS */
+
+.pixel-enderman,
+.pixel-chomper,
+.pixel-slime,
+.pixel-creeper-two,
+.pixel-slime-two,
+.pixel-alien,
+.pixel-cat {
+  animation: pixel-cross-right 13s ease-in-out infinite alternate !important;
+}
+
+.pixel-creeper,
+.pixel-ghost,
+.pixel-enderman-two,
+.pixel-ghost-two,
+.pixel-robot,
+.pixel-dragon {
+  animation: pixel-cross-left 14s ease-in-out infinite alternate !important;
+}
+
+.pixel-bat {
+  animation: pixel-bat-flight 8s ease-in-out infinite alternate !important;
+}
+
+.pixel-knight {
+  animation: pixel-knight-walk 10s ease-in-out infinite alternate !important;
+}
+
+.pixel-diamond {
+  animation: pixel-diamond-float 4s ease-in-out infinite !important;
+}
+
+@keyframes pixel-cross-right {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(32vw) translateY(-35px); }
+  100% { transform: translateX(68vw) translateY(15px); }
+}
+
+@keyframes pixel-cross-left {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(-32vw) translateY(35px); }
+  100% { transform: translateX(-68vw) translateY(-15px); }
+}
+
+@keyframes pixel-bat-flight {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-35vw, -100px); }
+  100% { transform: translate(25vw, 100px); }
+}
+
+@keyframes pixel-knight-walk {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(35vw); }
+  100% { transform: translateX(65vw); }
+}
+
+@keyframes pixel-diamond-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-65px) rotate(180deg); }
+}
+
+@media (max-width: 600px) {
+  .pixel-sprite { opacity: 0.48; }
+
+  @keyframes pixel-cross-right {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(75vw); }
+  }
+
+  @keyframes pixel-cross-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-75vw); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pixel-sprite { animation: none !important; }
+}
+
+
+/* PIXEL CHARACTERS VISIBILITY BOOST */
+.pixel-sprite {
+  opacity: 0.85 !important;
+  filter:
+    drop-shadow(0 0 5px currentColor)
+    drop-shadow(0 0 12px currentColor) !important;
+}
+
+.pixel-companion {
+  opacity: 0.9 !important;
+  filter: drop-shadow(0 0 12px #b45cff) !important;
+}
+
+@media (max-width: 600px) {
+  .pixel-sprite {
+    opacity: 0.72 !important;
+  }
+
+  .pixel-companion {
+    opacity: 0.75 !important;
+  }
+}
+
