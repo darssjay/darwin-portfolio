@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import type { Session } from '@supabase/supabase-js'
 import { supabase } from './supabase'
 import './Guestbook.css'
 
@@ -13,7 +12,6 @@ type Message = {
 
 export default function Guestbook() {
   const [messages, setMessages] = useState<Message[]>([])
-  const [session, setSession] = useState<Session | null>(null)
   const [isAdmin, setIsAdmin] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
   const [email, setEmail] = useState('')
@@ -49,9 +47,6 @@ export default function Guestbook() {
     const initialize = async () => {
       const { data } = await supabase.auth.getSession()
       if (!active) return
-
-      setSession(data.session)
-
       if (data.session) {
         await verifyAdmin()
       }
@@ -63,7 +58,6 @@ export default function Guestbook() {
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (_event, nextSession) => {
-        setSession(nextSession)
         if (!nextSession) {
           setIsAdmin(false)
           void loadMessages()
