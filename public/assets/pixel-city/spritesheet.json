@@ -1,0 +1,472 @@
+{
+ "meta": {
+  "name": "Pixel Cyberpunk City Tileset",
+  "tile_size": 16,
+  "image": "spritesheet.png",
+  "count": 66
+ },
+ "frames": {
+  "asphalt_1": {
+   "x": 0,
+   "y": 0,
+   "w": 16,
+   "h": 16,
+   "category": "ground"
+  },
+  "asphalt_2": {
+   "x": 16,
+   "y": 0,
+   "w": 16,
+   "h": 16,
+   "category": "ground"
+  },
+  "asphalt_3": {
+   "x": 32,
+   "y": 0,
+   "w": 16,
+   "h": 16,
+   "category": "ground"
+  },
+  "asphalt_wet": {
+   "x": 48,
+   "y": 0,
+   "w": 16,
+   "h": 16,
+   "category": "ground"
+  },
+  "road_h": {
+   "x": 64,
+   "y": 0,
+   "w": 16,
+   "h": 16,
+   "category": "ground"
+  },
+  "road_v": {
+   "x": 80,
+   "y": 0,
+   "w": 16,
+   "h": 16,
+   "category": "ground"
+  },
+  "crosswalk": {
+   "x": 96,
+   "y": 0,
+   "w": 16,
+   "h": 16,
+   "category": "ground"
+  },
+  "sidewalk": {
+   "x": 112,
+   "y": 0,
+   "w": 16,
+   "h": 16,
+   "category": "ground"
+  },
+  "concrete": {
+   "x": 128,
+   "y": 0,
+   "w": 16,
+   "h": 16,
+   "category": "ground"
+  },
+  "metal_floor": {
+   "x": 144,
+   "y": 0,
+   "w": 16,
+   "h": 16,
+   "category": "ground"
+  },
+  "grate": {
+   "x": 160,
+   "y": 0,
+   "w": 16,
+   "h": 16,
+   "category": "ground"
+  },
+  "hazard_stripes": {
+   "x": 176,
+   "y": 0,
+   "w": 16,
+   "h": 16,
+   "category": "ground"
+  },
+  "neon_floor_cyan": {
+   "x": 0,
+   "y": 16,
+   "w": 16,
+   "h": 16,
+   "category": "ground"
+  },
+  "neon_floor_pink": {
+   "x": 16,
+   "y": 16,
+   "w": 16,
+   "h": 16,
+   "category": "ground"
+  },
+  "toxic_water_1": {
+   "x": 32,
+   "y": 16,
+   "w": 16,
+   "h": 16,
+   "category": "ground"
+  },
+  "toxic_water_2": {
+   "x": 48,
+   "y": 16,
+   "w": 16,
+   "h": 16,
+   "category": "ground"
+  },
+  "steel_wall": {
+   "x": 64,
+   "y": 16,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "dark_wall": {
+   "x": 80,
+   "y": 16,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "rust_wall": {
+   "x": 96,
+   "y": 16,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "concrete_wall": {
+   "x": 112,
+   "y": 16,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "purple_wall": {
+   "x": 128,
+   "y": 16,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "brick_wall": {
+   "x": 144,
+   "y": 16,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "hull_panel": {
+   "x": 160,
+   "y": 16,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "building_windows_lit": {
+   "x": 176,
+   "y": 16,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "building_windows_mixed": {
+   "x": 0,
+   "y": 32,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "building_windows_dark": {
+   "x": 16,
+   "y": 32,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "pipes_wall": {
+   "x": 32,
+   "y": 32,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "circuit_board": {
+   "x": 48,
+   "y": 32,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "terminal_screen": {
+   "x": 64,
+   "y": 32,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "scanline_blue": {
+   "x": 80,
+   "y": 32,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "glass_panel": {
+   "x": 96,
+   "y": 32,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "roof_tiles": {
+   "x": 112,
+   "y": 32,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "door_steel": {
+   "x": 128,
+   "y": 32,
+   "w": 16,
+   "h": 16,
+   "category": "walls"
+  },
+  "antenna_tower": {
+   "x": 144,
+   "y": 32,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "street_lamp": {
+   "x": 160,
+   "y": 32,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "fire_hydrant": {
+   "x": 176,
+   "y": 32,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "dumpster": {
+   "x": 0,
+   "y": 48,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "metal_crate": {
+   "x": 16,
+   "y": 48,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "toxic_barrel": {
+   "x": 32,
+   "y": 48,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "vending_machine_blue": {
+   "x": 48,
+   "y": 48,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "vending_machine_pink": {
+   "x": 64,
+   "y": 48,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "computer_terminal": {
+   "x": 80,
+   "y": 48,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "server_rack": {
+   "x": 96,
+   "y": 48,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "neon_sign_cyan": {
+   "x": 112,
+   "y": 48,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "neon_sign_pink": {
+   "x": 128,
+   "y": 48,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "hologram_display": {
+   "x": 144,
+   "y": 48,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "patrol_drone": {
+   "x": 160,
+   "y": 48,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "hover_car_red": {
+   "x": 176,
+   "y": 48,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "hover_car_blue": {
+   "x": 0,
+   "y": 64,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "neon_bike": {
+   "x": 16,
+   "y": 64,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "trash_can": {
+   "x": 32,
+   "y": 64,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "air_vent": {
+   "x": 48,
+   "y": 64,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "cables": {
+   "x": 64,
+   "y": 64,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "traffic_cone": {
+   "x": 80,
+   "y": 64,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "street_bench": {
+   "x": 96,
+   "y": 64,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "billboard": {
+   "x": 112,
+   "y": 64,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "utility_pole": {
+   "x": 128,
+   "y": 64,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "security_mech": {
+   "x": 144,
+   "y": 64,
+   "w": 16,
+   "h": 16,
+   "category": "props"
+  },
+  "hacker": {
+   "x": 160,
+   "y": 64,
+   "w": 16,
+   "h": 16,
+   "category": "characters"
+  },
+  "street_samurai": {
+   "x": 176,
+   "y": 64,
+   "w": 16,
+   "h": 16,
+   "category": "characters"
+  },
+  "cop": {
+   "x": 0,
+   "y": 80,
+   "w": 16,
+   "h": 16,
+   "category": "characters"
+  },
+  "merchant": {
+   "x": 16,
+   "y": 80,
+   "w": 16,
+   "h": 16,
+   "category": "characters"
+  },
+  "punk": {
+   "x": 32,
+   "y": 80,
+   "w": 16,
+   "h": 16,
+   "category": "characters"
+  },
+  "android": {
+   "x": 48,
+   "y": 80,
+   "w": 16,
+   "h": 16,
+   "category": "characters"
+  },
+  "corp_exec": {
+   "x": 64,
+   "y": 80,
+   "w": 16,
+   "h": 16,
+   "category": "characters"
+  },
+  "cyborg": {
+   "x": 80,
+   "y": 80,
+   "w": 16,
+   "h": 16,
+   "category": "characters"
+  }
+ }
+}

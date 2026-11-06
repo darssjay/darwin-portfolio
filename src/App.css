@@ -3058,3 +3058,3431 @@ main,
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
+
+/* PIXEL CITY */
+.pixel-city {
+  position: relative;
+  width: 100%;
+  min-height: 440px;
+  overflow: hidden;
+  border: 2px solid #9b55ff;
+  border-radius: 14px;
+  background: linear-gradient(#100d2c, #251044 65%, #171329);
+  box-shadow: 0 0 25px #8b35ff33;
+  transition: background .6s ease;
+}
+
+.pixel-city.day {
+  background: linear-gradient(#74bde8, #c3d8ee 65%, #596b82);
+}
+
+.pixel-city-sky {
+  position: absolute;
+  inset: 0 0 42%;
+  overflow: hidden;
+}
+
+.city-sun-moon {
+  position: absolute;
+  top: 25px;
+  right: 12%;
+  font-size: 35px;
+  filter: drop-shadow(0 0 15px #ffe58a);
+}
+
+.city-cloud {
+  position: absolute;
+  top: 65px;
+  font-size: 35px;
+  opacity: .65;
+  animation: city-cloud-drift 18s linear infinite alternate;
+}
+
+.cloud-one { left: 15%; }
+.cloud-two {
+  left: 60%;
+  top: 110px;
+  animation-duration: 25s;
+}
+
+@keyframes city-cloud-drift {
+  from { transform: translateX(-15px); }
+  to { transform: translateX(35px); }
+}
+
+.pixel-city-buildings {
+  position: absolute;
+  left: 3%;
+  right: 3%;
+  bottom: 105px;
+  height: 235px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 8px;
+}
+
+.city-building {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  width: 22%;
+  height: 180px;
+  padding: 15px 7px;
+  border: 2px solid #9d66dc;
+  border-bottom: 5px solid #100d20;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(90deg, #21183b, #49316b, #21183b);
+  color: #fff;
+  cursor: pointer;
+  image-rendering: pixelated;
+  transition: filter .2s, transform .2s;
+  touch-action: manipulation;
+}
+
+.city-building:active {
+  transform: translateY(-5px);
+}
+
+.building-1 { height: 155px; }
+.building-2 { height: 205px; }
+.building-3 { height: 175px; }
+.building-4 { height: 225px; }
+
+.building-label {
+  font-size: clamp(8px, 2vw, 11px);
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #f5c5ff;
+  text-shadow: 0 0 8px #e85cff;
+}
+
+.building-windows {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  width: 85%;
+}
+
+.building-windows i {
+  display: block;
+  height: 13px;
+  background: #43365c;
+  border: 1px solid #8870a8;
+  transition: background .3s, box-shadow .3s;
+}
+
+.city-building.lights-on .building-windows i {
+  background: #ffe58a;
+  box-shadow: 0 0 9px #ffcf58;
+}
+
+.city-building.lights-off .building-windows i {
+  background: #29223d;
+  box-shadow: none;
+}
+
+.building-door {
+  margin-top: auto;
+  color: #c88aff;
+  font-size: 23px;
+}
+
+.city-street {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 105px;
+  background: #171522;
+  border-top: 4px solid #a05bce;
+}
+
+.city-road-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  border-top: 3px dashed #d5a9ff;
+  opacity: .65;
+}
+
+.city-car {
+  position: absolute;
+  z-index: 2;
+  top: 5px;
+  left: -55px;
+  font-size: 34px;
+  animation: city-car-drive 9s linear infinite;
+}
+
+@keyframes city-car-drive {
+  from { transform: translateX(-60px); }
+  to { transform: translateX(calc(100vw + 450px)); }
+}
+
+.city-npc {
+  position: absolute;
+  z-index: 3;
+  top: 4px;
+  left: 25%;
+  font-size: 30px;
+  animation: city-npc-walk 5s ease-in-out infinite alternate;
+}
+
+@keyframes city-npc-walk {
+  from { transform: translateX(0); }
+  to { transform: translateX(90px); }
+}
+
+.pixel-city-controls {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px 10px 5px;
+}
+
+.pixel-city-controls button {
+  min-height: 42px;
+  padding: 10px 15px;
+  border: 1px solid #c17aff;
+  border-radius: 6px;
+  background: #281543;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.pixel-city-controls button:active {
+  transform: scale(.96);
+  box-shadow: 0 0 14px #d45cff;
+}
+
+.city-hint {
+  position: relative;
+  z-index: 5;
+  padding: 8px 10px 15px;
+  color: #d8b8ff;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.pixel-city.rain .city-cloud {
+  opacity: 1;
+  filter: grayscale(1);
+}
+
+.city-rain {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  pointer-events: none;
+}
+
+.city-rain span {
+  position: absolute;
+  top: -20px;
+  width: 2px;
+  height: 15px;
+  background: #9edaff;
+  opacity: .8;
+  animation: city-rain-fall .8s linear infinite;
+}
+
+@keyframes city-rain-fall {
+  to { transform: translateY(260px); }
+}
+
+.pixel-city.day .city-building {
+  background: linear-gradient(90deg, #485b78, #7188a5, #485b78);
+  border-color: #b5d9ff;
+}
+
+.pixel-city.day .building-label {
+  color: #fff;
+  text-shadow: 0 1px 4px #263b65;
+}
+
+.pixel-city.day .city-street {
+  background: #414353;
+}
+
+.pixel-city.day .city-road-line {
+  border-color: #fff;
+}
+
+@media (max-width: 600px) {
+  .pixel-city {
+    min-height: 390px;
+  }
+
+  .pixel-city-buildings {
+    left: 2%;
+    right: 2%;
+    bottom: 95px;
+    height: 205px;
+    gap: 5px;
+  }
+
+  .city-building {
+    width: 24%;
+    padding: 12px 3px;
+    gap: 10px;
+  }
+
+  .building-1 { height: 135px; }
+  .building-2 { height: 175px; }
+  .building-3 { height: 150px; }
+  .building-4 { height: 190px; }
+
+  .building-windows {
+    gap: 6px;
+    width: 90%;
+  }
+
+  .building-windows i {
+    height: 10px;
+  }
+
+  .city-street {
+    height: 95px;
+  }
+
+  .pixel-city-controls {
+    gap: 8px;
+  }
+
+  .pixel-city-controls button {
+    flex: 1;
+    padding: 9px 6px;
+    font-size: 9px;
+  }
+
+  .city-npc {
+    left: 15%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .city-car,
+  .city-npc,
+  .city-cloud,
+  .city-rain span {
+    animation: none;
+  }
+}
+
+/* ===== NEON METROPOLIS - CYBERPUNK PIXEL CITY ===== */
+
+.cyber-city {
+  --neon-pink: #ff36c7;
+  --neon-blue: #16d9ff;
+  --neon-purple: #a855f7;
+  position: relative;
+  width: 100%;
+  min-height: 570px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #080817;
+  border: 2px solid #a23bce;
+  box-shadow: 0 0 25px #a020c855, inset 0 0 35px #180b35;
+  image-rendering: pixelated;
+}
+
+.cyber-sky {
+  position: absolute;
+  inset: 0 0 170px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 75%, #40155e 0%, transparent 55%),
+    linear-gradient(180deg, #070817 0%, #17102e 55%, #321044 100%);
+  transition: background 1s;
+}
+
+.cyber-moon {
+  position: absolute;
+  top: 48px;
+  right: 15%;
+  width: 42px;
+  height: 42px;
+  background: #d9eaff;
+  box-shadow: 0 0 15px #8bcfff, 0 0 50px #4c9cff;
+  clip-path: polygon(25% 0, 75% 0, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0 75%, 0 25%);
+}
+
+.cyber-sun {
+  position: absolute;
+  display: none;
+  top: 45px;
+  right: 15%;
+  width: 55px;
+  height: 55px;
+  background: #ffb85c;
+  box-shadow: 0 0 35px #ff8a38;
+}
+
+.cyber-stars {
+  position: absolute;
+  inset: 0;
+  opacity: .8;
+  background-image:
+    radial-gradient(2px 2px at 12% 20%, #fff, transparent),
+    radial-gradient(2px 2px at 30% 12%, #fff, transparent),
+    radial-gradient(2px 2px at 62% 25%, #fff, transparent),
+    radial-gradient(2px 2px at 82% 18%, #fff, transparent),
+    radial-gradient(2px 2px at 92% 48%, #fff, transparent),
+    radial-gradient(2px 2px at 44% 35%, #fff, transparent);
+}
+
+.cyber-city-main {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.cyber-skyline {
+  position: absolute;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.skyline-back {
+  bottom: 170px;
+  height: 250px;
+  opacity: .7;
+}
+
+.sky-tower {
+  position: relative;
+  width: 7%;
+  height: 55%;
+  background: #11152d;
+  border: 2px solid #27305a;
+  box-shadow: inset 4px 0 #1b2141;
+}
+
+.sky-tower:nth-child(3n) { height: 85%; }
+.sky-tower:nth-child(4n) { height: 70%; }
+.sky-tower:nth-child(5n) { height: 100%; }
+
+.sky-tower::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 40%;
+  width: 20%;
+  height: 18px;
+  background: #252c54;
+}
+
+.sky-tower i,
+.tower-windows i {
+  display: block;
+  width: 7px;
+  height: 9px;
+  background: #ffb64c;
+  box-shadow: 0 0 5px #ff9c36;
+}
+
+.sky-tower i {
+  position: absolute;
+  left: 20%;
+  top: calc(12px + (var(--unused, 0) * 1px));
+}
+
+.sky-tower i:nth-child(2n) { left: 60%; top: 35px; background: #36dfff; }
+.sky-tower i:nth-child(3n) { top: 65px; background: #ff46ca; }
+.sky-tower i:nth-child(4n) { top: 95px; }
+
+.sky-tower-1 { border-color: #35306a; }
+.sky-tower-2 { border-color: #164b67; }
+.sky-tower-3 { border-color: #622b70; }
+.sky-tower-4 { border-color: #264b65; }
+
+.skyline-front {
+  z-index: 2;
+  bottom: 150px;
+  height: 320px;
+  align-items: flex-end;
+  gap: 5px;
+  padding: 0 3%;
+}
+
+.mega-building {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 65%;
+  background: linear-gradient(90deg, #11142c, #25213f 50%, #11152d);
+  border: 2px solid #35416c;
+  border-bottom: 0;
+  box-shadow: inset 5px 0 #0b1027, inset -5px 0 #343057;
+}
+
+.mega-building-1 { height: 72%; }
+.mega-building-2 { height: 100%; }
+.mega-building-3 { height: 62%; }
+.mega-building-4 { height: 85%; }
+.mega-building-5 { height: 70%; }
+.mega-building-6 { height: 92%; }
+.mega-building-7 { height: 68%; }
+.mega-building-8 { height: 82%; }
+.mega-building-9 { height: 60%; }
+
+.tower-roof {
+  position: absolute;
+  top: -12px;
+  left: 10%;
+  width: 80%;
+  height: 12px;
+  background: #30345d;
+  border-top: 3px solid #18dfff;
+}
+
+.tower-antenna {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  width: 3px;
+  height: 30px;
+  background: #ff3bcb;
+  box-shadow: 0 0 8px #ff3bcb;
+}
+
+.tower-sign {
+  position: relative;
+  z-index: 3;
+  margin: 15px 3px 8px;
+  padding: 5px 1px;
+  text-align: center;
+  overflow: hidden;
+  font-size: clamp(6px, 1.1vw, 11px);
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #fff;
+  background: #251039;
+  border: 2px solid var(--neon-pink);
+  text-shadow: 0 0 5px var(--neon-pink);
+  box-shadow: 0 0 10px #ff36c7;
+  animation: neon-flicker 4s infinite;
+}
+
+.mega-building:nth-child(2n) .tower-sign {
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 10px #16d9ff;
+  text-shadow: 0 0 6px #16d9ff;
+}
+
+.mega-building:nth-child(3n) .tower-sign {
+  border-color: #a855f7;
+  box-shadow: 0 0 10px #a855f7;
+}
+
+.tower-windows {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  gap: 9px 3px;
+  padding: 5px;
+}
+
+.tower-windows i {
+  width: 65%;
+  height: 9px;
+  background: #ffb84c;
+  box-shadow: 0 0 7px #ff9e32;
+}
+
+.tower-windows i:nth-child(3n) {
+  background: #15dfff;
+  box-shadow: 0 0 7px #15dfff;
+}
+
+.tower-windows i:nth-child(4n) {
+  background: #ff39c7;
+  box-shadow: 0 0 7px #ff39c7;
+}
+
+.tower-windows i:nth-child(5n) { opacity: .15; }
+
+.cyber-billboards {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cyber-billboard {
+  position: absolute;
+  top: 35%;
+  left: 5%;
+  padding: 9px 12px;
+  min-width: 100px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 1000;
+  color: white;
+  background: #180d2e;
+  border: 3px solid var(--neon-pink);
+  box-shadow: 0 0 12px var(--neon-pink), inset 0 0 10px #ff36c744;
+  text-shadow: 0 0 8px white;
+  animation: billboard-glow 2s infinite alternate;
+}
+
+.cyber-billboard span {
+  display: block;
+  margin-top: 4px;
+  font-size: 6px;
+  letter-spacing: 1px;
+  color: #ffb8ed;
+}
+
+.billboard-blue {
+  top: 19%;
+  left: 42%;
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 12px var(--neon-blue);
+}
+
+.billboard-purple {
+  top: 48%;
+  left: auto;
+  right: 5%;
+  border-color: var(--neon-purple);
+  box-shadow: 0 0 12px var(--neon-purple);
+}
+
+.cyber-sidewalk {
+  position: absolute;
+  z-index: 5;
+  left: 0;
+  right: 0;
+  bottom: 92px;
+  height: 70px;
+  background: repeating-linear-gradient(90deg, #25203b 0 35px, #332343 35px 38px);
+  border-top: 4px solid #b02d9f;
+  border-bottom: 3px solid #625080;
+}
+
+.pixel-npc {
+  position: absolute;
+  bottom: 10px;
+  left: -30px;
+  width: 18px;
+  height: 48px;
+  animation: npc-walk 18s linear infinite;
+}
+
+.npc-2 { animation-delay: -4s; animation-duration: 23s; }
+.npc-3 { animation-delay: -9s; animation-duration: 20s; }
+.npc-4 { animation-delay: -13s; animation-duration: 26s; }
+.npc-5 { animation-delay: -6s; animation-duration: 30s; }
+.npc-6 { animation-delay: -17s; animation-duration: 22s; }
+.npc-7 { animation-delay: -11s; animation-duration: 28s; }
+
+.pixel-npc i {
+  position: absolute;
+  display: block;
+  image-rendering: pixelated;
+}
+
+.npc-head {
+  top: 5px;
+  left: 5px;
+  width: 10px;
+  height: 10px;
+  background: #e6a47e;
+  box-shadow: 0 -4px #191329, 3px 0 #f3b58e;
+}
+
+.npc-hair {
+  top: 2px;
+  left: 4px;
+  width: 12px;
+  height: 5px;
+  background: #171326;
+}
+
+.npc-body {
+  top: 16px;
+  left: 3px;
+  width: 14px;
+  height: 17px;
+  background: #d62b91;
+  box-shadow: inset 4px 0 #842b9a;
+}
+
+.npc-arm {
+  top: 17px;
+  left: 0;
+  width: 4px;
+  height: 14px;
+  background: #e6a47e;
+  box-shadow: 14px 2px #e6a47e;
+}
+
+.npc-leg {
+  top: 32px;
+  left: 5px;
+  width: 5px;
+  height: 13px;
+  background: #18213c;
+  box-shadow: 6px 0 #18213c;
+}
+
+.npc-2 .npc-body, .npc-5 .npc-body { background: #167eac; }
+.npc-3 .npc-body, .npc-6 .npc-body { background: #8b4bce; }
+.npc-4 .npc-body, .npc-7 .npc-body { background: #287e68; }
+
+.cyber-road {
+  position: absolute;
+  z-index: 6;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 95px;
+  background: linear-gradient(180deg, #17162b, #080b19);
+  border-top: 3px solid #1e203a;
+}
+
+.road-lane {
+  position: absolute;
+  top: 47px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: repeating-linear-gradient(90deg, #c0b5d0 0 35px, transparent 35px 65px);
+  opacity: .55;
+}
+
+.pixel-car {
+  position: absolute;
+  top: 12px;
+  left: -100px;
+  width: 65px;
+  height: 25px;
+  background: #e82b9c;
+  border-top: 6px solid #ff8be0;
+  box-shadow: 0 0 14px #ff36c7, 0 8px 15px #ff36c755;
+  animation: car-drive 12s linear infinite;
+}
+
+.pixel-car::before {
+  content: "";
+  position: absolute;
+  top: -17px;
+  left: 15px;
+  width: 30px;
+  height: 12px;
+  background: #9c5ad8;
+  border: 2px solid #ff8be0;
+}
+
+.pixel-car i,
+.pixel-car b {
+  position: absolute;
+  bottom: -7px;
+  width: 12px;
+  height: 9px;
+  background: #080817;
+  border: 2px solid #9a9bb9;
+}
+
+.pixel-car i { left: 8px; }
+.pixel-car b { right: 8px; }
+
+.car-two {
+  top: 58px;
+  background: #087da9;
+  border-color: #57e9ff;
+  box-shadow: 0 0 14px #16d9ff;
+  animation: car-drive-reverse 16s linear infinite;
+  animation-delay: -5s;
+}
+
+.car-two::before { background: #14618e; border-color: #57e9ff; }
+.car-three {
+  top: 15px;
+  background: #8c36c4;
+  border-color: #d6a0ff;
+  animation-duration: 20s;
+  animation-delay: -10s;
+}
+
+.road-reflection {
+  position: absolute;
+  inset: 0;
+  opacity: .12;
+  background: repeating-linear-gradient(100deg, transparent 0 45px, #ff36c7 46px 49px, transparent 50px 90px);
+}
+
+.cyber-fog {
+  position: absolute;
+  z-index: 7;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 65%, #130b25aa);
+}
+
+.cyber-rain {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cyber-rain i {
+  position: absolute;
+  top: -30px;
+  width: 2px;
+  height: 18px;
+  background: #72dfff;
+  opacity: .7;
+  animation: cyber-rain-fall .7s linear infinite;
+}
+
+.cyber-city-controls {
+  position: absolute;
+  z-index: 10;
+  bottom: 38px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cyber-city-controls button {
+  padding: 10px 15px;
+  color: #fff;
+  background: #190d30;
+  border: 2px solid #ff36c7;
+  box-shadow: 0 0 10px #ff36c788;
+  font-weight: 800;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.cyber-city-controls button:hover {
+  background: #49205b;
+  box-shadow: 0 0 18px #ff36c7;
+}
+
+.cyber-city .city-hint {
+  position: absolute;
+  z-index: 10;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  margin: 0;
+  text-align: center;
+  color: #c8a8e8;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.cyber-city.day .cyber-sky {
+  background: linear-gradient(180deg, #345d91, #8b579b 65%, #502b69);
+}
+
+.cyber-city.day .cyber-moon { display: none; }
+.cyber-city.day .cyber-sun { display: block; }
+.cyber-city.day .sky-tower,
+.cyber-city.day .mega-building {
+  filter: brightness(1.3);
+}
+
+@keyframes neon-flicker {
+  0%, 94%, 100% { opacity: 1; }
+  96% { opacity: .55; }
+  98% { opacity: .85; }
+}
+
+@keyframes billboard-glow {
+  from { filter: brightness(.8); }
+  to { filter: brightness(1.35); }
+}
+
+@keyframes npc-walk {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(100vw + 250px)); }
+}
+
+@keyframes car-drive {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(100vw + 250px)); }
+}
+
+@keyframes car-drive-reverse {
+  from { transform: translateX(calc(100vw + 250px)); }
+  to { transform: translateX(-150px); }
+}
+
+@keyframes cyber-rain-fall {
+  to { transform: translateY(650px); }
+}
+
+@media (max-width: 600px) {
+  .cyber-city { min-height: 480px; }
+  .cyber-sky { bottom: 145px; }
+  .skyline-back { bottom: 145px; height: 200px; }
+  .skyline-front { bottom: 125px; height: 245px; gap: 2px; padding: 0 2%; }
+  .mega-building { border-width: 1px; }
+  .tower-sign { margin: 10px 1px 5px; padding: 4px 0; font-size: 6px; }
+  .tower-windows { gap: 6px 2px; padding: 3px; }
+  .tower-windows i { height: 6px; }
+  .cyber-billboard { min-width: 65px; padding: 5px 4px; font-size: 8px; border-width: 2px; }
+  .cyber-billboard span { font-size: 5px; }
+  .cyber-sidewalk { bottom: 85px; height: 60px; }
+  .cyber-road { height: 88px; }
+  .pixel-npc { transform: scale(.8); transform-origin: bottom; }
+  .cyber-city-controls { bottom: 34px; gap: 6px; }
+  .cyber-city-controls button { padding: 8px 9px; font-size: 9px; }
+  .cyber-city .city-hint { font-size: 7px; letter-spacing: 1px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cyber-city *,
+  .cyber-city *::before,
+  .cyber-city *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ===== NEON METROPOLIS - REAL PIXEL ART ===== */
+.cyber-city-art {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 620px;
+  min-height: 620px;
+  overflow: hidden;
+  border: 2px solid #613d91;
+  border-radius: 12px;
+  background: #080817;
+  box-shadow: 0 0 35px #9b35d533, inset 0 0 55px #120c2d;
+  image-rendering: pixelated;
+}
+
+.cyber-city-art * {
+  box-sizing: border-box;
+}
+
+.city-art-sky {
+  position: absolute;
+  inset: 0 0 28% 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 75%, #3b185d66, transparent 55%),
+    linear-gradient(180deg, #08091c 0%, #17102e 55%, #35164b 100%);
+}
+
+.city-art-moon {
+  position: absolute;
+  top: 9%;
+  right: 17%;
+  width: 55px;
+  height: 55px;
+  background: #d8c8ff;
+  box-shadow: 0 0 20px #c9a5ff, 0 0 65px #a34dff77;
+  clip-path: polygon(25% 0, 75% 0, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0 75%, 0 25%);
+}
+
+.city-art-stars {
+  position: absolute;
+  inset: 0;
+  opacity: .7;
+  background-image:
+    radial-gradient(#fff 1px, transparent 1px),
+    radial-gradient(#a9dfff 1px, transparent 1px);
+  background-size: 53px 47px, 89px 73px;
+  background-position: 8px 12px, 31px 21px;
+}
+
+.city-art-farline {
+  position: absolute;
+  inset: 20% 0 0;
+  display: flex;
+  align-items: end;
+  justify-content: space-around;
+  gap: 5px;
+  opacity: .55;
+}
+
+.far-tower {
+  position: relative;
+  width: 13%;
+  height: 65%;
+  border: 2px solid #382b60;
+  background:
+    url('/assets/pixel-city/PNG/x4/walls/building_windows_dark.png') repeat,
+    #11162c;
+  background-size: 64px 64px;
+  box-shadow: inset 0 0 20px #251a49;
+}
+
+.far-two { height: 90%; width: 11%; }
+.far-three { height: 73%; width: 16%; }
+.far-four { height: 100%; width: 12%; }
+.far-five { height: 80%; width: 15%; }
+
+.city-art-buildings {
+  position: absolute;
+  z-index: 2;
+  inset: 12% 0 25%;
+  display: flex;
+  align-items: end;
+  justify-content: space-around;
+  gap: 7px;
+  padding: 0 2%;
+}
+
+.city-tower {
+  position: relative;
+  height: 80%;
+  width: 17%;
+  min-width: 0;
+  border: 3px solid #343052;
+  border-bottom: 0;
+  background: #111327;
+  box-shadow: inset 0 0 22px #080817, 0 0 15px #a02bff22;
+}
+
+.tower-one { height: 76%; width: 16%; }
+.tower-two { height: 95%; width: 19%; }
+.tower-three { height: 84%; width: 18%; }
+.tower-four { height: 68%; width: 16%; }
+.tower-five { height: 89%; width: 19%; }
+
+.tower-face {
+  position: absolute;
+  inset: 10px 0 0;
+  background-image: url('/assets/pixel-city/PNG/x4/walls/building_windows_mixed.png');
+  background-size: 64px 64px;
+  background-repeat: repeat;
+  image-rendering: pixelated;
+}
+
+.tower-two .tower-face,
+.tower-four .tower-face {
+  background-image: url('/assets/pixel-city/PNG/x4/walls/building_windows_lit.png');
+}
+
+.tower-three .tower-face {
+  background-image: url('/assets/pixel-city/PNG/x4/walls/glass_panel.png');
+}
+
+.tower-roof-art {
+  position: absolute;
+  z-index: 2;
+  top: -13px;
+  left: 0;
+  width: 100%;
+  height: 14px;
+  border-top: 4px solid #a94bdb;
+  background: #25203f;
+}
+
+.tower-roof-art img {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  max-width: none;
+  object-fit: contain;
+  image-rendering: pixelated;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, -5px);
+}
+
+.tower-neon-sign {
+  position: absolute;
+  z-index: 4;
+  width: 64px;
+  height: 64px;
+  max-width: none;
+  object-fit: contain;
+  image-rendering: pixelated;
+  left: 50%;
+  top: 35%;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 8px #ed38d9);
+}
+
+.tower-three .tower-neon-sign {
+  filter: drop-shadow(0 0 9px #36eaff);
+}
+
+.city-art-billboards {
+  position: absolute;
+  z-index: 5;
+  inset: 12% 0 30%;
+  pointer-events: none;
+}
+
+.art-billboard {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 115px;
+  height: 72px;
+  background: #090c20;
+  border: 2px solid #ff4bd8;
+  box-shadow: 0 0 16px #ff31d777;
+  transform: skewY(-3deg);
+}
+
+.art-billboard img {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  opacity: .7;
+}
+
+.art-billboard span {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  text-shadow: 0 0 8px #ff37db;
+  letter-spacing: 1px;
+}
+
+.art-billboard-pink { left: 19%; top: 34%; }
+.art-billboard-cyan {
+  right: 17%;
+  top: 18%;
+  border-color: #36eaff;
+  box-shadow: 0 0 16px #36eaff77;
+}
+.art-billboard-cyan span { text-shadow: 0 0 8px #36eaff; }
+
+.city-drone {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  right: 5%;
+  top: 7%;
+  animation: cityDroneFloat 4s ease-in-out infinite;
+}
+
+.city-art-sidewalk {
+  position: absolute;
+  z-index: 7;
+  bottom: 100px;
+  left: 0;
+  right: 0;
+  height: 78px;
+  border-top: 5px solid #7c6b9c;
+  background:
+    url('/assets/pixel-city/PNG/x4/ground/sidewalk.png') repeat,
+    #28243c;
+  background-size: 64px 64px;
+  box-shadow: 0 -8px 20px #a52aff33;
+}
+
+.city-art-sidewalk > img {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  bottom: 3px;
+}
+
+.city-lamp { left: 4%; }
+.city-vending { right: 8%; }
+.vending-two { right: 17%; }
+.city-bench { left: 25%; }
+
+.city-art-npcs {
+  position: absolute;
+  inset: 0 22% 0 14%;
+  display: flex;
+  align-items: end;
+  justify-content: space-around;
+  overflow: hidden;
+}
+
+.city-art-npcs img {
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  animation: cityNpcIdle 2.5s ease-in-out infinite;
+}
+
+.city-art-npcs img:nth-child(even) {
+  animation-delay: -.9s;
+}
+
+.city-art-road {
+  position: absolute;
+  z-index: 8;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 105px;
+  overflow: hidden;
+  border-top: 4px solid #b34ad1;
+  background:
+    url('/assets/pixel-city/PNG/x4/ground/asphalt_wet.png') repeat,
+    #111322;
+  background-size: 64px 64px;
+  box-shadow: inset 0 10px 25px #090817;
+}
+
+.city-road-lines {
+  position: absolute;
+  top: 49%;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: repeating-linear-gradient(90deg, #e5caff 0 28px, transparent 28px 48px);
+  opacity: .65;
+}
+
+.city-car,
+.city-bike {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 8px #35dcff99);
+}
+
+.city-car { top: 3px; }
+.car-red {
+  left: -75px;
+  animation: cityCarRight 12s linear infinite;
+}
+.car-blue {
+  right: -75px;
+  top: 35px;
+  animation: cityCarLeft 15s linear infinite;
+}
+.city-bike {
+  width: 48px;
+  height: 48px;
+  bottom: 0;
+  left: 53%;
+  animation: cityBikeMove 8s ease-in-out infinite alternate;
+}
+
+.city-road-glow {
+  position: absolute;
+  inset: 65% 0 0;
+  background: linear-gradient(90deg, transparent, #ff36d633, #28dfff44, transparent);
+  filter: blur(8px);
+}
+
+.city-art-rain {
+  position: absolute;
+  z-index: 12;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.city-art-rain i {
+  position: absolute;
+  top: -35px;
+  width: 2px;
+  height: 28px;
+  background: #8ceaff99;
+  box-shadow: 0 0 5px #4bdfff;
+  animation: cityRainFall .75s linear infinite;
+}
+
+.city-art-controls {
+  position: absolute;
+  z-index: 20;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+.city-art-controls button {
+  padding: 9px 12px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: #17102cdd;
+  border: 1px solid #b34bdf;
+  border-radius: 4px;
+  box-shadow: 0 0 12px #b34bdf55;
+}
+
+.city-art-controls button:hover {
+  background: #54236e;
+}
+
+.city-art-caption {
+  position: absolute;
+  z-index: 20;
+  right: 12px;
+  top: 15px;
+  color: #e8c7ff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px #d43dff;
+}
+
+.cyber-city-art.day .city-art-sky {
+  background: linear-gradient(180deg, #5b6b91, #b17d9f 75%, #5b315d);
+}
+
+.cyber-city-art.day .city-art-moon { display: none; }
+.cyber-city-art.day .city-art-stars { opacity: .12; }
+.cyber-city-art.day .city-tower {
+  filter: brightness(1.35) saturate(.8);
+}
+
+@keyframes cityCarRight {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(100vw + 180px)); }
+}
+@keyframes cityCarLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100vw - 180px)); }
+}
+@keyframes cityBikeMove {
+  from { transform: translateX(-25px); }
+  to { transform: translateX(25px); }
+}
+@keyframes cityNpcIdle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes cityDroneFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes cityRainFall {
+  to { transform: translateY(700px); }
+}
+
+@media (max-width: 600px) {
+  .cyber-city-art {
+    height: 510px;
+    min-height: 510px;
+    border-radius: 8px;
+  }
+
+  .city-art-buildings {
+    inset: 19% 0 27%;
+    gap: 3px;
+    padding: 0 1%;
+  }
+
+  .city-tower { border-width: 2px; }
+  .tower-neon-sign { width: 48px; height: 48px; }
+  .tower-roof-art img { width: 48px; height: 48px; }
+
+  .art-billboard {
+    width: 82px;
+    height: 54px;
+  }
+
+  .art-billboard span { font-size: 7px; }
+  .art-billboard-pink { left: 13%; }
+  .art-billboard-cyan { right: 10%; }
+
+  .city-art-sidewalk {
+    height: 72px;
+    bottom: 88px;
+  }
+
+  .city-art-sidewalk > img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .city-art-npcs {
+    left: 12%;
+    right: 22%;
+  }
+
+  .city-art-npcs img {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
+  }
+
+  .city-art-road { height: 92px; }
+  .city-car { width: 52px; height: 52px; }
+  .city-bike { width: 42px; height: 42px; }
+  .city-art-caption { top: 52px; right: 10px; font-size: 7px; }
+  .city-art-controls button { padding: 7px 8px; font-size: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cyber-city-art *,
+  .cyber-city-art *::before,
+  .cyber-city-art *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+
+/* ===== NEON METROPOLIS CITY LAYOUT REFINEMENT ===== */
+.cyber-city-art {
+  height: 760px;
+  min-height: 760px;
+  background: #080817;
+}
+
+.city-art-sky {
+  inset: 0 0 24% 0;
+}
+
+.city-art-farline {
+  inset: 17% 0 0;
+  opacity: .7;
+}
+
+.far-tower {
+  border-width: 2px;
+  background-size: 48px 48px;
+}
+
+.city-art-buildings {
+  inset: 13% 0 26%;
+  gap: 10px;
+  padding: 0 3%;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.city-tower {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 230px;
+  border-width: 3px;
+  box-shadow: inset 0 0 25px #080817, 0 0 18px #a02bff33;
+}
+
+.tower-one { height: 76%; align-self: end; }
+.tower-two { height: 96%; align-self: end; }
+.tower-three { height: 84%; align-self: end; }
+.tower-four { height: 70%; align-self: end; }
+.tower-five { height: 90%; align-self: end; }
+
+.tower-face {
+  background-size: 48px 48px;
+}
+
+.city-art-buildings::before,
+.city-art-buildings::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 0;
+  width: 11%;
+  height: 68%;
+  border: 2px solid #382b60;
+  background:
+    url('/assets/pixel-city/PNG/x4/walls/building_windows_dark.png') repeat,
+    #111327;
+  background-size: 48px 48px;
+  box-shadow: inset 0 0 25px #080817;
+}
+
+.city-art-buildings::before { left: -5%; }
+.city-art-buildings::after { right: -5%; height: 78%; }
+
+.city-art-billboards {
+  inset: 14% 0 31%;
+}
+
+.art-billboard-pink { left: 17%; top: 39%; }
+.art-billboard-cyan { right: 15%; top: 24%; }
+
+.city-art-sidewalk {
+  height: 112px;
+  bottom: 112px;
+  border-top-width: 6px;
+  box-shadow: 0 -10px 25px #a52aff44;
+}
+
+.city-art-sidewalk > img {
+  width: 72px;
+  height: 72px;
+  bottom: 8px;
+}
+
+.city-lamp { left: 3%; }
+.city-vending { right: 5%; }
+.vending-two { right: 13%; }
+.city-bench { left: 23%; }
+
+.city-art-npcs {
+  left: 16%;
+  right: 23%;
+  align-items: end;
+  justify-content: space-evenly;
+  gap: 8px;
+}
+
+.city-art-npcs img {
+  width: 72px;
+  height: 72px;
+  flex: 0 1 72px;
+  object-fit: contain;
+}
+
+.city-art-road {
+  height: 112px;
+}
+
+.city-car {
+  width: 76px;
+  height: 76px;
+}
+
+.city-bike {
+  width: 58px;
+  height: 58px;
+}
+
+@media (max-width: 600px) {
+  .cyber-city-art {
+    height: 590px;
+    min-height: 590px;
+  }
+
+  .city-art-buildings {
+    inset: 20% 0 29%;
+    gap: 3px;
+    padding: 0 1%;
+  }
+
+  .city-tower {
+    border-width: 2px;
+  }
+
+  .tower-face {
+    background-size: 40px 40px;
+  }
+
+  .city-art-sidewalk {
+    height: 88px;
+    bottom: 92px;
+  }
+
+  .city-art-sidewalk > img {
+    width: 48px;
+    height: 48px;
+    bottom: 4px;
+  }
+
+  .city-art-npcs {
+    left: 10%;
+    right: 19%;
+    gap: 0;
+  }
+
+  .city-art-npcs img {
+    width: 42px;
+    height: 52px;
+    flex: 0 1 42px;
+  }
+
+  .city-art-road {
+    height: 92px;
+  }
+
+  .city-car {
+    width: 54px;
+    height: 54px;
+  }
+
+  .city-bike {
+    width: 42px;
+    height: 42px;
+  }
+
+  .city-art-buildings::before,
+  .city-art-buildings::after {
+    width: 9%;
+  }
+}
+
+/* =====================================================
+   TOKYO NEON DISTRICT - ELEVATED WIDE CITY PERSPECTIVE
+   ===================================================== */
+
+.city-scene {
+  position: relative;
+  width: 100%;
+  height: 850px;
+  min-height: 850px;
+  overflow: hidden;
+  isolation: isolate;
+  border: 3px solid #7042a7;
+  border-radius: 12px;
+  background: #080d23;
+  box-shadow: 0 0 35px #a52aff33, inset 0 0 50px #080817;
+  image-rendering: pixelated;
+}
+
+.city-scene * {
+  box-sizing: border-box;
+}
+
+.scene-sky {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(180deg,#07132f 0%,#102650 38%,#18213e 68%,#2a1640 100%);
+}
+
+.scene-stars {
+  position: absolute;
+  inset: 0 0 42%;
+  opacity: .75;
+  background-image:
+    radial-gradient(#a9edff 1px,transparent 1px),
+    radial-gradient(#ffb9e9 1px,transparent 1px);
+  background-size: 53px 47px,87px 73px;
+  background-position: 8px 12px,31px 21px;
+}
+
+.scene-moon {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  right: 17%;
+  top: 9%;
+  background: #c9d9ff;
+  box-shadow: 0 0 25px #83caff;
+  clip-path: polygon(25% 0,75% 0,100% 25%,100% 75%,75% 100%,25% 100%,0 75%,0 25%);
+}
+
+.scene-mountain {
+  position: absolute;
+  width: 34%;
+  height: 24%;
+  left: 33%;
+  top: 19%;
+  opacity: .35;
+  background: linear-gradient(135deg,transparent 48%,#426eaa 49% 55%,transparent 56%);
+  clip-path: polygon(0 100%,45% 0,100% 100%);
+}
+
+.scene-distant {
+  position: absolute;
+  inset: 20% 0 43%;
+  display: flex;
+  align-items: end;
+  justify-content: space-around;
+  gap: 5px;
+  opacity: .8;
+}
+
+.distant-building {
+  height: 70%;
+  width: 7%;
+  border: 2px solid #111d3d;
+  background:
+    url('/assets/pixel-city/PNG/x4/walls/building_windows_dark.png') repeat,
+    #111a35;
+  background-size: 42px 42px;
+}
+.distant-building.db-0 { height: 88%; }
+.distant-building.db-1 { height: 55%; }
+.distant-building.db-2 { height: 100%; }
+.distant-building.db-3 { height: 73%; }
+.distant-building.db-4 { height: 64%; }
+
+.scene-tower-landmarks {
+  position: absolute;
+  inset: 5% 0 39%;
+  pointer-events: none;
+}
+
+.landmark-tower {
+  position: absolute;
+  bottom: 0;
+  width: 7%;
+  height: 75%;
+  background: repeating-linear-gradient(0deg,#17284b 0 8px,#253b64 8px 11px);
+  border: 3px solid #17203e;
+  box-shadow: 0 0 15px #ff4b4b55;
+  clip-path: polygon(40% 0,60% 0,60% 17%,76% 17%,76% 30%,100% 100%,0 100%,24% 30%,24% 17%,40% 17%);
+}
+.landmark-red { left: 13%; height: 93%; filter: drop-shadow(0 0 8px #ff3a22); }
+.landmark-blue { left: 49%; height: 88%; filter: drop-shadow(0 0 8px #32aaff); }
+.landmark-blue.second { left: 75%; height: 85%; }
+.landmark-spire {
+  position: absolute;
+  width: 5px;
+  height: 30%;
+  top: -28%;
+  left: 48%;
+  background: #ff4b42;
+  box-shadow: 0 0 10px currentColor;
+}
+.landmark-blue .landmark-spire { background: #40aaff; }
+
+.scene-city-back {
+  position: absolute;
+  z-index: 1;
+  inset: 32% 0 29%;
+  display: flex;
+  align-items: end;
+  justify-content: space-around;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.back-block {
+  flex: 1;
+  height: 80%;
+  background: #101a35;
+  border: 3px solid #10152d;
+  box-shadow: inset 0 0 15px #050b1c;
+}
+.back-0,.back-5 { height: 62%; }
+.back-1,.back-7 { height: 92%; }
+.back-2,.back-6 { height: 75%; }
+.back-3,.back-8 { height: 100%; }
+.back-windows {
+  position: absolute;
+  inset: 5px;
+  background: url('/assets/pixel-city/PNG/x4/walls/building_windows_lit.png') repeat;
+  background-size: 42px 42px;
+  opacity: .8;
+}
+
+.scene-city-left,
+.scene-city-right {
+  position: absolute;
+  z-index: 3;
+  top: 31%;
+  bottom: 25%;
+  width: 39%;
+  display: flex;
+  align-items: end;
+  gap: 5px;
+}
+
+.scene-city-left { left: 0; }
+.scene-city-right { right: 0; }
+
+.main-building {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 75%;
+  border: 3px solid #10142c;
+  border-bottom: 0;
+  background: #151b36;
+  box-shadow: inset 0 0 20px #050817, 0 0 14px #f52b9b22;
+  overflow: visible;
+}
+
+.left-building.building-0,
+.right-building.building-5 { height: 65%; }
+.left-building.building-1,
+.right-building.building-2 { height: 100%; }
+.left-building.building-2,
+.right-building.building-4 { height: 82%; }
+.left-building.building-3,
+.right-building.building-1 { height: 91%; }
+.left-building.building-4,
+.right-building.building-0 { height: 72%; }
+.left-building.building-5 { height: 86%; }
+
+.building-roof {
+  position: absolute;
+  top: -9px;
+  left: -3px;
+  right: -3px;
+  height: 10px;
+  background: #29304c;
+  border-top: 4px solid #d12da9;
+}
+.building-windows {
+  position: absolute;
+  inset: 7px 0 18%;
+  background: url('/assets/pixel-city/PNG/x4/walls/building_windows_lit.png') repeat;
+  background-size: 46px 46px;
+  image-rendering: pixelated;
+}
+.right-building .building-windows {
+  background-image: url('/assets/pixel-city/PNG/x4/walls/building_windows_mixed.png');
+}
+.building-shopfront {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 18%;
+  border-top: 4px solid #a72eae;
+  background: repeating-linear-gradient(90deg,#11172e 0 15px,#26334e 15px 18px);
+}
+.vertical-neon {
+  position: absolute;
+  z-index: 5;
+  top: 30%;
+  left: 5px;
+  padding: 8px 4px;
+  color: #fff2a8;
+  background: #ed315b;
+  border: 3px solid #ffb64a;
+  box-shadow: 0 0 15px #ff315c;
+  font-size: clamp(7px,1vw,12px);
+  font-weight: 900;
+  line-height: 1.5;
+  writing-mode: vertical-rl;
+  text-align: center;
+}
+.cyan-neon {
+  left: auto;
+  right: 5px;
+  background: #087d9b;
+  border-color: #44efff;
+  box-shadow: 0 0 15px #22dfff;
+}
+.large-neon-board {
+  position: absolute;
+  z-index: 6;
+  top: 24%;
+  left: 8%;
+  width: 82%;
+  padding: 10px 3px;
+  color: #fff5a5;
+  background: #07578c;
+  border: 4px solid #49dfff;
+  box-shadow: 0 0 18px #19caff;
+  text-align: center;
+  font-weight: 1000;
+  font-size: clamp(9px,1.3vw,16px);
+  line-height: 1.4;
+  text-shadow: 0 0 8px #fff;
+}
+.large-neon-board.cyan-board {
+  color: #fff;
+  background: #b51b69;
+  border-color: #ff7ac9;
+  box-shadow: 0 0 18px #ff38ad;
+}
+.building-ad {
+  position: absolute;
+  z-index: 6;
+  right: 5%;
+  top: 50%;
+  padding: 7px;
+  color: #fff;
+  background: #d3295b;
+  border: 3px solid #ffb94b;
+  font-size: 12px;
+  font-weight: 900;
+  box-shadow: 0 0 15px #ff386a;
+}
+
+.scene-cross-street {
+  position: absolute;
+  z-index: 5;
+  left: 24%;
+  right: 24%;
+  top: 55%;
+  height: 14%;
+  background: #101a32;
+  border-top: 5px solid #283b61;
+  border-bottom: 5px solid #283b61;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.scene-shop {
+  width: 36%;
+  height: 80%;
+  border: 3px solid #ff4bbd;
+  background: #17152e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  box-shadow: 0 0 14px #ff35a8;
+}
+.shop-right {
+  border-color: #39eaff;
+  box-shadow: 0 0 14px #39eaff;
+}
+.shop-light {
+  position: absolute;
+  width: 20px;
+  height: 7px;
+  background: #ffb849;
+  box-shadow: 0 0 12px #ff8c32;
+}
+
+.scene-center-road {
+  position: absolute;
+  z-index: 6;
+  left: 24%;
+  right: 24%;
+  top: 59%;
+  bottom: 0;
+  overflow: hidden;
+  background:
+    url('/assets/pixel-city/PNG/x4/ground/asphalt_wet.png') repeat,
+    #101a30;
+  background-size: 64px 64px;
+  clip-path: polygon(42% 0,58% 0,100% 100%,0 100%);
+  border-top: 4px solid #39bce9;
+}
+.road-center-glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,#ff2b8b55,transparent 42%,#20cfff55);
+}
+.road-lane {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #b7d9ff;
+  opacity: .5;
+}
+.lane-left { left: 35%; transform: rotate(8deg); }
+.lane-right { right: 35%; transform: rotate(-8deg); }
+.road-perspective-lines {
+  position: absolute;
+  inset: 0;
+}
+.road-perspective-lines i {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  height: 90%;
+  background: #42dfff66;
+  transform-origin: bottom;
+}
+.road-perspective-lines i:nth-child(1) { transform: rotate(-40deg); }
+.road-perspective-lines i:nth-child(2) { transform: rotate(-30deg); }
+.road-perspective-lines i:nth-child(3) { transform: rotate(-20deg); }
+.road-perspective-lines i:nth-child(4) { transform: rotate(-10deg); }
+.road-perspective-lines i:nth-child(5) { transform: rotate(0); }
+.road-perspective-lines i:nth-child(6) { transform: rotate(10deg); }
+.road-perspective-lines i:nth-child(7) { transform: rotate(20deg); }
+.road-perspective-lines i:nth-child(8) { transform: rotate(30deg); }
+.road-perspective-lines i:nth-child(9) { transform: rotate(40deg); }
+.road-crosswalk {
+  position: absolute;
+  bottom: 8%;
+  left: 7%;
+  right: 7%;
+  height: 14%;
+  display: flex;
+  justify-content: space-around;
+  transform: perspective(120px) rotateX(15deg);
+}
+.road-crosswalk i {
+  width: 6%;
+  background: #9bdfff;
+  opacity: .75;
+  box-shadow: 0 0 8px #3bcfff;
+}
+.road-reflections {
+  position: absolute;
+  inset: 50% 0 0;
+  background: repeating-linear-gradient(100deg,transparent 0 18px,#ff438a55 19px 22px,transparent 23px 42px);
+  filter: blur(2px);
+}
+
+.scene-sidewalk {
+  position: absolute;
+  z-index: 8;
+  bottom: 0;
+  height: 34%;
+  width: 27%;
+  overflow: hidden;
+  border-top: 5px solid #a94acb;
+  background:
+    url('/assets/pixel-city/PNG/x4/ground/sidewalk.png') repeat,
+    #28243c;
+  background-size: 64px 64px;
+  box-shadow: 0 -8px 20px #b52aff44;
+}
+.sidewalk-left { left: 0; }
+.sidewalk-right { right: 0; }
+.sidewalk-tile-pattern {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg,transparent 0 35px,#111a35 36px 39px);
+  opacity: .5;
+}
+.sidewalk-people {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  display: flex;
+  align-items: end;
+  justify-content: space-around;
+}
+.sidewalk-people img {
+  width: 42px;
+  height: 54px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 5px #ff49c9);
+  animation: cityNpcIdle 2.5s ease-in-out infinite;
+}
+.people-far {
+  top: 15%;
+  transform: scale(.65);
+  transform-origin: bottom center;
+  opacity: .9;
+}
+.people-near {
+  bottom: 4%;
+}
+.people-near img:nth-child(even) { animation-delay: -.8s; }
+
+.scene-street-prop {
+  position: absolute;
+  z-index: 3;
+  bottom: 5%;
+  width: 55px;
+  height: 65px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.prop-left-lamp { left: 2%; }
+.prop-left-vend { right: 1%; }
+.prop-right-lamp { right: 2%; }
+.prop-right-vend { left: 1%; }
+
+.pixel-blossom {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  width: 75px;
+  height: 100px;
+  pointer-events: none;
+}
+.pixel-blossom::before {
+  content: "";
+  position: absolute;
+  left: 34px;
+  bottom: 0;
+  width: 9px;
+  height: 65px;
+  background: #30213a;
+}
+.pixel-blossom i {
+  position: absolute;
+  width: 30px;
+  height: 25px;
+  background: #e63f9c;
+  border: 4px solid #a52b80;
+  box-shadow: 0 0 12px #ff48b9;
+}
+.pixel-blossom i:nth-child(1) { left: 4px; top: 8px; }
+.pixel-blossom i:nth-child(2) { left: 35px; top: 0; }
+.pixel-blossom i:nth-child(3) { left: 20px; top: 30px; }
+.pixel-blossom i:nth-child(4) { left: 47px; top: 28px; }
+.pixel-blossom i:nth-child(5) { left: 0; top: 42px; }
+.tree-left { left: 0; }
+.tree-right { right: 0; transform: scaleX(-1); }
+
+.scene-traffic {
+  position: absolute;
+  z-index: 10;
+  inset: 58% 20% 0;
+  pointer-events: none;
+}
+.scene-car,
+.scene-bike,
+.scene-drone {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.scene-car-red {
+  bottom: 12%;
+  left: 4%;
+  animation: cityCarRight 13s linear infinite;
+}
+.scene-car-blue {
+  bottom: 36%;
+  right: 0;
+  animation: cityCarLeft 16s linear infinite;
+}
+.scene-bike {
+  width: 52px;
+  height: 52px;
+  bottom: 5%;
+  left: 48%;
+  animation: cityBikeMove 5s ease-in-out infinite alternate;
+}
+.scene-drone {
+  width: 65px;
+  height: 65px;
+  top: -65%;
+  right: 4%;
+  animation: cityDroneFloat 4s ease-in-out infinite;
+}
+
+.city-scene .city-art-controls {
+  z-index: 30;
+  top: 12px;
+  left: 12px;
+}
+.city-scene .city-art-caption {
+  z-index: 30;
+  top: 20px;
+  right: 15px;
+  color: #ffd5f3;
+  text-shadow: 0 0 10px #ff3cbd;
+  font-size: 10px;
+}
+.city-scene.day .scene-sky {
+  background: linear-gradient(180deg,#3c5f91,#9c8ab1 65%,#60446e);
+}
+.city-scene.day .scene-stars { opacity: .12; }
+.city-scene.day .main-building { filter: brightness(1.3) saturate(.8); }
+
+@media (min-width: 900px) {
+  .city-scene {
+    height: 900px;
+  }
+  .scene-city-left,
+  .scene-city-right {
+    width: 40%;
+  }
+  .scene-center-road {
+    left: 25%;
+    right: 25%;
+  }
+  .scene-sidewalk {
+    width: 28%;
+  }
+  .sidewalk-people img {
+    width: 54px;
+    height: 68px;
+  }
+}
+
+@media (max-width: 600px) {
+  .city-scene {
+    height: 720px;
+    min-height: 720px;
+    border-width: 2px;
+  }
+  .scene-city-left,
+  .scene-city-right {
+    top: 34%;
+    bottom: 27%;
+    width: 39%;
+    gap: 2px;
+  }
+  .main-building {
+    border-width: 2px;
+  }
+  .building-windows {
+    background-size: 34px 34px;
+  }
+  .scene-center-road {
+    left: 22%;
+    right: 22%;
+    top: 61%;
+  }
+  .scene-cross-street {
+    left: 20%;
+    right: 20%;
+    top: 56%;
+  }
+  .scene-sidewalk {
+    height: 32%;
+    width: 28%;
+  }
+  .sidewalk-people {
+    left: 0;
+    right: 0;
+  }
+  .sidewalk-people img {
+    width: 30px;
+    height: 42px;
+  }
+  .people-far {
+    top: 20%;
+    transform: scale(.7);
+  }
+  .scene-street-prop {
+    width: 38px;
+    height: 48px;
+  }
+  .pixel-blossom {
+    transform: scale(.65);
+    transform-origin: top left;
+  }
+  .tree-right { transform: scaleX(-1) scale(.65); }
+  .scene-traffic {
+    left: 15%;
+    right: 15%;
+  }
+  .scene-car {
+    width: 52px;
+    height: 52px;
+  }
+  .scene-bike {
+    width: 40px;
+    height: 40px;
+  }
+  .scene-drone {
+    width: 48px;
+    height: 48px;
+  }
+  .landmark-tower { width: 8%; }
+  .city-scene .city-art-caption {
+    top: 55px;
+    right: 10px;
+    font-size: 7px;
+  }
+  .city-scene .city-art-controls button {
+    padding: 7px 8px;
+    font-size: 8px;
+  }
+  .vertical-neon {
+    font-size: 6px;
+    padding: 5px 2px;
+  }
+  .large-neon-board {
+    font-size: 8px;
+    padding: 5px 2px;
+    border-width: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .city-scene *,
+  .city-scene *::before,
+  .city-scene *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ===== CITY COMPOSITION FIX 2 ===== */
+
+/* Remove floating shop panels */
+.city-scene .scene-cross-street {
+  display: none;
+}
+
+/* Proper perspective road */
+.city-scene .scene-center-road {
+  left: 27%;
+  right: 27%;
+  top: 57%;
+  bottom: 0;
+  clip-path: polygon(42% 0, 58% 0, 82% 100%, 18% 100%);
+  background:
+    url('/assets/pixel-city/PNG/x4/ground/asphalt_wet.png') repeat,
+    #101a30;
+  background-size: 64px 64px;
+  border: 0;
+}
+
+.city-scene .road-center-glow {
+  background:
+    linear-gradient(90deg, #ff2b8b22, transparent 45%, #20cfff22);
+}
+
+.city-scene .road-crosswalk {
+  bottom: 16%;
+  left: 10%;
+  right: 10%;
+  height: 12%;
+}
+
+.city-scene .road-reflections {
+  opacity: .55;
+}
+
+/* Balanced city blocks */
+.city-scene .scene-city-left,
+.city-scene .scene-city-right {
+  width: 34%;
+  top: 32%;
+  bottom: 27%;
+  gap: 7px;
+}
+
+.city-scene .main-building {
+  border-width: 2px;
+}
+
+.city-scene .building-windows {
+  background-size: 38px 38px;
+}
+
+.city-scene .building-ad {
+  top: 45%;
+  right: 8%;
+  padding: 4px 6px;
+  font-size: 9px;
+}
+
+/* Wider pedestrian areas */
+.city-scene .scene-sidewalk {
+  width: 32%;
+  height: 31%;
+  bottom: 0;
+}
+
+.city-scene .sidewalk-people {
+  left: 3%;
+  right: 3%;
+  gap: 2px;
+  justify-content: space-evenly;
+}
+
+.city-scene .sidewalk-people img {
+  width: 40px;
+  height: 52px;
+}
+
+.city-scene .people-far {
+  top: 12%;
+  transform: scale(.72);
+}
+
+.city-scene .people-near {
+  bottom: 4%;
+}
+
+.city-scene .scene-street-prop {
+  width: 48px;
+  height: 58px;
+}
+
+/* Keep traffic inside the road */
+.city-scene .scene-traffic {
+  left: 28%;
+  right: 28%;
+  top: 59%;
+  bottom: 0;
+}
+
+.city-scene .scene-car-red {
+  left: 20%;
+  bottom: 12%;
+}
+
+.city-scene .scene-car-blue {
+  right: 20%;
+  bottom: 35%;
+}
+
+.city-scene .scene-bike {
+  left: 48%;
+  bottom: 4%;
+}
+
+/* Reduce clutter from decorative landmarks */
+.city-scene .landmark-tower {
+  opacity: .72;
+}
+
+.city-scene .scene-city-back {
+  opacity: .65;
+}
+
+@media (max-width: 600px) {
+  .city-scene .scene-city-left,
+  .city-scene .scene-city-right {
+    width: 35%;
+    top: 34%;
+    bottom: 27%;
+    gap: 2px;
+  }
+
+  .city-scene .scene-center-road {
+    left: 25%;
+    right: 25%;
+    top: 59%;
+    clip-path: polygon(42% 0, 58% 0, 84% 100%, 16% 100%);
+  }
+
+  .city-scene .scene-sidewalk {
+    width: 31%;
+    height: 31%;
+  }
+
+  .city-scene .sidewalk-people img {
+    width: 34px;
+    height: 46px;
+  }
+
+  .city-scene .people-far {
+    transform: scale(.68);
+  }
+
+  .city-scene .scene-traffic {
+    left: 25%;
+    right: 25%;
+  }
+
+  .city-scene .scene-car {
+    width: 46px;
+    height: 46px;
+  }
+
+  .city-scene .scene-bike {
+    width: 36px;
+    height: 36px;
+  }
+
+  .city-scene .scene-street-prop {
+    width: 36px;
+    height: 46px;
+  }
+}
+
+/* ===== HORIZONTAL CYBERPUNK STREET ===== */
+.city-scene .scene-cross-street {
+  display: none !important;
+}
+
+.city-scene .scene-center-road {
+  position: absolute;
+  z-index: 7;
+  left: 0;
+  right: 0;
+  top: 57%;
+  bottom: auto;
+  height: 18%;
+  overflow: hidden;
+  clip-path: none;
+  border: 0;
+  border-top: 3px solid #d43d9d;
+  border-bottom: 3px solid #36c9ed;
+  background:
+    url('/assets/pixel-city/PNG/x4/ground/asphalt_wet.png') repeat,
+    #20283b;
+  background-size: 64px 64px;
+  box-shadow: 0 0 18px #a52bca55;
+}
+
+.city-scene .road-center-glow {
+  background: linear-gradient(180deg, #ff3d9b22, transparent 45%, #20cfff22);
+}
+
+.city-scene .road-horizontal-divider {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  border-top: 3px dashed #f5d85b;
+  opacity: .9;
+}
+
+.city-scene .road-crosswalk {
+  top: 8%;
+  bottom: 8%;
+  left: 47%;
+  right: 47%;
+  height: auto;
+  transform: none;
+  gap: 3px;
+}
+
+.city-scene .road-crosswalk i {
+  width: 100%;
+  background: #d9e4ec;
+  box-shadow: none;
+}
+
+.city-scene .road-reflections {
+  inset: 0;
+  opacity: .22;
+}
+
+/* One continuous flat pavement */
+.city-scene .scene-horizontal-sidewalk {
+  position: absolute;
+  z-index: 9;
+  left: 0;
+  right: 0;
+  top: 75%;
+  height: 15%;
+  overflow: hidden;
+  border-top: 4px solid #bd55cf;
+  border-bottom: 3px solid #424d65;
+  background:
+    url('/assets/pixel-city/PNG/x4/ground/sidewalk.png') repeat,
+    #45475a;
+  background-size: 64px 64px;
+  box-shadow: 0 -5px 15px #c52cbb44;
+}
+
+.city-scene .scene-horizontal-sidewalk .sidewalk-tile-pattern {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0 29px,
+    #18223b55 30px 33px
+  );
+  opacity: .7;
+}
+
+.city-scene .city-walker {
+  position: absolute;
+  z-index: 2;
+  bottom: 12%;
+  width: 38px;
+  height: 48px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 3px 3px #080b18);
+  animation: cityNpcIdle 2.5s ease-in-out infinite;
+}
+
+.city-scene .walker-1 { left: 8%; }
+.city-scene .walker-2 { left: 19%; bottom: 18%; }
+.city-scene .walker-3 { left: 31%; }
+.city-scene .walker-4 { left: 42%; bottom: 17%; }
+.city-scene .walker-5 { left: 56%; }
+.city-scene .walker-6 { left: 68%; bottom: 18%; }
+.city-scene .walker-7 { left: 80%; }
+.city-scene .walker-8 { left: 90%; bottom: 17%; }
+
+.city-scene .horizontal-prop {
+  position: absolute;
+  z-index: 3;
+  bottom: 3%;
+  width: 42px;
+  height: 58px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.city-scene .prop-left { left: 1%; }
+.city-scene .prop-right { right: 1%; }
+
+/* Vehicles stay on the horizontal road */
+.city-scene .scene-traffic {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  top: 57%;
+  bottom: auto;
+  height: 18%;
+  pointer-events: none;
+}
+
+.city-scene .scene-car {
+  width: 62px;
+  height: 52px;
+  object-fit: contain;
+}
+
+.city-scene .scene-car-red {
+  left: 12%;
+  bottom: 8%;
+  animation: cityCarRight 13s linear infinite;
+}
+
+.city-scene .scene-car-blue {
+  right: 12%;
+  bottom: 48%;
+  animation: cityCarLeft 16s linear infinite;
+}
+
+.city-scene .scene-bike {
+  width: 42px;
+  height: 42px;
+  left: 48%;
+  bottom: 3%;
+  animation: cityBikeMove 5s ease-in-out infinite alternate;
+}
+
+.city-scene .scene-drone {
+  top: -65%;
+  right: 8%;
+}
+
+@media (max-width: 600px) {
+  .city-scene .scene-center-road {
+    top: 57%;
+    height: 18%;
+  }
+
+  .city-scene .scene-horizontal-sidewalk {
+    top: 75%;
+    height: 15%;
+  }
+
+  .city-scene .city-walker {
+    width: 30px;
+    height: 40px;
+  }
+
+  .city-scene .horizontal-prop {
+    width: 32px;
+    height: 44px;
+  }
+
+  .city-scene .scene-car {
+    width: 46px;
+    height: 42px;
+  }
+
+  .city-scene .scene-bike {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+/* ===== VARIED BUILDINGS + NEON BILLBOARDS ===== */
+
+/* Different building widths */
+.city-scene .scene-city-left .main-building:nth-child(1),
+.city-scene .scene-city-right .main-building:nth-child(1) {
+  flex: 0 0 15%;
+}
+
+.city-scene .scene-city-left .main-building:nth-child(2),
+.city-scene .scene-city-right .main-building:nth-child(2) {
+  flex: 0 0 18%;
+}
+
+.city-scene .scene-city-left .main-building:nth-child(3),
+.city-scene .scene-city-right .main-building:nth-child(3) {
+  flex: 0 0 14%;
+}
+
+.city-scene .scene-city-left .main-building:nth-child(4),
+.city-scene .scene-city-right .main-building:nth-child(4) {
+  flex: 0 0 20%;
+}
+
+.city-scene .scene-city-left .main-building:nth-child(5),
+.city-scene .scene-city-right .main-building:nth-child(5) {
+  flex: 0 0 17%;
+}
+
+.city-scene .scene-city-left .main-building:nth-child(6),
+.city-scene .scene-city-right .main-building:nth-child(6) {
+  flex: 0 0 16%;
+}
+
+/* Billboard fixtures */
+.city-scene .main-building::after {
+  position: absolute;
+  z-index: 8;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 88%;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 3px;
+  border: 3px solid #42eaff;
+  background: #092c59;
+  color: #ffffff;
+  font-size: clamp(7px, 1.1vw, 12px);
+  font-weight: 1000;
+  line-height: 1.25;
+  text-align: center;
+  text-shadow: 0 0 7px #fff;
+  box-shadow: 0 0 12px #20dfff, inset 0 0 10px #168acb;
+  content: "";
+}
+
+.city-scene .left-building.building-1::after {
+  content: "TOKYO\\A 2077";
+  white-space: pre;
+  border-color: #ff4db8;
+  background: #68134d;
+  box-shadow: 0 0 14px #ff2b9b;
+}
+
+.city-scene .left-building.building-4::after {
+  content: "NIGHT\\A MARKET";
+  white-space: pre;
+}
+
+.city-scene .right-building.building-0::after {
+  content: "NEON\\A ARCADE";
+  white-space: pre;
+  border-color: #ffbd4a;
+  background: #67223d;
+  box-shadow: 0 0 14px #ff873c;
+}
+
+.city-scene .right-building.building-3::after {
+  content: "CYBER\\A CAFE";
+  white-space: pre;
+}
+
+/* Billboard sizing on phones */
+@media (max-width: 600px) {
+  .city-scene .main-building::after {
+    min-height: 30px;
+    padding: 3px 1px;
+    font-size: 7px;
+    border-width: 2px;
+  }
+}
+
+/* ===== UNIQUE NPC MOVEMENTS ===== */
+.city-scene .city-walker {
+  transform-origin: bottom center;
+  animation-duration: 3s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.city-scene .walker-1 { animation-name: npcWalkOne; animation-duration: 4s; }
+.city-scene .walker-2 { animation-name: npcLookAround; animation-duration: 3.7s; }
+.city-scene .walker-3 { animation-name: npcWalkTwo; animation-duration: 5s; }
+.city-scene .walker-4 { animation-name: npcShiftWeight; animation-duration: 2.8s; }
+.city-scene .walker-5 { animation-name: npcWalkThree; animation-duration: 4.5s; }
+.city-scene .walker-6 { animation-name: npcLookAround; animation-duration: 4.2s; }
+.city-scene .walker-7 { animation-name: npcShiftWeight; animation-duration: 3.4s; }
+.city-scene .walker-8 { animation-name: npcWalkOne; animation-duration: 5.2s; }
+
+.city-scene .city-walker:nth-child(odd) { animation-delay: -1.3s; }
+.city-scene .city-walker:nth-child(even) { animation-delay: -2.1s; }
+
+@keyframes npcWalkOne {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(7px, -2px); }
+  50% { transform: translate(13px, 0); }
+  75% { transform: translate(6px, -3px); }
+}
+@keyframes npcWalkTwo {
+  0%, 100% { transform: translate(0, 0); }
+  30% { transform: translate(-5px, -3px); }
+  60% { transform: translate(-11px, 0); }
+  80% { transform: translate(-4px, -2px); }
+}
+@keyframes npcWalkThree {
+  0%, 100% { transform: translate(0, 0) scaleX(1); }
+  35% { transform: translate(5px, -3px) scaleX(1); }
+  70% { transform: translate(10px, 0) scaleX(1); }
+}
+@keyframes npcLookAround {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  30% { transform: translateY(-2px) rotate(4deg); }
+  60% { transform: translateY(0) rotate(-4deg); }
+}
+@keyframes npcShiftWeight {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  25% { transform: translateY(-3px) rotate(-3deg); }
+  50% { transform: translateY(0) rotate(2deg); }
+  75% { transform: translateY(-1px) rotate(0); }
+}
+
+/* Remove the awkward bike from the road */
+.city-scene .scene-bike,
+.city-scene .city-bike {
+  display: none !important;
+}
+
+/* ===== COMPLETE NEON CITY DESIGN ===== */
+
+/* Buildings with varied widths */
+.city-scene .scene-city-left .main-building,
+.city-scene .scene-city-right .main-building {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.city-scene .scene-city-left .main-building:nth-child(1),
+.city-scene .scene-city-right .main-building:nth-child(4) { flex: 0.8 1 0; }
+
+.city-scene .scene-city-left .main-building:nth-child(2),
+.city-scene .scene-city-right .main-building:nth-child(2) { flex: 1.35 1 0; }
+
+.city-scene .scene-city-left .main-building:nth-child(3),
+.city-scene .scene-city-right .main-building:nth-child(5) { flex: 0.95 1 0; }
+
+.city-scene .scene-city-left .main-building:nth-child(4),
+.city-scene .scene-city-right .main-building:nth-child(1) { flex: 1.4 1 0; }
+
+.city-scene .scene-city-left .main-building:nth-child(5),
+.city-scene .scene-city-right .main-building:nth-child(6) { flex: 0.85 1 0; }
+
+.city-scene .scene-city-left .main-building:nth-child(6),
+.city-scene .scene-city-right .main-building:nth-child(3) { flex: 1.15 1 0; }
+
+/* Varied building heights */
+.city-scene .scene-city-left .main-building:nth-child(1),
+.city-scene .scene-city-right .main-building:nth-child(5) { height: 65%; }
+
+.city-scene .scene-city-left .main-building:nth-child(2),
+.city-scene .scene-city-right .main-building:nth-child(2) { height: 100%; }
+
+.city-scene .scene-city-left .main-building:nth-child(3),
+.city-scene .scene-city-right .main-building:nth-child(4) { height: 78%; }
+
+.city-scene .scene-city-left .main-building:nth-child(4),
+.city-scene .scene-city-right .main-building:nth-child(1) { height: 92%; }
+
+.city-scene .scene-city-left .main-building:nth-child(5),
+.city-scene .scene-city-right .main-building:nth-child(6) { height: 70%; }
+
+.city-scene .scene-city-left .main-building:nth-child(6),
+.city-scene .scene-city-right .main-building:nth-child(3) { height: 85%; }
+
+/* Building details */
+.city-scene .building-windows {
+  background-size: 32px 36px;
+  image-rendering: pixelated;
+}
+
+.city-scene .building-shopfront {
+  height: 20%;
+  border-top: 3px solid #ff45ba;
+  background:
+    repeating-linear-gradient(90deg, #10172d 0 13px, #263958 14px 17px);
+  box-shadow: inset 0 0 12px #24cfff33;
+}
+
+/* Real billboard panels */
+.city-scene .facade-billboard {
+  position: absolute;
+  z-index: 15;
+  top: 24%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 88%;
+  min-height: 44px;
+  padding: 5px 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  background: #101c42;
+  border: 3px solid #39eaff;
+  box-shadow: 0 0 12px #20dfff, inset 0 0 10px #168acb;
+  font-size: clamp(7px, 1vw, 11px);
+  font-weight: 1000;
+  line-height: 1.3;
+  text-align: center;
+  text-shadow: 0 0 6px white;
+}
+
+.city-scene .billboard-pink {
+  background: #68134d;
+  border-color: #ff4db8;
+  box-shadow: 0 0 14px #ff2b9b;
+}
+
+.city-scene .billboard-cyan {
+  background: #07516b;
+  border-color: #39eaff;
+}
+
+.city-scene .billboard-orange {
+  background: #67223d;
+  border-color: #ffbd4a;
+  box-shadow: 0 0 14px #ff873c;
+}
+
+.city-scene .billboard-blue {
+  background: #092c59;
+  border-color: #42aaff;
+  box-shadow: 0 0 14px #278dff;
+}
+
+/* Unique NPC movement */
+.city-scene .city-walker {
+  transform-origin: bottom center;
+  animation-duration: 3s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.city-scene .walker-1 { animation: npcWalkOne 4s ease-in-out infinite; }
+.city-scene .walker-2 { animation: npcLookAround 3.7s ease-in-out infinite; }
+.city-scene .walker-3 { animation: npcWalkTwo 5s ease-in-out infinite; }
+.city-scene .walker-4 { animation: npcShiftWeight 2.8s ease-in-out infinite; }
+.city-scene .walker-5 { animation: npcWalkThree 4.5s ease-in-out infinite; }
+.city-scene .walker-6 { animation: npcLookAround 4.2s ease-in-out infinite; }
+.city-scene .walker-7 { animation: npcShiftWeight 3.4s ease-in-out infinite; }
+.city-scene .walker-8 { animation: npcWalkOne 5.2s ease-in-out infinite; }
+
+.city-scene .walker-1 { animation-delay: -1.3s; }
+.city-scene .walker-2 { animation-delay: -2.1s; }
+.city-scene .walker-3 { animation-delay: -0.7s; }
+.city-scene .walker-4 { animation-delay: -1.8s; }
+.city-scene .walker-5 { animation-delay: -2.5s; }
+.city-scene .walker-6 { animation-delay: -0.4s; }
+.city-scene .walker-7 { animation-delay: -1.6s; }
+.city-scene .walker-8 { animation-delay: -3s; }
+
+@keyframes npcWalkOne {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(7px, -2px); }
+  50% { transform: translate(13px, 0); }
+  75% { transform: translate(6px, -3px); }
+}
+@keyframes npcWalkTwo {
+  0%, 100% { transform: translate(0, 0); }
+  30% { transform: translate(-5px, -3px); }
+  60% { transform: translate(-11px, 0); }
+  80% { transform: translate(-4px, -2px); }
+}
+@keyframes npcWalkThree {
+  0%, 100% { transform: translate(0, 0); }
+  35% { transform: translate(5px, -3px); }
+  70% { transform: translate(10px, 0); }
+}
+@keyframes npcLookAround {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  30% { transform: translateY(-2px) rotate(4deg); }
+  60% { transform: translateY(0) rotate(-4deg); }
+}
+@keyframes npcShiftWeight {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  25% { transform: translateY(-3px) rotate(-3deg); }
+  50% { transform: translateY(0) rotate(2deg); }
+  75% { transform: translateY(-1px) rotate(0); }
+}
+
+/* Remove awkward bike */
+.city-scene .scene-bike,
+.city-scene .city-bike {
+  display: none !important;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .city-scene .facade-billboard {
+    min-height: 30px;
+    padding: 3px 1px;
+    border-width: 2px;
+    font-size: 6px;
+  }
+
+  .city-scene .building-windows {
+    background-size: 24px 28px;
+  }
+}
+
+
+/* ===== FINAL CITY NPC PATROL + TEXTLESS BILLBOARDS ===== */
+.city-scene .facade-billboard {
+  font-size: 0 !important;
+  color: transparent !important;
+  text-shadow: none !important;
+  overflow: hidden;
+  min-height: 48px;
+}
+
+.city-scene .city-walker {
+  width: 54px !important;
+  height: 66px !important;
+  bottom: 9% !important;
+  object-fit: contain;
+  transform-origin: bottom center;
+  will-change: transform;
+  animation-timing-function: linear !important;
+  animation-iteration-count: infinite !important;
+  z-index: 5 !important;
+}
+
+/* Four NPCs walk from left to right */
+.city-scene .walker-1,
+.city-scene .walker-3,
+.city-scene .walker-5,
+.city-scene .walker-7 {
+  left: -65px !important;
+  right: auto !important;
+  scale: 1 1;
+}
+
+.city-scene .walker-1 { animation: cityPatrolRight 17s linear -3s infinite !important; }
+.city-scene .walker-3 { animation: cityPatrolRight 22s linear -12s infinite !important; bottom: 17% !important; }
+.city-scene .walker-5 { animation: cityPatrolRight 19s linear -8s infinite !important; }
+.city-scene .walker-7 { animation: cityPatrolRight 25s linear -18s infinite !important; bottom: 14% !important; }
+
+/* Four NPCs walk from right to left */
+.city-scene .walker-2,
+.city-scene .walker-4,
+.city-scene .walker-6,
+.city-scene .walker-8 {
+  right: -65px !important;
+  left: auto !important;
+  scale: -1 1;
+}
+
+.city-scene .walker-2 { animation: cityPatrolLeft 20s linear -7s infinite !important; bottom: 16% !important; }
+.city-scene .walker-4 { animation: cityPatrolLeft 24s linear -15s infinite !important; }
+.city-scene .walker-6 { animation: cityPatrolLeft 18s linear -4s infinite !important; bottom: 13% !important; }
+.city-scene .walker-8 { animation: cityPatrolLeft 26s linear -21s infinite !important; }
+
+@keyframes cityPatrolRight {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(100vw + 180px)); }
+}
+
+@keyframes cityPatrolLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100vw - 180px)); }
+}
+
+@media (max-width: 600px) {
+  .city-scene .city-walker {
+    width: 42px !important;
+    height: 54px !important;
+  }
+  .city-scene .facade-billboard {
+    min-height: 34px;
+    padding: 2px;
+  }
+}
+
+/* ===== FIX NPC DIRECTIONS AND WALKING LANES ===== */
+
+/* Keep props in the foreground */
+.city-scene .horizontal-prop {
+  z-index: 8 !important;
+  bottom: 0 !important;
+}
+
+/* Keep pedestrians on a separate lane */
+.city-scene .city-walker {
+  position: absolute !important;
+  width: 46px !important;
+  height: 52px !important;
+  bottom: 45% !important;
+  right: auto;
+  left: -12%;
+  z-index: 5 !important;
+  will-change: left;
+}
+
+/* Walk to the RIGHT */
+.city-scene .walker-1,
+.city-scene .walker-3,
+.city-scene .walker-5,
+.city-scene .walker-7 {
+  left: -12% !important;
+  right: auto !important;
+  scale: 1 1;
+}
+
+.city-scene .walker-1 { animation: patrolRight 17s linear -2s infinite !important; }
+.city-scene .walker-3 { animation: patrolRight 22s linear -11s infinite !important; bottom: 39% !important; }
+.city-scene .walker-5 { animation: patrolRight 19s linear -7s infinite !important; }
+.city-scene .walker-7 { animation: patrolRight 25s linear -17s infinite !important; bottom: 35% !important; }
+
+/* Walk to the LEFT */
+.city-scene .walker-2,
+.city-scene .walker-4,
+.city-scene .walker-6,
+.city-scene .walker-8 {
+  left: 112% !important;
+  right: auto !important;
+  scale: -1 1;
+}
+
+.city-scene .walker-2 { animation: patrolLeft 20s linear -6s infinite !important; bottom: 42% !important; }
+.city-scene .walker-4 { animation: patrolLeft 24s linear -14s infinite !important; }
+.city-scene .walker-6 { animation: patrolLeft 18s linear -3s infinite !important; bottom: 37% !important; }
+.city-scene .walker-8 { animation: patrolLeft 26s linear -20s infinite !important; }
+
+@keyframes patrolRight {
+  from { left: -12%; }
+  to { left: 112%; }
+}
+
+@keyframes patrolLeft {
+  from { left: 112%; }
+  to { left: -12%; }
+}
+
+@media (max-width: 600px) {
+  .city-scene .city-walker {
+    width: 38px !important;
+    height: 44px !important;
+  }
+}
+
+/* ===== FINAL FIX: VISIBLE NPC WALKING + CLEAN BUILDINGS ===== */
+
+/* Remove all text-based building signs */
+.city-scene .facade-billboard,
+.city-scene .vertical-neon,
+.city-scene .large-neon-board,
+.city-scene .building-ad,
+.city-scene .main-building::before,
+.city-scene .main-building::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* NPCs stay inside the sidewalk, behind foreground props */
+.city-scene .city-walker {
+  position: absolute !important;
+  bottom: 0 !important;
+  width: 44px !important;
+  height: 50px !important;
+  z-index: 5 !important;
+  right: auto;
+  left: 0;
+  object-fit: contain;
+  image-rendering: pixelated;
+  will-change: left;
+}
+
+/* Left to right */
+.city-scene .walker-1,
+.city-scene .walker-3,
+.city-scene .walker-5,
+.city-scene .walker-7 {
+  left: -12%;
+  right: auto;
+}
+
+.city-scene .walker-1 { animation: patrolRight 17s linear -2s infinite !important; }
+.city-scene .walker-3 { animation: patrolRight 22s linear -11s infinite !important; }
+.city-scene .walker-5 { animation: patrolRight 19s linear -7s infinite !important; }
+.city-scene .walker-7 { animation: patrolRight 25s linear -17s infinite !important; }
+
+/* Right to left */
+.city-scene .walker-2,
+.city-scene .walker-4,
+.city-scene .walker-6,
+.city-scene .walker-8 {
+  left: 112%;
+  right: auto;
+  transform: scaleX(-1);
+}
+
+.city-scene .walker-2 { animation: patrolLeft 20s linear -6s infinite !important; }
+.city-scene .walker-4 { animation: patrolLeft 24s linear -14s infinite !important; }
+.city-scene .walker-6 { animation: patrolLeft 18s linear -3s infinite !important; }
+.city-scene .walker-8 { animation: patrolLeft 26s linear -20s infinite !important; }
+
+@keyframes patrolRight {
+  from { left: -12%; }
+  to { left: 112%; }
+}
+
+@keyframes patrolLeft {
+  from { left: 112%; }
+  to { left: -12%; }
+}
+
+/* Props are always drawn in front of pedestrians */
+.city-scene .horizontal-prop {
+  z-index: 8 !important;
+  bottom: 0 !important;
+}
+
+@media (max-width: 600px) {
+  .city-scene .city-walker {
+    width: 38px !important;
+    height: 44px !important;
+  }
+}
+
+
+/* ===== NPC MOVEMENT FIX: TRANSFORM ANIMATION ===== */
+.city-scene .scene-horizontal-sidewalk {
+  position: absolute;
+  overflow: hidden;
+}
+
+.city-scene .city-walker {
+  position: absolute !important;
+  bottom: 0 !important;
+  width: 46px !important;
+  height: 54px !important;
+  z-index: 6 !important;
+  object-fit: contain;
+  image-rendering: pixelated;
+  will-change: transform;
+  animation-timing-function: linear !important;
+  animation-iteration-count: infinite !important;
+}
+
+/* Left-to-right pedestrians */
+.city-scene .walker-1,
+.city-scene .walker-3,
+.city-scene .walker-5,
+.city-scene .walker-7 {
+  animation-name: npcCrossRight !important;
+}
+.city-scene .walker-1 { animation-duration: 17s !important; animation-delay: -4s !important; }
+.city-scene .walker-3 { animation-duration: 23s !important; animation-delay: -13s !important; }
+.city-scene .walker-5 { animation-duration: 19s !important; animation-delay: -8s !important; }
+.city-scene .walker-7 { animation-duration: 26s !important; animation-delay: -20s !important; }
+
+/* Right-to-left pedestrians */
+.city-scene .walker-2,
+.city-scene .walker-4,
+.city-scene .walker-6,
+.city-scene .walker-8 {
+  animation-name: npcCrossLeft !important;
+}
+.city-scene .walker-2 { animation-duration: 20s !important; animation-delay: -9s !important; }
+.city-scene .walker-4 { animation-duration: 24s !important; animation-delay: -16s !important; }
+.city-scene .walker-6 { animation-duration: 18s !important; animation-delay: -5s !important; }
+.city-scene .walker-8 { animation-duration: 27s !important; animation-delay: -22s !important; }
+
+@keyframes npcCrossRight {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(100vw + 180px)); }
+}
+@keyframes npcCrossLeft {
+  from { transform: translateX(0) scaleX(-1); }
+  to { transform: translateX(calc(-100vw - 180px)) scaleX(-1); }
+}
+
+/* Props remain in front at the sidewalk edges */
+.city-scene .horizontal-prop {
+  z-index: 8 !important;
+}
+
+/* ===== FOUR CARS, TWO OPPOSING ROAD LANES ===== */
+.city-scene .scene-traffic {
+  z-index: 10;
+  overflow: hidden;
+}
+
+.city-scene .scene-traffic .scene-car {
+  position: absolute !important;
+  width: 66px !important;
+  height: 48px !important;
+  object-fit: contain;
+  will-change: transform;
+}
+
+.city-scene .scene-car-red {
+  top: 5% !important;
+  bottom: auto !important;
+  left: -100px !important;
+  animation: trafficRight 14s linear infinite !important;
+}
+
+.city-scene .scene-car-purple {
+  top: 5% !important;
+  bottom: auto !important;
+  left: -100px !important;
+  animation: trafficRight 19s linear -9s infinite !important;
+}
+
+.city-scene .scene-car-blue {
+  top: 53% !important;
+  bottom: auto !important;
+  right: -100px !important;
+  left: auto !important;
+  animation: trafficLeft 16s linear -5s infinite !important;
+}
+
+.city-scene .scene-car-cyan {
+  top: 53% !important;
+  bottom: auto !important;
+  right: -100px !important;
+  left: auto !important;
+  animation: trafficLeft 21s linear -13s infinite !important;
+}
+
+@keyframes trafficRight {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(100vw + 220px)); }
+}
+@keyframes trafficLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100vw - 220px)); }
+}
+
+@media (max-width: 600px) {
+  .city-scene .city-walker {
+    width: 40px !important;
+    height: 48px !important;
+  }
+  .city-scene .scene-traffic .scene-car {
+    width: 52px !important;
+    height: 40px !important;
+  }
+}
+
+/* FINAL NPC DIRECTION OVERRIDE */
+.city-scene .city-walker {
+  left: 0 !important;
+  right: auto !important;
+  will-change: transform;
+}
+
+/* NPC 1, 3, 5, 7: move RIGHT */
+.city-scene .walker-1,
+.city-scene .walker-3,
+.city-scene .walker-5,
+.city-scene .walker-7 {
+  animation-name: npcMoveRight !important;
+}
+
+.city-scene .walker-1 { animation-duration: 17s !important; animation-delay: -3s !important; }
+.city-scene .walker-3 { animation-duration: 22s !important; animation-delay: -12s !important; }
+.city-scene .walker-5 { animation-duration: 19s !important; animation-delay: -8s !important; }
+.city-scene .walker-7 { animation-duration: 25s !important; animation-delay: -17s !important; }
+
+/* NPC 2, 4, 6, 8: move LEFT */
+.city-scene .walker-2,
+.city-scene .walker-4,
+.city-scene .walker-6,
+.city-scene .walker-8 {
+  animation-name: npcMoveLeft !important;
+}
+
+.city-scene .walker-2 { animation-duration: 20s !important; animation-delay: -7s !important; }
+.city-scene .walker-4 { animation-duration: 24s !important; animation-delay: -15s !important; }
+.city-scene .walker-6 { animation-duration: 18s !important; animation-delay: -4s !important; }
+.city-scene .walker-8 { animation-duration: 26s !important; animation-delay: -21s !important; }
+
+@keyframes npcMoveRight {
+  from { transform: translateX(-60px); }
+  to { transform: translateX(calc(100vw + 100px)); }
+}
+
+@keyframes npcMoveLeft {
+  from { transform: translateX(calc(100vw + 100px)) scaleX(-1); }
+  to { transform: translateX(-60px) scaleX(-1); }
+}
+
+
+
+
+
+/* ===== CONSOLIDATED NPC MOVEMENT ===== */
+.city-scene .scene-horizontal-sidewalk {
+  overflow: hidden !important;
+}
+
+.city-scene .city-walker {
+  position: absolute !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  left: 0 !important;
+  right: auto !important;
+  width: 42px !important;
+  height: 48px !important;
+  object-fit: contain;
+  image-rendering: pixelated;
+  will-change: translate;
+  animation-timing-function: linear !important;
+  animation-iteration-count: infinite !important;
+}
+
+/* LEFT TO RIGHT: enter from the left edge */
+.city-scene .walker-1,
+.city-scene .walker-3,
+.city-scene .walker-5,
+.city-scene .walker-7 {
+  transform: none !important;
+  animation-name: cityWalkRight !important;
+}
+
+.city-scene .walker-1 { bottom: 2% !important; animation-duration: 18s !important; animation-delay: -3s !important; }
+.city-scene .walker-3 { bottom: 2% !important; animation-duration: 22s !important; animation-delay: -12s !important; }
+.city-scene .walker-5 { bottom: 2% !important; animation-duration: 20s !important; animation-delay: -7s !important; }
+.city-scene .walker-7 { bottom: 2% !important; animation-duration: 25s !important; animation-delay: -18s !important; }
+
+/* RIGHT TO LEFT: enter from the right edge */
+.city-scene .walker-2,
+.city-scene .walker-4,
+.city-scene .walker-6,
+.city-scene .walker-8 {
+  transform: scaleX(-1) !important;
+  animation-name: cityWalkLeft !important;
+}
+
+.city-scene .walker-2 { bottom: 2% !important; animation-duration: 19s !important; animation-delay: -8s !important; }
+.city-scene .walker-4 { bottom: 2% !important; animation-duration: 23s !important; animation-delay: -15s !important; }
+.city-scene .walker-6 { bottom: 2% !important; animation-duration: 21s !important; animation-delay: -5s !important; }
+.city-scene .walker-8 { bottom: 2% !important; animation-duration: 26s !important; animation-delay: -20s !important; }
+
+@keyframes cityWalkRight {
+  from { translate: -60px 0; }
+  to { translate: calc(100vw + 100px) 0; }
+}
+
+@keyframes cityWalkLeft {
+  from { translate: calc(100vw + 100px) 0; }
+  to { translate: -60px 0; }
+}
+
+/* ===== LIGHT FINE RAIN ===== */
+.city-scene .city-art-rain {
+  z-index: 12;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.city-scene .city-art-rain i {
+  position: absolute;
+  top: -15px;
+  width: 1px;
+  height: 11px;
+  background: #a8eaff99;
+  opacity: .42;
+  box-shadow: 0 0 2px #4bdfff66;
+  animation: cityRainFall 1.1s linear infinite;
+}
+
+@keyframes cityRainFall {
+  from { translate: 0 -15px; }
+  to { translate: 0 620px; }
+}
+
+@media (max-width: 600px) {
+  .city-scene .city-walker {
+    width: 34px !important;
+    height: 40px !important;
+  }
+
+  .city-scene .city-art-rain i {
+    height: 9px;
+    opacity: .38;
+  }
+}

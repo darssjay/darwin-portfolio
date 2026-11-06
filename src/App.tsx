@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import './Theme.css'
 import { Analytics } from '@vercel/analytics/react'
-import { trackVisit } from './analytics'
+import { trackVisit, getDailyStats } from './analytics'
+import Guestbook from './Guestbook'
 
 const skills = [
   { name: 'C', level: 75 },
@@ -548,6 +549,11 @@ function App() {
     visitors: 0,
     page_views: 0
   })
+  const [dailyActivity, setDailyActivity] = useState<Array<{
+    visit_date: string
+    total_visitors: number
+    total_page_views: number
+  }>>([])
 
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     const savedTheme = localStorage.getItem('portfolio-theme')
@@ -560,18 +566,33 @@ function App() {
 
   useEffect(() => {
     let active = true
-    trackVisit().then((stats) => {
-      if (active && stats) {
-        setVisitorStats({
-          visitors: Number(stats.visitors),
-          page_views: Number(stats.page_views)
-        })
-      }
-    })
+    trackVisit()
+      .then((stats) => {
+        if (active && stats) {
+          setVisitorStats({
+            visitors: Number(stats.visitors),
+            page_views: Number(stats.page_views)
+          })
+        }
+        return getDailyStats()
+      })
+      .then((activity) => {
+        if (active) {
+          setDailyActivity(activity.map((item) => ({
+            visit_date: item.visit_date,
+            total_visitors: Number(item.total_visitors),
+            total_page_views: Number(item.total_page_views)
+          })))
+        }
+      })
+      .catch((error) => console.error('Analytics loading error:', error))
     return () => { active = false }
   }, [])
 
   const closeMenu = () => setMenuOpen(false)
+
+  const [pixelCityTime, setPixelCityTime] = useState<'day' | 'night'>('night')
+  const [pixelCityWeather, setPixelCityWeather] = useState<'clear' | 'rain'>('clear')
 
   const toggleTheme = () => {
     setTheme((current) => current === 'dark' ? 'light' : 'dark')
@@ -851,6 +872,7 @@ function App() {
           <a href="#experience" onClick={closeMenu}>EXPERIENCE</a>
           <a href="#education" onClick={closeMenu}>EDUCATION</a>
           <a href="#projects" onClick={closeMenu}>PROJECTS</a>
+          <a href="#pixel-city" onClick={closeMenu}>PIXEL CITY</a>
           <a href="#resume" onClick={closeMenu}>RESUME</a>
           <a href="#contact" onClick={closeMenu} className="nav-contact">CONTACT</a>
         </div>
@@ -1232,7 +1254,138 @@ function App() {
           </div>
         )}
 
-        <section id="resume" className="section-container section-block">
+        <section id="pixel-city" className="section-container section-block">
+  <div className="section-heading">
+    <span className="section-number">06 / INTERACTIVE WORLD</span>
+    <h2>NEON <span>METROPOLIS</span></h2>
+    <p>EXPLORE THE CITY THAT NEVER SLEEPS</p>
+  </div>
+
+  <div className={`pixel-city cyber-city-art city-scene ${pixelCityTime} ${pixelCityWeather}`}>
+    <div className="scene-sky">
+      <div className="scene-stars" />
+      <div className="scene-moon" />
+      <div className="scene-mountain" />
+
+      <div className="scene-distant skyline-a">
+        {Array.from({ length: 13 }, (_, i) => (
+          <div key={i} className={`distant-building db-${i % 5}`} />
+        ))}
+      </div>
+
+      <div className="scene-tower-landmarks">
+        <div className="landmark-tower landmark-red">
+          <div className="landmark-spire" />
+          <div className="landmark-body" />
+        </div>
+        <div className="landmark-tower landmark-blue">
+          <div className="landmark-spire" />
+          <div className="landmark-body" />
+        </div>
+        <div className="landmark-tower landmark-blue second">
+          <div className="landmark-spire" />
+          <div className="landmark-body" />
+        </div>
+      </div>
+    </div>
+
+    <div className="scene-city-back">
+      {Array.from({ length: 9 }, (_, i) => (
+        <div key={i} className={`back-block back-${i}`}>
+          <div className="back-windows" />
+        </div>
+      ))}
+    </div>
+
+    <div className="scene-city-left">
+      {Array.from({ length: 6 }, (_, i) => (
+        <div key={i} className={`main-building left-building building-${i}`}>
+          <div className="building-roof" />
+          <div className="building-windows" />
+          <div className="building-shopfront" />
+          {i === 0 && <div className="facade-billboard billboard-orange" aria-hidden="true" />}
+          {i === 3 && <div className="facade-billboard billboard-blue" aria-hidden="true" />}
+          {i === 1 && <div className="facade-billboard billboard-pink" aria-hidden="true" />}
+          {i === 4 && <div className="facade-billboard billboard-cyan" aria-hidden="true" />}
+        </div>
+      ))}
+    </div>
+
+    <div className="scene-city-right">
+      {Array.from({ length: 6 }, (_, i) => (
+        <div key={i} className={`main-building right-building building-${i}`}>
+          <div className="building-roof" />
+          <div className="building-windows" />
+          <div className="building-shopfront" />
+        </div>
+      ))}
+    </div>
+
+    <div className="scene-cross-street">
+      <div className="cross-street-line" />
+      <div className="scene-shop shop-left">
+        <span>RAMEN</span>
+        <div className="shop-light" />
+      </div>
+      <div className="scene-shop shop-right">
+        <span>ARCADE</span>
+        <div className="shop-light" />
+      </div>
+    </div>
+
+    <div className="scene-center-road">
+      <div className="road-center-glow" />
+      <div className="road-horizontal-divider" />
+      <div className="road-crosswalk">
+        {Array.from({ length: 12 }, (_, i) => <i key={i} />)}
+      </div>
+      <div className="road-reflections" />
+    </div>
+
+    <div className="scene-horizontal-sidewalk">
+      <div className="sidewalk-tile-pattern" />
+      {['hacker','merchant','punk','android','street_samurai','cyborg','cop','corp_exec'].map((person, i) => (
+        <img
+          key={person}
+          className={`city-walker walker-${i + 1}`}
+          src={`/assets/pixel-city/PNG/x4/characters/${person}.png`}
+          alt=""
+        />
+      ))}
+      <img className="horizontal-prop prop-left" src="/assets/pixel-city/PNG/x4/props/street_lamp.png" alt="" />
+      <img className="horizontal-prop prop-right" src="/assets/pixel-city/PNG/x4/props/vending_machine_blue.png" alt="" />
+    </div>
+
+    <div className="scene-traffic">
+      <img className="scene-car scene-car-red" src="/assets/pixel-city/PNG/x4/props/hover_car_red.png" alt="Red hover car" />
+      <img className="scene-car scene-car-blue" src="/assets/pixel-city/PNG/x4/props/hover_car_blue.png" alt="Blue hover car" />
+      <img className="scene-car scene-car-purple" src="/assets/pixel-city/PNG/x4/props/hover_car_red.png" alt="Purple lane hover car" />
+      <img className="scene-car scene-car-cyan" src="/assets/pixel-city/PNG/x4/props/hover_car_blue.png" alt="Cyan lane hover car" />
+      <img className="scene-bike" src="/assets/pixel-city/PNG/x4/props/neon_bike.png" alt="Neon bike" />
+      <img className="scene-drone" src="/assets/pixel-city/PNG/x4/props/patrol_drone.png" alt="Patrol drone" />
+    </div>
+
+    {pixelCityWeather === 'rain' && (
+      <div className="city-art-rain" aria-hidden="true">
+        {Array.from({ length: 70 }, (_, i) => (
+          <i key={i} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 15) * -0.2}s` }} />
+        ))}
+      </div>
+    )}
+
+    <div className="city-art-controls">
+      <button type="button" onClick={() => setPixelCityTime(current => current === 'day' ? 'night' : 'day')}>
+        {pixelCityTime === 'day' ? 'NIGHT MODE' : 'DAY MODE'}
+      </button>
+      <button type="button" onClick={() => setPixelCityWeather(current => current === 'clear' ? 'rain' : 'clear')}>
+        {pixelCityWeather === 'clear' ? 'START RAIN' : 'STOP RAIN'}
+      </button>
+    </div>
+    <p className="city-art-caption">TOKYO NEON DISTRICT // 2077</p>
+  </div>
+</section>
+
+<section id="resume" className="section-container section-block">
           <div className="section-heading">
             <span className="section-number">06 / MY BACKGROUND</span>
             <h2>MY <span>RESUME</span></h2>
@@ -1358,6 +1511,8 @@ function App() {
           </div>
         </section>
 
+        <Guestbook />
+
         <section id="web-analytics" className="section-container section-block">
           <div className="section-heading">
             <span className="section-number">08 / WEBSITE STATISTICS</span>
@@ -1380,7 +1535,40 @@ function App() {
               <p>Total portfolio page loads</p>
             </div>
           </div>
-        </section>
+        
+          <div className="panel daily-activity-panel" style={{ padding: '24px', marginTop: '24px' }}>
+            <span className="panel-tag">LAST 7 DAYS</span>
+            <h3 style={{ margin: '10px 0 4px' }}>DAILY <span>ACTIVITY</span></h3>
+            <p style={{ marginBottom: '18px' }}>Unique visitors and page views · Philippine time</p>
+            <div style={{ display: 'flex', gap: '18px', marginBottom: '18px', flexWrap: 'wrap' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '7px', fontSize: '0.8rem' }}><i style={{ width: '10px', height: '10px', borderRadius: '3px', background: '#ff5ac8', display: 'inline-block' }} /> Visitors</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '7px', fontSize: '0.8rem' }}><i style={{ width: '10px', height: '10px', borderRadius: '3px', background: '#8b5cf6', display: 'inline-block' }} /> Page views</span>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, minmax(0, 1fr))', gap: '8px', alignItems: 'end', minHeight: '175px' }}>
+              {Array.from({ length: 7 }, (_, index) => {
+                const date = new Date(Date.now() - (6 - index) * 86400000)
+                const day = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Manila' }).format(date)
+                const record = dailyActivity.find((item) => item.visit_date === day)
+                const visitors = Number(record?.total_visitors ?? 0)
+                const pageViews = Number(record?.total_page_views ?? 0)
+                const maxValue = Math.max(1, ...dailyActivity.flatMap((item) => [Number(item.total_visitors), Number(item.total_page_views)]))
+                const visitorHeight = Math.max(3, (visitors / maxValue) * 112)
+                const pageViewHeight = Math.max(3, (pageViews / maxValue) * 112)
+                return (
+                  <div key={day} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'end', gap: '7px', minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'end', justifyContent: 'center', gap: '4px', height: '118px', width: '100%' }}>
+                      <div title={`${visitors} visitors`} style={{ height: `${visitorHeight}px`, width: '34%', maxWidth: '16px', borderRadius: '5px 5px 2px 2px', background: '#ff5ac8' }} />
+                      <div title={`${pageViews} page views`} style={{ height: `${pageViewHeight}px`, width: '34%', maxWidth: '16px', borderRadius: '5px 5px 2px 2px', background: '#8b5cf6' }} />
+                    </div>
+                    <small style={{ fontSize: '0.68rem', textAlign: 'center' }}>{new Intl.DateTimeFormat('en-PH', { timeZone: 'Asia/Manila', weekday: 'short' }).format(date)}</small>
+                    <small style={{ fontSize: '0.62rem', opacity: 0.75, textAlign: 'center' }}>{visitors} / {pageViews}</small>
+                  </div>
+                )
+              })}
+            </div>
+            <p style={{ marginTop: '16px', fontSize: '0.75rem' }}>Numbers below each day: visitors / page views.</p>
+          </div>
+</section>
 
       </main>
 

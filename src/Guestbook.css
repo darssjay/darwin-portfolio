@@ -1,0 +1,205 @@
+.guestbook-layout {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 22px;
+}
+
+.guestbook-form,
+.guestbook-wall,
+.guestbook-admin,
+.guestbook-login {
+  padding: 26px;
+  min-width: 0;
+}
+
+.guestbook-form,
+.guestbook-login {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.guestbook-form label,
+.guestbook-login label {
+  color: var(--pink);
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.guestbook-form input,
+.guestbook-form textarea,
+.guestbook-login input {
+  width: 100%;
+  min-width: 0;
+  padding: 13px;
+  color: #f7eaff;
+  background: #100a1c;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.guestbook-form input:focus,
+.guestbook-form textarea:focus,
+.guestbook-login input:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 2px #ff4db822;
+}
+
+.guestbook-form textarea {
+  resize: vertical;
+}
+
+.guestbook-form button,
+.guestbook-login button,
+.guestbook-pending button {
+  border: 1px solid var(--pink);
+  background: #8f246e;
+  color: white;
+  padding: 12px 15px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.guestbook-form button:disabled,
+.guestbook-login button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.guestbook-hint,
+.guestbook-empty {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.guestbook-wall-heading,
+.guestbook-message-top,
+.guestbook-admin-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.guestbook-count {
+  color: var(--pink);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.guestbook-messages {
+  display: grid;
+  gap: 12px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.guestbook-message,
+.guestbook-pending {
+  padding: 15px;
+  background: #100a1c;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--pink);
+}
+
+.guestbook-message-top strong,
+.guestbook-pending strong {
+  color: #fff;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.guestbook-message time {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.guestbook-message p,
+.guestbook-pending p {
+  color: #d5c4e4;
+  font-size: 13px;
+  line-height: 1.7;
+  margin-top: 9px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.guestbook-notice {
+  color: var(--pink);
+  font-size: 12px;
+  margin-top: 14px;
+}
+
+.guestbook-admin-access {
+  margin-top: 22px;
+}
+
+.guestbook-admin-link,
+.guestbook-logout {
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.guestbook-login {
+  max-width: 430px;
+  margin-top: 15px;
+}
+
+.guestbook-admin h3 {
+  color: white;
+  font-size: 17px;
+  margin-bottom: 7px;
+}
+
+.guestbook-admin-heading p {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.guestbook-pending {
+  margin-top: 14px;
+}
+
+.guestbook-pending > div {
+  display: flex;
+  gap: 10px;
+  margin-top: 13px;
+}
+
+.guestbook-pending .guestbook-delete {
+  background: #351522;
+  border-color: #d94b70;
+}
+
+@media (max-width: 700px) {
+  .guestbook-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .guestbook-form,
+  .guestbook-wall,
+  .guestbook-admin,
+  .guestbook-login {
+    padding: 19px;
+  }
+
+  .guestbook-wall-heading,
+  .guestbook-admin-heading {
+    align-items: flex-start;
+  }
+
+  .guestbook-count {
+    text-align: right;
+  }
+}
