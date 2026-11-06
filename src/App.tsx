@@ -1624,7 +1624,8 @@ function App() {
 
       <footer className="footer">
         <a
-          href="#home"
+          role="button"
+          tabIndex={0}
           className="logo"
           title="Secret?"
           onClick={(event) => {
