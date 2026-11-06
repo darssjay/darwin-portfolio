@@ -137,7 +137,7 @@ const education = [
 
 function App() {
   const [secretRoomOpen, setSecretRoomOpen] = useState(false)
-  const [logoClickCount, setLogoClickCount] = useState(0)
+  const [, setLogoClickCount] = useState(0)
 
   const loadRpgSave = () => {
     try {
