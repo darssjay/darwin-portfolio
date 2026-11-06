@@ -1787,17 +1787,7 @@ button:active,
 }
 
 /* LOADING SCREEN EXIT TRANSITION */
-.pixel-loading-screen {
-  animation: loading-exit 0.55s ease forwards;
-}
 
-@keyframes loading-exit {
-  to {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-}
 
 /* LIVE PIXEL DIGITAL CLOCK */
 .pixel-clock {
