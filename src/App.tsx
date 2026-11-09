@@ -872,11 +872,11 @@ function App() {
           <a href="#about" onClick={closeMenu}>ABOUT</a>
           <a href="#skills" onClick={closeMenu}>SKILLS</a>
           <a href="#experience" onClick={closeMenu}>EXPERIENCE</a>
-          <a href="#education" onClick={closeMenu}>EDUCATION</a>
           <a href="#projects" onClick={closeMenu}>PROJECTS</a>
-          <a href="#web-analytics" onClick={closeMenu}>ANALYTICS</a>
+          <a href="#education" onClick={closeMenu}>EDUCATION</a>
           <a href="#resume" onClick={closeMenu}>CV</a>
           <a href="#contact" onClick={closeMenu} className="nav-contact">CONTACT</a>
+          <a href="#web-analytics" onClick={closeMenu}>ANALYTICS</a>
         </div>
 
         <button
@@ -1122,29 +1122,9 @@ function App() {
           </div>
         </section>
 
-        <section id="education" className="section-container section-block">
-          <div className="section-heading">
-            <span className="section-number">04 / ACADEMIC BACKGROUND</span>
-            <h2>MY <span>EDUCATION</span></h2>
-            <p>MY EDUCATIONAL BACKGROUND</p>
-          </div>
-
-          <div className="education-grid">
-            {education.map((item, index) => (
-              <div className="education-card panel" key={item.school}>
-                <span className="education-icon">{item.icon}</span>
-                <span className="experience-number">EDUCATION_0{index + 1}</span>
-                <h3>{item.course}</h3>
-                <strong>{item.school}</strong>
-                <p>{item.period}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
         <section id="projects" className="section-container section-block">
           <div className="section-heading">
-            <span className="section-number">05 / SELECTED WORK</span>
+            <span className="section-number">04 / SELECTED WORK</span>
             <h2>MY <span>PROJECTS</span></h2>
             <p>SOME OF THE PROJECTS I'VE WORKED ON</p>
           </div>
@@ -1192,6 +1172,28 @@ function App() {
             ))}
           </div>
         </section>
+
+        <section id="education" className="section-container section-block">
+          <div className="section-heading">
+            <span className="section-number">05 / ACADEMIC BACKGROUND</span>
+            <h2>MY <span>EDUCATION</span></h2>
+            <p>MY EDUCATIONAL BACKGROUND</p>
+          </div>
+
+          <div className="education-grid">
+            {education.map((item, index) => (
+              <div className="education-card panel" key={item.school}>
+                <span className="education-icon">{item.icon}</span>
+                <span className="experience-number">EDUCATION_0{index + 1}</span>
+                <h3>{item.course}</h3>
+                <strong>{item.school}</strong>
+                <p>{item.period}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+
 
 
         {activeProject !== null && (
@@ -1851,6 +1853,21 @@ function App() {
             <span className="footer-location">PHILIPPINES 🇵🇭</span>
           </div>
 
+          <div className="footer-contact">
+            <span className="footer-label">// CONNECT WITH ME</span>
+            <a href="mailto:darwinjohnricarte@gmail.com">
+              EMAIL: darwinjohnricarte@gmail.com
+            </a>
+            <a href="https://ph.linkedin.com/in/darwin-john-ricarte-76824344a"
+              target="_blank" rel="noopener noreferrer">
+              LINKEDIN: MY PROFILE ↗
+            </a>
+            <a href="https://github.com/darssjay"
+              target="_blank" rel="noopener noreferrer">
+              GITHUB: DARSSJAY ↗
+            </a>
+          </div>
+
           <div className="footer-navigation">
             <span className="footer-label">// QUICK NAVIGATION</span>
             <nav className="footer-nav" aria-label="Footer navigation">
@@ -1858,11 +1875,11 @@ function App() {
               <a href="#about">ABOUT</a>
               <a href="#skills">SKILLS</a>
               <a href="#experience">EXPERIENCE</a>
-              <a href="#education">EDUCATION</a>
               <a href="#projects">PROJECTS</a>
-              <a href="#web-analytics">ANALYTICS</a>
+              <a href="#education">EDUCATION</a>
               <a href="#resume">CV</a>
               <a href="#contact">CONTACT</a>
+              <a href="#web-analytics">ANALYTICS</a>
             </nav>
           </div>
         </div>

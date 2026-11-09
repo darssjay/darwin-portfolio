@@ -6620,3 +6620,43 @@ main,
     gap: 15px;
   }
 }
+
+/* FOOTER CONTACT LINKS */
+.footer-main {
+  grid-template-columns: 0.8fr 1.2fr 1.7fr;
+  gap: 35px;
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.footer-contact a {
+  color: #bca9ce;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1.8;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color .2s ease, text-shadow .2s ease;
+}
+
+.footer-contact a:hover {
+  color: var(--pink);
+  text-shadow: 0 0 10px #e879f988;
+}
+
+@media (max-width: 700px) {
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .footer-contact {
+    width: 100%;
+  }
+}
