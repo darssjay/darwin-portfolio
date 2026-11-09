@@ -208,7 +208,7 @@ function App() {
     if (
       name.length < 2 || name.length > 80 ||
       email.length < 5 || email.length > 254 ||
-      !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
       subject.length < 3 || subject.length > 120 ||
       message.length < 10 || message.length > 3000
     ) {
@@ -1297,51 +1297,74 @@ function App() {
           <div className="section-heading">
             <span className="section-number">01 / INTRODUCTION</span>
             <h2>ABOUT <span>ME</span></h2>
-            <p>A LITTLE INTRODUCTION ABOUT MYSELF</p>
+            <p>GET TO KNOW THE PERSON BEHIND THE PROJECTS</p>
           </div>
 
-          <div className="about-grid">
-            <div className="about-main panel">
-              <span className="panel-tag">WHO AM I?</span>
-              <h3>Curious mind. Future developer.</h3>
-              <p>
-                Hi! I'm Darwin John Ricarte, an Information Technology
-                student at City College of Calamba. I am interested in
-                programming, web development, and designing systems that
-                can help solve everyday problems.
-              </p>
-              <p>
-                I am continuously improving my skills through school
-                activities and personal projects. I enjoy learning new
-                technologies and turning ideas into working applications.
-              </p>
+          <div className="about-grid about-grid-modern">
+            <div className="about-main panel about-profile-card">
+              <div className="about-profile-top">
+                <div className="about-avatar">DJR</div>
+                <div className="about-profile-heading">
+                  <span className="panel-tag">PERSONAL PROFILE / 01</span>
+                  <h3>Curious mind. Future developer.</h3>
+                  <span className="about-role">BSIT STUDENT // ASPIRING DEVELOPER</span>
+                </div>
+              </div>
+
+              <div className="about-bio">
+                <p>
+                  Hi! I'm Darwin John Ricarte, an Information Technology
+                  student at City College of Calamba. I'm interested in
+                  programming, web development, software systems, and
+                  creative digital design.
+                </p>
+                <p>
+                  I continue to develop my skills through academic activities,
+                  self-learning, and personal projects. I enjoy exploring
+                  technology and turning ideas into useful digital solutions.
+                </p>
+              </div>
+
+              <div className="about-focus">
+                <span>MY CURRENT FOCUS</span>
+                <strong>Web Development · Software Development · UI/UX Design</strong>
+              </div>
             </div>
 
-            <div className="about-side">
+            <div className="about-side about-side-modern">
+              <div className="info-card panel">
+                <span className="info-icon">📍</span>
+                <div>
+                  <small>LOCATION</small>
+                  <h3>Calamba City, Laguna</h3>
+                  <p>Philippines</p>
+                </div>
+              </div>
+
               <div className="info-card panel">
                 <span className="info-icon">🎓</span>
                 <div>
                   <small>EDUCATION</small>
                   <h3>City College of Calamba</h3>
-                  <p>BS Information Technology</p>
+                  <p>BS Information Technology · 2024–Present</p>
                 </div>
               </div>
 
               <div className="info-card panel">
                 <span className="info-icon">💻</span>
                 <div>
-                  <small>INTERESTS</small>
-                  <h3>Technology & Development</h3>
-                  <p>Programming, web design, and software systems</p>
+                  <small>IT EXPERIENCE</small>
+                  <h3>Academic & Personal Projects</h3>
+                  <p>No formal IT employment yet; gaining practical experience through studies and projects.</p>
                 </div>
               </div>
 
               <div className="info-card panel">
                 <span className="info-icon">🚀</span>
                 <div>
-                  <small>GOAL</small>
-                  <h3>Future IT Professional</h3>
-                  <p>Learn, create, and grow through experience</p>
+                  <small>SPECIALIZATION INTERESTS</small>
+                  <h3>Web & Software Development</h3>
+                  <p>UI/UX prototyping, graphic design, and multimedia creation</p>
                 </div>
               </div>
             </div>
@@ -1352,12 +1375,16 @@ function App() {
           <div className="section-heading">
             <span className="section-number">02 / MY ABILITIES</span>
             <h2>MY <span>SKILLS</span></h2>
-            <p>TOOLS AND TECHNOLOGIES I'M LEARNING</p>
+            <p>LANGUAGES, TOOLS, AND CREATIVE SKILLS I'M DEVELOPING</p>
           </div>
 
-          <div className="skills-layout">
-            <div className="skills-list panel">
-              <span className="panel-tag">TECHNICAL SKILLS</span>
+          <div className="skills-layout skills-layout-modern">
+            <div className="skills-list panel skills-level-panel">
+              <span className="panel-tag">TECHNICAL FOUNDATION</span>
+              <h3 className="skills-panel-title">Core skill levels</h3>
+              <p className="skills-panel-description">
+                Current self-assessed familiarity with selected programming and web technologies.
+              </p>
 
               {skills.map((skill) => (
                 <div className="skill-item" key={skill.name}>
@@ -1375,22 +1402,62 @@ function App() {
               ))}
             </div>
 
-            <div className="skills-extra panel">
-              <span className="panel-tag">WHAT I CAN DO</span>
-              <div className="skill-chip">⌨️ Programming Basics</div>
-              <div className="skill-chip">🌐 Web Development</div>
-              <div className="skill-chip">🗄️ Database Management</div>
-              <div className="skill-chip">🎨 UI / UX Design</div>
-              <div className="skill-chip">🧩 Problem Solving</div>
+            <div className="skills-extra panel skills-categories-panel">
+              <span className="panel-tag">SKILL SET / CATEGORIES</span>
+              <h3 className="skills-panel-title">Tools I work with</h3>
+
+              <div className="skill-category-grid">
+                <div className="skill-category">
+                  <span className="skill-category-icon">⌨️</span>
+                  <h4>Programming & Web</h4>
+                  <p>C, C++, Java, JavaScript, TypeScript, Python, HTML, CSS, React, Vite, responsive web design, website layout and styling, deployment, and basic API integration.</p>
+                </div>
+
+                <div className="skill-category">
+                  <span className="skill-category-icon">🗄️</span>
+                  <h4>Database & Development Tools</h4>
+                  <p>SQL, database design, Supabase, PostgreSQL concepts, Git, GitHub, npm, Vercel, Termux, and Acode.</p>
+                </div>
+
+                <div className="skill-category">
+                  <span className="skill-category-icon">🎨</span>
+                  <h4>UI/UX & Graphic Design</h4>
+                  <p>UI/UX prototyping, Figma, Canva, Adobe Photoshop, photo manipulation, digital illustration, typography, poster design, and presentation design.</p>
+                </div>
+
+                <div className="skill-category">
+                  <span className="skill-category-icon">🎬</span>
+                  <h4>Video & Multimedia</h4>
+                  <p>CapCut, Alight Motion, basic animation, video transitions and effects, audio editing, video storytelling, motion graphics, and social media content creation.</p>
+                </div>
+
+                <div className="skill-category">
+                  <span className="skill-category-icon">📁</span>
+                  <h4>Productivity & Computer Skills</h4>
+                  <p>Microsoft Word, PowerPoint, Excel, Google Docs, Google Sheets, file management, and basic troubleshooting.</p>
+                </div>
+              </div>
+
+              <div className="skills-capabilities">
+                <span className="capabilities-label">WHAT I CAN DO</span>
+                <div className="skill-chip-grid">
+                  <span className="skill-chip">Programming Basics</span>
+                  <span className="skill-chip">Web Development</span>
+                  <span className="skill-chip">Database Management</span>
+                  <span className="skill-chip">UI/UX Design</span>
+                  <span className="skill-chip">Creative Design</span>
+                  <span className="skill-chip">Problem Solving</span>
+                </div>
+              </div>
+
               <p className="skills-note">
-                Always open to learning new tools, languages, and
-                technologies.
+                Always learning, experimenting, and improving through hands-on projects and practice.
               </p>
             </div>
           </div>
         </section>
 
-          <div className="pixel-achievements">
+        <div className="pixel-achievements">
             <span className="panel-tag">UNLOCKED ACHIEVEMENTS</span>
             <div className="achievement-list">
               <div className="achievement-badge">
