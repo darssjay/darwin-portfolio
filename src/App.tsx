@@ -1828,25 +1828,49 @@ function App() {
       )}
 
       <footer className="footer">
-        <button type="button" className="logo footer-secret-logo" title="Secret?"
-          onClick={(event) => {
-            event.preventDefault()
-            setLogoClickCount(count => {
-              const nextCount = count + 1
-              if (nextCount >= 5) {
-                setSecretRoomOpen(true)
-                return 0
-              }
-              return nextCount
-            })
-          }}
-        >
-          <span className="logo-bracket">{'<'}</span>
-          DJR<span className="logo-dot">.DEV</span>
-          <span className="logo-bracket">{'/>'}</span>
-        </button>
-        <p>DESIGNED & BUILT BY DARWIN JOHN RICARTE</p>
-        <a href="#home" className="back-to-top">BACK TO TOP ↑</a>
+        <div className="footer-main">
+          <div className="footer-brand">
+            <button type="button" className="logo footer-secret-logo" title="Secret?"
+              onClick={(event) => {
+                event.preventDefault()
+                setLogoClickCount(count => {
+                  const nextCount = count + 1
+                  if (nextCount >= 5) {
+                    setSecretRoomOpen(true)
+                    return 0
+                  }
+                  return nextCount
+                })
+              }}
+            >
+              <span className="logo-bracket">{'<'}</span>
+              DJR<span className="logo-dot">.DEV</span>
+              <span className="logo-bracket">{'/>'}</span>
+            </button>
+            <span className="footer-tagline">WEB DEVELOPER IN TRAINING</span>
+            <span className="footer-location">PHILIPPINES 🇵🇭</span>
+          </div>
+
+          <div className="footer-navigation">
+            <span className="footer-label">// QUICK NAVIGATION</span>
+            <nav className="footer-nav" aria-label="Footer navigation">
+              <a href="#home">HOME</a>
+              <a href="#about">ABOUT</a>
+              <a href="#skills">SKILLS</a>
+              <a href="#experience">EXPERIENCE</a>
+              <a href="#education">EDUCATION</a>
+              <a href="#projects">PROJECTS</a>
+              <a href="#web-analytics">ANALYTICS</a>
+              <a href="#resume">CV</a>
+              <a href="#contact">CONTACT</a>
+            </nav>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          <p>© {new Date().getFullYear()} DESIGNED & BUILT BY DARWIN JOHN RICARTE</p>
+          <a href="#home" className="back-to-top">BACK TO TOP ↑</a>
+        </div>
       </footer>
 
       <Analytics />
