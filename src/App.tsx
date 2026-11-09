@@ -1303,7 +1303,7 @@ function App() {
           <div className="about-grid about-grid-modern">
             <div className="about-main panel about-profile-card">
               <div className="about-profile-top">
-                <div className="about-avatar">DJR</div>
+                <img className="about-avatar" src="/images/darwin-profile.jpg" alt="Darwin John Ricarte" />
                 <div className="about-profile-heading">
                   <span className="panel-tag">PERSONAL PROFILE / 01</span>
                   <h3>Curious mind. Future developer.</h3>
