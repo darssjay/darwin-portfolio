@@ -113,11 +113,7 @@ main,
   color: var(--pink);
 }
 
-.nav-links .nav-contact {
-  border: 1px solid var(--purple);
-  color: var(--pink);
-  padding: 11px 16px;
-}
+
 
 .menu-toggle {
   display: none;
@@ -981,10 +977,7 @@ main,
     font-size: 11px;
   }
 
-  .nav-links .nav-contact {
-    margin-top: 12px;
-    text-align: center;
-  }
+
 
   .section-container {
     width: 88%;
@@ -6659,4 +6652,23 @@ main,
   .footer-contact {
     width: 100%;
   }
+}
+
+
+/* ANALYTICS STAT CARDS */
+.analytics-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 650px) {
+  .analytics-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+
 }

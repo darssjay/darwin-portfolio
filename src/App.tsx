@@ -1396,7 +1396,7 @@ function App() {
             <h2>WEB <span>ANALYTICS</span></h2>
             <p>LIVE VISITOR STATISTICS FROM MY PORTFOLIO</p>
           </div>
-          <div className="skills-layout">
+          <div className="analytics-stats-grid">
             <div className="panel" style={{ padding: '28px', textAlign: 'center' }}>
               <span className="panel-tag">TOTAL VISITORS</span>
               <h3 style={{ fontSize: 'clamp(2rem, 6vw, 3.5rem)', margin: '15px 0' }}>
