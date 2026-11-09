@@ -548,3 +548,376 @@
     letter-spacing: 1px;
   }
 }
+
+/* =========================================
+   SOFT LAVENDER LIGHT MODE REFRESH
+   Scoped to light mode only.
+   Dark mode and game areas remain unchanged.
+========================================= */
+
+.app.light-mode {
+  background:
+    radial-gradient(ellipse at 85% 5%, rgba(205, 181, 224, 0.22), transparent 38%),
+    radial-gradient(ellipse at 5% 65%, rgba(226, 207, 216, 0.20), transparent 38%),
+    #f1edf3 !important;
+  color: #403449;
+}
+
+.app.light-mode .navbar,
+.app.light-mode .nav-links {
+  background: rgba(249, 246, 250, 0.96);
+  border-color: #e3d9e8;
+  box-shadow: 0 3px 18px rgba(65, 45, 75, 0.045);
+}
+
+.app.light-mode .logo,
+.app.light-mode .hero h1,
+.app.light-mode .section-heading h2,
+.app.light-mode .about-main h3,
+.app.light-mode .contact-message h3,
+.app.light-mode .project-content h3 {
+  color: #403449;
+}
+
+.app.light-mode .nav-links a {
+  color: #6f6078;
+}
+
+.app.light-mode .nav-links a:hover {
+  color: #805b99;
+}
+
+.app.light-mode .theme-toggle {
+  background: #e9e0ed;
+  color: #705381;
+  border-color: #d8c9df;
+}
+
+.app.light-mode .theme-toggle:hover {
+  background: #ded0e5;
+  border-color: #a98ab9;
+}
+
+.app.light-mode .panel,
+.app.light-mode .character-card,
+.app.light-mode .experience-card,
+.app.light-mode .education-card,
+.app.light-mode .info-card,
+.app.light-mode .contact-item {
+  background: #faf7fa;
+  border-color: #e4dbe7;
+  box-shadow: 0 4px 16px rgba(65, 45, 75, 0.045);
+}
+
+.app.light-mode .hero-description,
+.app.light-mode .about-main p,
+.app.light-mode .contact-message p,
+.app.light-mode .project-content p,
+.app.light-mode .skills-note,
+.app.light-mode .experience-card p,
+.app.light-mode .education-card p,
+.app.light-mode .info-card p {
+  color: #766b7d;
+}
+
+.app.light-mode .hero-role,
+.app.light-mode .character-top,
+.app.light-mode .character-info strong,
+.app.light-mode .info-card h3,
+.app.light-mode .experience-card h3,
+.app.light-mode .education-card h3,
+.app.light-mode .contact-item strong {
+  color: #51415d;
+}
+
+.app.light-mode .experience-card strong,
+.app.light-mode .education-card strong {
+  color: #765b87;
+}
+
+.app.light-mode .availability,
+.app.light-mode .button-outline {
+  background: #eae2ed;
+  border-color: #d8c9df;
+  color: #705381;
+}
+
+.app.light-mode .button-outline:hover {
+  background: #ded2e5;
+  border-color: #a98ab9;
+}
+
+.app.light-mode .button-primary {
+  background: linear-gradient(110deg, #806093, #a47bab);
+  color: #fff;
+  border-color: #806093;
+}
+
+.app.light-mode .button-primary:hover {
+  background: linear-gradient(110deg, #705181, #91689d);
+}
+
+.app.light-mode .skill-chip {
+  background: #f8f3f8;
+  border-color: #e1d6e5;
+  color: #594966;
+}
+
+.app.light-mode .skill-label {
+  color: #55465f;
+}
+
+.app.light-mode .skill-track {
+  background: #e5dce9;
+  border-color: #d8cce0;
+}
+
+.app.light-mode .info-icon,
+.app.light-mode .resume-icon,
+.app.light-mode .contact-item > span,
+.app.light-mode .experience-icon,
+.app.light-mode .education-icon {
+  background: #e9dfed;
+  color: #795c8c;
+}
+
+.app.light-mode .project-image-wrap,
+.app.light-mode .project-image-fallback {
+  background-color: #eee7f1;
+  border-color: #dfd3e5;
+}
+
+.app.light-mode .project-footer,
+.app.light-mode .contact-item,
+.app.light-mode .footer {
+  border-color: #e1d7e5;
+}
+
+.app.light-mode .project-number,
+.app.light-mode .footer p,
+.app.light-mode .back-to-top,
+.app.light-mode .character-info small {
+  color: #887b8e;
+}
+
+.app.light-mode .experience-number,
+.app.light-mode .skill-label,
+.app.light-mode .info-card small {
+  color: #866494;
+}
+
+.app.light-mode .hero-social a {
+  color: #805b99;
+}
+
+.app.light-mode .hero-social a:hover {
+  color: #60466f;
+}
+
+/* GUESTBOOK */
+.app.light-mode .guestbook-form,
+.app.light-mode .guestbook-wall,
+.app.light-mode .guestbook-admin,
+.app.light-mode .guestbook-login {
+  background: #faf7fa;
+  border-color: #e3d9e8;
+  box-shadow: 0 4px 16px rgba(65, 45, 75, 0.045);
+}
+
+.app.light-mode .guestbook-form label,
+.app.light-mode .guestbook-login label {
+  color: #795c8c;
+}
+
+.app.light-mode .guestbook-form input,
+.app.light-mode .guestbook-form textarea,
+.app.light-mode .guestbook-login input {
+  color: #493b50;
+  background: #f2edf3;
+  border-color: #ded2e3;
+}
+
+.app.light-mode .guestbook-form input::placeholder,
+.app.light-mode .guestbook-form textarea::placeholder,
+.app.light-mode .guestbook-login input::placeholder {
+  color: #95879b;
+}
+
+.app.light-mode .guestbook-form input:focus,
+.app.light-mode .guestbook-form textarea:focus,
+.app.light-mode .guestbook-login input:focus {
+  border-color: #a486b3;
+  outline-color: #a486b3;
+}
+
+.app.light-mode .guestbook-message,
+.app.light-mode .guestbook-pending {
+  background: #f3eef4;
+  border-color: #e2d7e6;
+}
+
+.app.light-mode .guestbook-message-top strong,
+.app.light-mode .guestbook-pending strong,
+.app.light-mode .guestbook-admin h3 {
+  color: #493b50;
+}
+
+.app.light-mode .guestbook-message p,
+.app.light-mode .guestbook-pending p,
+.app.light-mode .guestbook-admin-heading p {
+  color: #756a7c;
+}
+
+.app.light-mode .guestbook-message time,
+.app.light-mode .guestbook-hint,
+.app.light-mode .guestbook-empty,
+.app.light-mode .guestbook-admin-link,
+.app.light-mode .guestbook-logout {
+  color: #887b8e;
+}
+
+.app.light-mode .guestbook-count,
+.app.light-mode .guestbook-notice {
+  color: #805b99;
+}
+
+.app.light-mode .guestbook-form button,
+.app.light-mode .guestbook-login button,
+.app.light-mode .guestbook-pending button {
+  background: #806093;
+  color: #fff;
+}
+
+.app.light-mode .guestbook-message-delete,
+.app.light-mode .guestbook-pending .guestbook-delete {
+  color: #a33e59;
+  background: #f7e9ed;
+  border-color: #e7bdca;
+}
+
+.app.light-mode .guestbook-message-delete:hover,
+.app.light-mode .guestbook-pending .guestbook-delete:hover {
+  background: #f1dce3;
+  border-color: #d99aaf;
+}
+
+/* KEEP ORIGINAL PIXEL GAME WORLDS UNCHANGED */
+
+
+/* MOBILE NAVBAR TOGGLE VISIBILITY FIX */
+@media (max-width: 650px) {
+  .app .navbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .app .sound-toggle,
+  .app .theme-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 40px;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    margin-left: 0;
+    padding: 6px;
+    position: relative;
+    z-index: 1001;
+  }
+
+  .app .theme-toggle {
+    margin-left: 0;
+  }
+}
+
+/* MOBILE NAVBAR COMPACT LAYOUT */
+@media (max-width: 650px) {
+  .app .navbar {
+    padding: 0 3%;
+    gap: 5px;
+    justify-content: space-between;
+  }
+
+  .app .navbar .logo {
+    font-size: 8px;
+    white-space: nowrap;
+    flex-shrink: 1;
+  }
+
+  .app .pixel-clock {
+    flex: 1 1 100px;
+    min-width: 0;
+    max-width: 125px;
+    margin: 0 3px;
+    padding: 5px 4px;
+    text-align: center;
+  }
+
+  .app .clock-label {
+    font-size: 5px;
+    letter-spacing: 1px;
+  }
+
+  .app .clock-time {
+    font-size: 9px;
+    letter-spacing: 0;
+    text-shadow: none;
+    white-space: nowrap;
+  }
+
+  .app .menu-toggle {
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+  }
+
+  .app .sound-toggle,
+  .app .theme-toggle {
+    flex: 0 0 36px;
+    width: 36px;
+    min-width: 36px;
+    height: 40px;
+    padding: 4px;
+  }
+
+  .app .theme-toggle {
+    margin-left: 0;
+  }
+}
+
+/* CLEAR LIGHT MODE CLOCK */
+.app.light-mode .pixel-clock {
+  background: #eee7f1;
+  border-color: #d8c9df;
+  box-shadow: none;
+}
+
+.app.light-mode .clock-label {
+  color: #80658c;
+}
+
+.app.light-mode .clock-time {
+  color: #493b50;
+  text-shadow: none;
+}
+
+/* SOFT PIXEL GRID - LIGHT MODE ONLY */
+.app.light-mode .background-grid {
+  opacity: 0.10;
+  background-image:
+    linear-gradient(rgba(132, 91, 153, 0.38) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(132, 91, 153, 0.38) 1px, transparent 1px);
+  background-size: 45px 45px;
+}
+
+/* SOFTER LAVENDER BACKGROUND */
+.app.light-mode {
+  background:
+    radial-gradient(ellipse at 85% 8%, rgba(211, 190, 224, 0.30), transparent 38%),
+    radial-gradient(ellipse at 8% 55%, rgba(235, 211, 224, 0.28), transparent 40%),
+    #f1edf3 !important;
+}

@@ -145,7 +145,22 @@ const education = [
 ]
 
 function App() {
+  const profileQuotes = [
+    "Every expert was once a beginner.",
+    "Small steps still move you forward.",
+    "Dream it. Code it. Build it.",
+    "Loading dreams... Please wait.",
+    "One bug at a time. One step closer.",
+    "Keep learning. Your future is compiling.",
+    "Believe in the process. Keep building."
+  ]
+  const [profileQuote, setProfileQuote] = useState("")
   const [secretRoomOpen, setSecretRoomOpen] = useState(false)
+
+  const showProfileQuote = () => {
+    const nextQuote = profileQuotes[Math.floor(Math.random() * profileQuotes.length)]
+    setProfileQuote(nextQuote)
+  }
   const [, setLogoClickCount] = useState(0)
 
   const loadRpgSave = () => {
@@ -964,7 +979,24 @@ function App() {
                   src="/images/darwin-profile.jpg"
                   alt="Darwin John Ricarte"
                   className="profile-photo"
+                  onClick={showProfileQuote}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Tap to reveal an inspirational quote"
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault()
+                      showProfileQuote()
+                    }
+                  }}
                 />
+                {profileQuote && (
+                  <div className="profile-quote-bubble" key={profileQuote}>
+                    <span className="profile-quote-cloud">☁</span>
+                    <p>{profileQuote}</p>
+                    <small>TAP AGAIN FOR ANOTHER QUOTE</small>
+                  </div>
+                )}
                 <div className="character-platform"></div>
               </div>
 
