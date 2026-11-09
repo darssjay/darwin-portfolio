@@ -528,7 +528,7 @@ function App() {
 
   useEffect(() => {
     const elements = document.querySelectorAll(
-      '#about, #skills, #experience, #education, #projects, #resume, #contact, #web-analytics'
+      '#about, #skills, #experience, #education, #projects, #resume, #contact, #web-analytics, #pixel-city'
     )
 
     const observer = new IntersectionObserver((entries) => {
@@ -874,7 +874,7 @@ function App() {
           <a href="#experience" onClick={closeMenu}>EXPERIENCE</a>
           <a href="#education" onClick={closeMenu}>EDUCATION</a>
           <a href="#projects" onClick={closeMenu}>PROJECTS</a>
-          <a href="#pixel-city" onClick={closeMenu}>PIXEL CITY</a>
+          <a href="#web-analytics" onClick={closeMenu}>ANALYTICS</a>
           <a href="#resume" onClick={closeMenu}>CV</a>
           <a href="#contact" onClick={closeMenu} className="nav-contact">CONTACT</a>
         </div>
@@ -1248,137 +1248,6 @@ function App() {
           </div>
         )}
 
-        <section id="pixel-city" className="section-container section-block">
-  <div className="section-heading">
-    <span className="section-number">06 / INTERACTIVE WORLD</span>
-    <h2>NEON <span>METROPOLIS</span></h2>
-    <p>EXPLORE THE CITY THAT NEVER SLEEPS</p>
-  </div>
-
-  <div className={`pixel-city cyber-city-art city-scene ${pixelCityTime} ${pixelCityWeather}`}>
-    <div className="scene-sky">
-      <div className="scene-stars" />
-      <div className="scene-moon" />
-      <div className="scene-mountain" />
-
-      <div className="scene-distant skyline-a">
-        {Array.from({ length: 13 }, (_, i) => (
-          <div key={i} className={`distant-building db-${i % 5}`} />
-        ))}
-      </div>
-
-      <div className="scene-tower-landmarks">
-        <div className="landmark-tower landmark-red">
-          <div className="landmark-spire" />
-          <div className="landmark-body" />
-        </div>
-        <div className="landmark-tower landmark-blue">
-          <div className="landmark-spire" />
-          <div className="landmark-body" />
-        </div>
-        <div className="landmark-tower landmark-blue second">
-          <div className="landmark-spire" />
-          <div className="landmark-body" />
-        </div>
-      </div>
-    </div>
-
-    <div className="scene-city-back">
-      {Array.from({ length: 9 }, (_, i) => (
-        <div key={i} className={`back-block back-${i}`}>
-          <div className="back-windows" />
-        </div>
-      ))}
-    </div>
-
-    <div className="scene-city-left">
-      {Array.from({ length: 6 }, (_, i) => (
-        <div key={i} className={`main-building left-building building-${i}`}>
-          <div className="building-roof" />
-          <div className="building-windows" />
-          <div className="building-shopfront" />
-          {i === 0 && <div className="facade-billboard billboard-orange" aria-hidden="true" />}
-          {i === 3 && <div className="facade-billboard billboard-blue" aria-hidden="true" />}
-          {i === 1 && <div className="facade-billboard billboard-pink" aria-hidden="true" />}
-          {i === 4 && <div className="facade-billboard billboard-cyan" aria-hidden="true" />}
-        </div>
-      ))}
-    </div>
-
-    <div className="scene-city-right">
-      {Array.from({ length: 6 }, (_, i) => (
-        <div key={i} className={`main-building right-building building-${i}`}>
-          <div className="building-roof" />
-          <div className="building-windows" />
-          <div className="building-shopfront" />
-        </div>
-      ))}
-    </div>
-
-    <div className="scene-cross-street">
-      <div className="cross-street-line" />
-      <div className="scene-shop shop-left">
-        <span>RAMEN</span>
-        <div className="shop-light" />
-      </div>
-      <div className="scene-shop shop-right">
-        <span>ARCADE</span>
-        <div className="shop-light" />
-      </div>
-    </div>
-
-    <div className="scene-center-road">
-      <div className="road-center-glow" />
-      <div className="road-horizontal-divider" />
-      <div className="road-crosswalk">
-        {Array.from({ length: 12 }, (_, i) => <i key={i} />)}
-      </div>
-      <div className="road-reflections" />
-    </div>
-
-    <div className="scene-horizontal-sidewalk">
-      <div className="sidewalk-tile-pattern" />
-      {['hacker','merchant','punk','android','street_samurai','cyborg','cop','corp_exec'].map((person, i) => (
-        <img
-          key={person}
-          className={`city-walker walker-${i + 1}`}
-          src={`/assets/pixel-city/PNG/x4/characters/${person}.png`}
-          alt=""
-        />
-      ))}
-      <img className="horizontal-prop prop-left" src="/assets/pixel-city/PNG/x4/props/street_lamp.png" alt="" />
-      <img className="horizontal-prop prop-right" src="/assets/pixel-city/PNG/x4/props/vending_machine_blue.png" alt="" />
-    </div>
-
-    <div className="scene-traffic">
-      <img className="scene-car scene-car-red" src="/assets/pixel-city/PNG/x4/props/hover_car_red.png" alt="Red hover car" />
-      <img className="scene-car scene-car-blue" src="/assets/pixel-city/PNG/x4/props/hover_car_blue.png" alt="Blue hover car" />
-      <img className="scene-car scene-car-purple" src="/assets/pixel-city/PNG/x4/props/hover_car_red.png" alt="Purple lane hover car" />
-      <img className="scene-car scene-car-cyan" src="/assets/pixel-city/PNG/x4/props/hover_car_blue.png" alt="Cyan lane hover car" />
-      <img className="scene-bike" src="/assets/pixel-city/PNG/x4/props/neon_bike.png" alt="Neon bike" />
-      <img className="scene-drone" src="/assets/pixel-city/PNG/x4/props/patrol_drone.png" alt="Patrol drone" />
-    </div>
-
-    {pixelCityWeather === 'rain' && (
-      <div className="city-art-rain" aria-hidden="true">
-        {Array.from({ length: 70 }, (_, i) => (
-          <i key={i} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 15) * -0.2}s` }} />
-        ))}
-      </div>
-    )}
-
-    <div className="city-art-controls">
-      <button type="button" onClick={() => setPixelCityTime(current => current === 'day' ? 'night' : 'day')}>
-        {pixelCityTime === 'day' ? 'NIGHT MODE' : 'DAY MODE'}
-      </button>
-      <button type="button" onClick={() => setPixelCityWeather(current => current === 'clear' ? 'rain' : 'clear')}>
-        {pixelCityWeather === 'clear' ? 'START RAIN' : 'STOP RAIN'}
-      </button>
-    </div>
-    <p className="city-art-caption">TOKYO NEON DISTRICT // 2077</p>
-  </div>
-</section>
-
 <section id="resume" className="section-container section-block">
           <div className="section-heading">
             <span className="section-number">06 / MY BACKGROUND</span>
@@ -1587,6 +1456,137 @@ function App() {
           </div>
 </section>
 
+
+        <section id="pixel-city" className="section-container section-block">
+  <div className="section-heading">
+    <span className="section-number">09 / INTERACTIVE WORLD</span>
+    <h2>NEON <span>METROPOLIS</span></h2>
+    <p>EXPLORE THE CITY THAT NEVER SLEEPS</p>
+  </div>
+
+  <div className={`pixel-city cyber-city-art city-scene ${pixelCityTime} ${pixelCityWeather}`}>
+    <div className="scene-sky">
+      <div className="scene-stars" />
+      <div className="scene-moon" />
+      <div className="scene-mountain" />
+
+      <div className="scene-distant skyline-a">
+        {Array.from({ length: 13 }, (_, i) => (
+          <div key={i} className={`distant-building db-${i % 5}`} />
+        ))}
+      </div>
+
+      <div className="scene-tower-landmarks">
+        <div className="landmark-tower landmark-red">
+          <div className="landmark-spire" />
+          <div className="landmark-body" />
+        </div>
+        <div className="landmark-tower landmark-blue">
+          <div className="landmark-spire" />
+          <div className="landmark-body" />
+        </div>
+        <div className="landmark-tower landmark-blue second">
+          <div className="landmark-spire" />
+          <div className="landmark-body" />
+        </div>
+      </div>
+    </div>
+
+    <div className="scene-city-back">
+      {Array.from({ length: 9 }, (_, i) => (
+        <div key={i} className={`back-block back-${i}`}>
+          <div className="back-windows" />
+        </div>
+      ))}
+    </div>
+
+    <div className="scene-city-left">
+      {Array.from({ length: 6 }, (_, i) => (
+        <div key={i} className={`main-building left-building building-${i}`}>
+          <div className="building-roof" />
+          <div className="building-windows" />
+          <div className="building-shopfront" />
+          {i === 0 && <div className="facade-billboard billboard-orange" aria-hidden="true" />}
+          {i === 3 && <div className="facade-billboard billboard-blue" aria-hidden="true" />}
+          {i === 1 && <div className="facade-billboard billboard-pink" aria-hidden="true" />}
+          {i === 4 && <div className="facade-billboard billboard-cyan" aria-hidden="true" />}
+        </div>
+      ))}
+    </div>
+
+    <div className="scene-city-right">
+      {Array.from({ length: 6 }, (_, i) => (
+        <div key={i} className={`main-building right-building building-${i}`}>
+          <div className="building-roof" />
+          <div className="building-windows" />
+          <div className="building-shopfront" />
+        </div>
+      ))}
+    </div>
+
+    <div className="scene-cross-street">
+      <div className="cross-street-line" />
+      <div className="scene-shop shop-left">
+        <span>RAMEN</span>
+        <div className="shop-light" />
+      </div>
+      <div className="scene-shop shop-right">
+        <span>ARCADE</span>
+        <div className="shop-light" />
+      </div>
+    </div>
+
+    <div className="scene-center-road">
+      <div className="road-center-glow" />
+      <div className="road-horizontal-divider" />
+      <div className="road-crosswalk">
+        {Array.from({ length: 12 }, (_, i) => <i key={i} />)}
+      </div>
+      <div className="road-reflections" />
+    </div>
+
+    <div className="scene-horizontal-sidewalk">
+      <div className="sidewalk-tile-pattern" />
+      {['hacker','merchant','punk','android','street_samurai','cyborg','cop','corp_exec'].map((person, i) => (
+        <img
+          key={person}
+          className={`city-walker walker-${i + 1}`}
+          src={`/assets/pixel-city/PNG/x4/characters/${person}.png`}
+          alt=""
+        />
+      ))}
+      <img className="horizontal-prop prop-left" src="/assets/pixel-city/PNG/x4/props/street_lamp.png" alt="" />
+      <img className="horizontal-prop prop-right" src="/assets/pixel-city/PNG/x4/props/vending_machine_blue.png" alt="" />
+    </div>
+
+    <div className="scene-traffic">
+      <img className="scene-car scene-car-red" src="/assets/pixel-city/PNG/x4/props/hover_car_red.png" alt="Red hover car" />
+      <img className="scene-car scene-car-blue" src="/assets/pixel-city/PNG/x4/props/hover_car_blue.png" alt="Blue hover car" />
+      <img className="scene-car scene-car-purple" src="/assets/pixel-city/PNG/x4/props/hover_car_red.png" alt="Purple lane hover car" />
+      <img className="scene-car scene-car-cyan" src="/assets/pixel-city/PNG/x4/props/hover_car_blue.png" alt="Cyan lane hover car" />
+      <img className="scene-bike" src="/assets/pixel-city/PNG/x4/props/neon_bike.png" alt="Neon bike" />
+      <img className="scene-drone" src="/assets/pixel-city/PNG/x4/props/patrol_drone.png" alt="Patrol drone" />
+    </div>
+
+    {pixelCityWeather === 'rain' && (
+      <div className="city-art-rain" aria-hidden="true">
+        {Array.from({ length: 70 }, (_, i) => (
+          <i key={i} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 15) * -0.2}s` }} />
+        ))}
+      </div>
+    )}
+
+    <div className="city-art-controls">
+      <button type="button" onClick={() => setPixelCityTime(current => current === 'day' ? 'night' : 'day')}>
+        {pixelCityTime === 'day' ? 'NIGHT MODE' : 'DAY MODE'}
+      </button>
+      <button type="button" onClick={() => setPixelCityWeather(current => current === 'clear' ? 'rain' : 'clear')}>
+        {pixelCityWeather === 'clear' ? 'START RAIN' : 'STOP RAIN'}
+      </button>
+    </div>
+    <p className="city-art-caption">TOKYO NEON DISTRICT // 2077</p>
+  </div>
+</section>
       </main>
 
       {secretRoomOpen && (
