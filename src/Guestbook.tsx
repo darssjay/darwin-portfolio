@@ -205,6 +205,21 @@ export default function Guestbook() {
                     <time>{new Date(item.created_at).toLocaleDateString()}</time>
                   </div>
                   <p>{item.message}</p>
+                  {isAdmin && (
+                    <div className="guestbook-message-admin-actions">
+                      <button
+                        type="button"
+                        className="guestbook-message-delete"
+                        onClick={() => {
+                          if (window.confirm('Delete this published message permanently?')) {
+                            void deleteMessage(item.id)
+                          }
+                        }}
+                      >
+                        DELETE
+                      </button>
+                    </div>
+                  )}
                 </article>
               ))}
             </div>

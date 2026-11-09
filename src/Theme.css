@@ -440,3 +440,111 @@
   .pixel-image-grid { aspect-ratio: 4 / 3; }
 }
 
+
+
+/* BEFORE / AFTER LARGE PROJECT PREVIEW */
+.lightbox-before-after {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  max-height: 58vh;
+  aspect-ratio: 16 / 9;
+}
+
+.lightbox-compare-item {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid rgba(190, 120, 255, 0.4);
+  border-radius: 10px;
+  background: #10091c;
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.12);
+}
+
+.lightbox-compare-item span {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  left: 12px;
+  padding: 7px 10px;
+  color: #fff;
+  background: rgba(24, 10, 39, 0.88);
+  border: 1px solid rgba(190, 120, 255, 0.65);
+  border-radius: 5px;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+.lightbox-compare-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  animation: compare-image-reveal 0.75s ease forwards;
+}
+
+.lightbox-compare-item.after img {
+  animation-delay: 0.2s;
+}
+
+.lightbox-compare-item.before {
+  animation: compare-panel-in 0.6s ease both;
+}
+
+.lightbox-compare-item.after {
+  animation: compare-panel-in 0.6s ease 0.15s both;
+}
+
+@keyframes compare-image-reveal {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+    filter: brightness(1.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes compare-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pixel-lightbox.pixel-closing .lightbox-compare-item {
+  animation: compare-panel-out 0.35s ease forwards;
+}
+
+@keyframes compare-panel-out {
+  to {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+}
+
+@media (max-width: 600px) {
+  .lightbox-before-after {
+    gap: 6px;
+    aspect-ratio: 4 / 3;
+    max-height: 48vh;
+  }
+
+  .lightbox-compare-item span {
+    top: 6px;
+    left: 6px;
+    padding: 5px 6px;
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+}

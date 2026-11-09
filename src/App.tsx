@@ -23,6 +23,7 @@ const projects = [
     icon: '🖥️',
     status: 'DEVELOPMENT',
     image: '/images/dbv-internet-cafe.png',
+    beforeImage: undefined,
   },
   {
     title: '250 Coffee',
@@ -31,6 +32,7 @@ const projects = [
     icon: '☕',
     status: 'DEVELOPMENT',
     image: '/images/250-coffee.jpg',
+    beforeImage: undefined,
   },
   {
     title: 'Kita Tracker',
@@ -39,6 +41,7 @@ const projects = [
     icon: '📊',
     status: 'PROTOTYPE',
     image: '/images/kita-tracker.jpg',
+    beforeImage: undefined,
   },
   {
     title: 'Peach Illustration',
@@ -46,7 +49,8 @@ const projects = [
     description: 'A digital fruit illustration created using design elements such as color, shape, texture, and shading, while applying different design principles.',
     icon: '🍑',
     status: 'COMPLETED',
-    image: '/images/peach-illustration.jpg',
+    image: '/images/peach-after.jpg',
+    beforeImage: '/images/peach-before.jpg',
   },
   {
     title: 'DJ Witch Cat',
@@ -54,7 +58,8 @@ const projects = [
     description: 'An original witch-cat character illustration featuring a cute design, creative details, and personalized visual elements.',
     icon: '🐱',
     status: 'COMPLETED',
-    image: '/images/dj-witch-cat.jpg',
+    image: '/images/witch-cat-after.jpg',
+    beforeImage: '/images/witch-cat-before.jpg',
   },
   {
     title: 'Tech Week 2025',
@@ -62,7 +67,8 @@ const projects = [
     description: 'A technology-themed digital artwork featuring a laptop and creative visual elements that represent innovation and modern technology.',
     icon: '💻',
     status: 'COMPLETED',
-    image: '/images/tech-week-2025.jpg',
+    image: '/images/tech-week-after.jpg',
+    beforeImage: '/images/tech-week-before.jpg',
   },
   {
     title: 'DARS Typography Poster',
@@ -70,7 +76,8 @@ const projects = [
     description: 'A typography poster design focused on font pairing, visual hierarchy, alignment, contrast, and creative text presentation.',
     icon: '🔤',
     status: 'COMPLETED',
-    image: '/images/dars-poster.jpg',
+    image: '/images/dars-poster-after.jpg',
+    beforeImage: '/images/dars-poster-before.jpg',
   },
   {
     title: 'Portfolio Wireframe',
@@ -78,7 +85,8 @@ const projects = [
     description: 'A low-fidelity website wireframe showing the layout, page structure, and navigation flow of a personal portfolio website.',
     icon: '📐',
     status: 'COMPLETED',
-    image: '/images/portfolio-wireframe.jpg',
+    image: '/images/wireframe-after.jpg',
+    beforeImage: '/images/wireframe-before.jpg',
   },
 ]
 
@@ -1140,19 +1148,41 @@ function App() {
                 </div>
 
                 <div className="project-image-wrap">
-                  <img
-                    src={project.image}
-                    alt={`${project.title} project preview`}
-                    className="project-image"
-                    onClick={() => {
-                      playPixelSound(720)
-                      setActiveProject(index)
-                      setClosingProject(false)
-                    }}
-                    onError={(event) => {
-                      event.currentTarget.style.display = 'none'
-                    }}
-                  />
+                  {project.beforeImage ? (
+                    <button
+                      type="button"
+                      className="project-before-after"
+                      onClick={() => {
+                        playPixelSound(720)
+                        setActiveProject(index)
+                        setClosingProject(false)
+                      }}
+                      aria-label={`View before and after images for ${project.title}`}
+                    >
+                      <span className="project-compare-item">
+                        <small>BEFORE</small>
+                        <img src={project.beforeImage} alt={`${project.title} before`} />
+                      </span>
+                      <span className="project-compare-item">
+                        <small>AFTER</small>
+                        <img src={project.image} alt={`${project.title} after`} />
+                      </span>
+                    </button>
+                  ) : (
+                    <img
+                      src={project.image}
+                      alt={`${project.title} project preview`}
+                      className="project-image"
+                      onClick={() => {
+                        playPixelSound(720)
+                        setActiveProject(index)
+                        setClosingProject(false)
+                      }}
+                      onError={(event) => {
+                        event.currentTarget.style.display = 'none'
+                      }}
+                    />
+                  )}
                   <div className="project-image-fallback">
                     <span>{project.icon}</span>
                     <small>PROJECT PREVIEW</small>
@@ -1221,25 +1251,38 @@ function App() {
                 ×
               </button>
 
-              <div className="pixel-image-grid">
-                {Array.from({ length: 216 }, (_, i) => {
-                  const col = i % 18
-                  const row = Math.floor(i / 18)
+              {projects[activeProject].beforeImage ? (
+                <div className="lightbox-before-after">
+                  <div className="lightbox-compare-item before">
+                    <span>01 / BEFORE</span>
+                    <img src={projects[activeProject].beforeImage} alt="Before project artwork" />
+                  </div>
+                  <div className="lightbox-compare-item after">
+                    <span>02 / AFTER</span>
+                    <img src={projects[activeProject].image} alt="After project artwork" />
+                  </div>
+                </div>
+              ) : (
+                <div className="pixel-image-grid">
+                  {Array.from({ length: 216 }, (_, i) => {
+                    const col = i % 18
+                    const row = Math.floor(i / 18)
 
-                  return (
-                    <div
-                      key={i}
-                      className="pixel-tile"
-                      style={{
-                        backgroundImage: `url(${projects[activeProject].image})`,
-                        backgroundSize: '1800% 1200%',
-                        backgroundPosition: `${(col / 17) * 100}% ${(row / 11) * 100}%`,
-                        animationDelay: `${((i * 13) % 45) * 12}ms`
-                      }}
-                    />
-                  )
-                })}
-              </div>
+                    return (
+                      <div
+                        key={i}
+                        className="pixel-tile"
+                        style={{
+                          backgroundImage: `url(${projects[activeProject].image})`,
+                          backgroundSize: '1800% 1200%',
+                          backgroundPosition: `${(col / 17) * 100}% ${(row / 11) * 100}%`,
+                          animationDelay: `${((i * 13) % 45) * 12}ms`
+                        }}
+                      />
+                    )
+                  })}
+                </div>
+              )}
 
               <div className="pixel-image-info">
                 <span>{projects[activeProject].category}</span>

@@ -203,3 +203,28 @@
     text-align: right;
   }
 }
+
+
+/* ADMIN DELETE BUTTON FOR PUBLISHED GUESTBOOK MESSAGES */
+.guestbook-message-admin-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.guestbook-message-delete {
+  color: #ffb4c5;
+  background: #351522;
+  border: 1px solid #d94b70;
+  padding: 8px 13px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.guestbook-message-delete:hover {
+  background: #572035;
+  border-color: #ff6f96;
+}

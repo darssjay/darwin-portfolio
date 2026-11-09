@@ -705,6 +705,8 @@ main,
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
+  transform: scale(1.15);
   position: relative;
   z-index: 2;
   transition: transform 0.4s ease;
@@ -716,6 +718,8 @@ main,
 
 .project-image-fallback {
   position: absolute;
+  z-index: 1;
+  pointer-events: none;
   inset: 0;
   display: flex;
   flex-direction: column;
@@ -6671,4 +6675,70 @@ main,
   }
 
 
+}
+
+
+/* BEFORE / AFTER PROJECT CARDS */
+.project-before-after {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: #130b20;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.project-compare-item {
+  position: relative;
+  display: block;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  border-right: 1px solid rgba(190, 120, 255, 0.45);
+}
+
+.project-compare-item:last-child {
+  border-right: 0;
+}
+
+.project-compare-item small {
+  position: absolute;
+  z-index: 3;
+  top: 9px;
+  left: 9px;
+  padding: 5px 7px;
+  color: #fff;
+  background: rgba(24, 10, 39, 0.85);
+  border: 1px solid rgba(190, 120, 255, 0.6);
+  border-radius: 5px;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.project-compare-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.55s ease, filter 0.55s ease;
+}
+
+.project-before-after:hover .project-compare-item img {
+  transform: scale(1.06);
+  filter: brightness(1.12);
+}
+
+@media (max-width: 600px) {
+  .project-compare-item small {
+    top: 6px;
+    left: 5px;
+    padding: 4px 5px;
+    font-size: 8px;
+  }
 }
