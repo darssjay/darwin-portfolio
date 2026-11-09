@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://darwin-portfolio-kappa.vercel.app/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://darwin-portfolio-kappa.vercel.app/projects/dbv-internet-cafe</loc>
+  </url>
+  <url>
+    <loc>https://darwin-portfolio-kappa.vercel.app/projects/250-coffee</loc>
+  </url>
+  <url>
+    <loc>https://darwin-portfolio-kappa.vercel.app/projects/kita-tracker</loc>
+  </url>
+  <url>
+    <loc>https://darwin-portfolio-kappa.vercel.app/projects/peach-illustration</loc>
+  </url>
+  <url>
+    <loc>https://darwin-portfolio-kappa.vercel.app/projects/dj-witch-cat</loc>
+  </url>
+  <url>
+    <loc>https://darwin-portfolio-kappa.vercel.app/projects/tech-week-2025</loc>
+  </url>
+  <url>
+    <loc>https://darwin-portfolio-kappa.vercel.app/projects/dars-typography-poster</loc>
+  </url>
+  <url>
+    <loc>https://darwin-portfolio-kappa.vercel.app/projects/portfolio-wireframe</loc>
+  </url>
+</urlset>

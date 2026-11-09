@@ -5,6 +5,7 @@ import './Theme.css'
 import { Analytics } from '@vercel/analytics/react'
 import { trackVisit, getDailyStats, trackCvDownload } from './analytics'
 import Guestbook from './Guestbook'
+import { supabase } from './supabase'
 
 const skills = [
   { name: 'C', level: 75 },
@@ -18,6 +19,9 @@ const skills = [
 const projects = [
   {
     title: 'DBV Internet Cafe',
+    year: 'Unknown',
+    type: 'Application',
+    technologies: ['Java'],
     category: 'JAVA APPLICATION',
     description: 'A Java-based internet cafe management system designed to handle computer reservations, monitor computer usage time, and manage customer top-ups.',
     icon: '🖥️',
@@ -27,6 +31,9 @@ const projects = [
   },
   {
     title: '250 Coffee',
+    year: 'Unknown',
+    type: 'Web Application',
+    technologies: [],
     category: 'WEB / POS SYSTEM',
     description: 'A web-based kiosk ordering and financial management system with POS features for customer orders, product management, payment verification, and sales monitoring.',
     icon: '☕',
@@ -36,6 +43,9 @@ const projects = [
   },
   {
     title: 'Kita Tracker',
+    year: 'Unknown',
+    type: 'UI/UX Design',
+    technologies: [],
     category: 'UI / UX DESIGN',
     description: 'An income and expense tracking application designed to help public transport drivers record their daily earnings and expenses.',
     icon: '📊',
@@ -45,6 +55,9 @@ const projects = [
   },
   {
     title: 'Peach Illustration',
+    year: 'Unknown',
+    type: 'Illustration',
+    technologies: [],
     category: 'DIGITAL ILLUSTRATION',
     description: 'A digital fruit illustration created using design elements such as color, shape, texture, and shading, while applying different design principles.',
     icon: '🍑',
@@ -54,6 +67,9 @@ const projects = [
   },
   {
     title: 'DJ Witch Cat',
+    year: 'Unknown',
+    type: 'Character Design',
+    technologies: [],
     category: 'CHARACTER DESIGN',
     description: 'An original witch-cat character illustration featuring a cute design, creative details, and personalized visual elements.',
     icon: '🐱',
@@ -63,6 +79,9 @@ const projects = [
   },
   {
     title: 'Tech Week 2025',
+    year: '2025',
+    type: 'Illustration',
+    technologies: [],
     category: 'DIGITAL ILLUSTRATION',
     description: 'A technology-themed digital artwork featuring a laptop and creative visual elements that represent innovation and modern technology.',
     icon: '💻',
@@ -72,6 +91,9 @@ const projects = [
   },
   {
     title: 'DARS Typography Poster',
+    year: 'Unknown',
+    type: 'Graphic Design',
+    technologies: [],
     category: 'GRAPHIC DESIGN',
     description: 'A typography poster design focused on font pairing, visual hierarchy, alignment, contrast, and creative text presentation.',
     icon: '🔤',
@@ -81,6 +103,9 @@ const projects = [
   },
   {
     title: 'Portfolio Wireframe',
+    year: 'Unknown',
+    type: 'UI/UX Design',
+    technologies: [],
     category: 'UI / UX DESIGN',
     description: 'A low-fidelity website wireframe showing the layout, page structure, and navigation flow of a personal portfolio website.',
     icon: '📐',
@@ -145,6 +170,65 @@ const education = [
 ]
 
 function App() {
+  const [contactName, setContactName] = useState("")
+  const [contactEmail, setContactEmail] = useState("")
+  const [contactSubject, setContactSubject] = useState("")
+  const [contactMessage, setContactMessage] = useState("")
+  const [contactWebsite, setContactWebsite] = useState("")
+  const [contactBusy, setContactBusy] = useState(false)
+  const [contactNotice, setContactNotice] = useState("")
+
+  const submitContactMessage = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setContactNotice("")
+
+    if (contactWebsite.trim()) {
+      setContactNotice("Thank you! Your message has been received.")
+      return
+    }
+
+    const name = contactName.trim()
+    const email = contactEmail.trim()
+    const subject = contactSubject.trim()
+    const message = contactMessage.trim()
+
+    if (
+      name.length < 2 || name.length > 80 ||
+      email.length < 5 || email.length > 254 ||
+      !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) ||
+      subject.length < 3 || subject.length > 120 ||
+      message.length < 10 || message.length > 3000
+    ) {
+      setContactNotice("Please check your details and message before submitting.")
+      return
+    }
+
+    setContactBusy(true)
+
+    try {
+      const { error } = await supabase
+        .from("contact_messages")
+        .insert({ name, email, subject, message })
+
+      if (error) {
+        console.error("Contact form submission error:", error)
+        setContactNotice("Message could not be sent. Please try again later.")
+      } else {
+        setContactName("")
+        setContactEmail("")
+        setContactSubject("")
+        setContactMessage("")
+        setContactWebsite("")
+        setContactNotice("Message sent successfully! Thank you for reaching out.")
+      }
+    } catch (error) {
+      console.error("Contact form error:", error)
+      setContactNotice("Something went wrong. Please try again later.")
+    } finally {
+      setContactBusy(false)
+    }
+  }
+
   const profileQuotes = [
     "Every expert was once a beginner.",
     "Small steps still move you forward.",
@@ -503,6 +587,63 @@ function App() {
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeProject, setActiveProject] = useState<number | null>(null)
+  const [projectSearch, setProjectSearch] = useState("")
+  const [projectCategory, setProjectCategory] = useState("ALL")
+  const [projectTechnology, setProjectTechnology] = useState("ALL")
+  const [projectYear, setProjectYear] = useState("ALL")
+  const [projectType, setProjectType] = useState("ALL")
+  const [selectedProjectSlug, setSelectedProjectSlug] = useState<string | null>(() => {
+    const match = window.location.pathname.match(/^\/projects\/([^/]+)\/?$/)
+    return match ? match[1] : null
+  })
+
+  useEffect(() => {
+    const handleProjectHistory = () => {
+      const match = window.location.pathname.match(/^\/projects\/([^/]+)\/?$/)
+      setSelectedProjectSlug(match ? match[1] : null)
+    }
+    window.addEventListener("popstate", handleProjectHistory)
+    return () => window.removeEventListener("popstate", handleProjectHistory)
+  }, [])
+
+  const openProjectDetails = (title: string) => {
+    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+    window.history.pushState({}, "", `/projects/${slug}`)
+    setSelectedProjectSlug(slug)
+    window.scrollTo(0, 0)
+  }
+
+  const backToProjects = () => {
+    window.location.href = "/#projects"
+  }
+
+
+  const allTechnologies = [...new Set(projects.flatMap(project => project.technologies))]
+  const allYears = [...new Set(projects.map(project => project.year))]
+  const allTypes = [...new Set(projects.map(project => project.type))]
+
+  const filteredProjects = projects
+    .map((project, index) => ({ project, index }))
+    .filter(({ project }) => {
+      const query = projectSearch.toLowerCase().trim()
+      const matchesSearch = !query || [
+        project.title,
+        project.category,
+        project.description,
+        project.status,
+        project.year,
+        project.type,
+        ...project.technologies
+      ].some(value => value.toLowerCase().includes(query))
+
+      const matchesCategory = projectCategory === "ALL" || project.category === projectCategory
+      const matchesTechnology = projectTechnology === "ALL" || project.technologies.includes(projectTechnology)
+      const matchesYear = projectYear === "ALL" || project.year === projectYear
+      const matchesType = projectType === "ALL" || project.type === projectType
+
+      return matchesSearch && matchesCategory && matchesTechnology && matchesYear && matchesType
+    })
+
   const [closingProject, setClosingProject] = useState(false)
 
   const [scrollProgress, setScrollProgress] = useState(0)
@@ -551,7 +692,7 @@ function App() {
 
   useEffect(() => {
     const elements = document.querySelectorAll(
-      '#about, #skills, #experience, #education, #projects, #resume, #contact, #web-analytics, #pixel-city'
+      '#about, #skills, #experience, #education, #resume, #contact, #web-analytics, #pixel-city'
     )
 
     const observer = new IntersectionObserver((entries) => {
@@ -619,8 +760,120 @@ function App() {
   const [pixelCityTime, setPixelCityTime] = useState<'day' | 'night'>('night')
   const [pixelCityWeather, setPixelCityWeather] = useState<'clear' | 'rain'>('clear')
 
+  const selectedProject = projects.find(
+    project => project.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') === selectedProjectSlug
+  )
+
+  useEffect(() => {
+    const baseTitle = 'Darwin John Ricarte | Web Developer Portfolio'
+    const baseDescription = 'Explore the portfolio of Darwin John Ricarte, a BSIT student and aspiring web developer from the Philippines.'
+
+    const title = selectedProject
+      ? `${selectedProject.title} | Darwin John Ricarte`
+      : baseTitle
+
+    const description = selectedProject
+      ? `${selectedProject.description} View this project in Darwin John Ricarte's portfolio.`
+      : baseDescription
+
+    document.title = title
+
+    const updateMeta = (selector: string, content: string) => {
+      const element = document.querySelector(selector)
+      if (element) element.setAttribute('content', content)
+    }
+
+    updateMeta('meta[name="description"]', description)
+    updateMeta('meta[property="og:title"]', title)
+    updateMeta('meta[property="og:description"]', description)
+    updateMeta('meta[name="twitter:title"]', title)
+    updateMeta('meta[name="twitter:description"]', description)
+  }, [selectedProject])
+
+  useEffect(() => {
+    if (window.location.hash === '#projects') {
+      const timer = window.setTimeout(() => {
+        const projectsSection = document.getElementById('projects')
+        if (projectsSection) {
+          window.scrollTo(0, projectsSection.offsetTop)
+        }
+      }, 300)
+
+      return () => window.clearTimeout(timer)
+    }
+  }, [])
+
   const toggleTheme = () => {
     setTheme((current) => current === 'dark' ? 'light' : 'dark')
+  }
+
+  if (selectedProjectSlug) {
+    return (
+      <div className={`app ${theme === 'light' ? 'light-mode' : ''}`}>
+        <main className="project-detail-page section-container">
+          <button className="project-detail-back" onClick={backToProjects}>
+            ← BACK TO PROJECTS
+          </button>
+
+          {selectedProject ? (
+            <>
+              <span className="project-category">{selectedProject.category}</span>
+              <h1>{selectedProject.title}</h1>
+              <span className="project-status">{selectedProject.status}</span>
+
+              <div className="project-detail-image">
+                <img src={selectedProject.image} alt={`${selectedProject.title} project`} />
+              </div>
+
+              <h2>ABOUT THIS PROJECT</h2>
+              <p>{selectedProject.description}</p>
+
+              <div className="project-detail-meta">
+                <div>
+                  <small>YEAR</small>
+                  <strong>{selectedProject.year}</strong>
+                </div>
+                <div>
+                  <small>PROJECT TYPE</small>
+                  <strong>{selectedProject.type}</strong>
+                </div>
+                <div>
+                  <small>TECHNOLOGIES</small>
+                  <strong>
+                    {selectedProject.technologies.length > 0
+                      ? selectedProject.technologies.join(", ")
+                      : "Not specified"}
+                  </strong>
+                </div>
+              </div>
+
+              {selectedProject.beforeImage && (
+                <div className="project-detail-gallery">
+                  <div>
+                    <h3>BEFORE</h3>
+                    <img src={selectedProject.beforeImage} alt={`${selectedProject.title} before`} />
+                  </div>
+                  <div>
+                    <h3>AFTER</h3>
+                    <img src={selectedProject.image} alt={`${selectedProject.title} after`} />
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              <h1>PROJECT NOT FOUND</h1>
+              <p>The project link may be incorrect or unavailable.</p>
+            </>
+          )}
+
+          <button className="project-detail-back" onClick={backToProjects}>
+            ← BACK TO ALL PROJECTS
+          </button>
+        </main>
+        <Analytics />
+      </div>
+    )
   }
 
   return (
@@ -886,11 +1139,16 @@ function App() {
           className="menu-toggle"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle navigation"
+          aria-expanded={menuOpen}
+          aria-controls="main-navigation"
         >
           ☰
         </button>
 
-        <div className={`nav-links ${menuOpen ? 'active' : ''}`}>
+        <div
+          id="main-navigation"
+          className={`nav-links ${menuOpen ? 'active' : ''}`}
+        >
           <a href="#home" onClick={closeMenu}>HOME</a>
           <a href="#about" onClick={closeMenu}>ABOUT</a>
           <a href="#skills" onClick={closeMenu}>SKILLS</a>
@@ -1169,8 +1427,76 @@ function App() {
             <p>SOME OF THE PROJECTS I'VE WORKED ON</p>
           </div>
 
+          <div className="projects-toolbar">
+            <input
+              type="search"
+              className="project-search"
+              placeholder="SEARCH PROJECTS..."
+              value={projectSearch}
+              onChange={(event) => setProjectSearch(event.target.value)}
+              aria-label="Search projects"
+            />
+
+            <div className="project-filters">
+              {["ALL", ...new Set(projects.map(project => project.category))].map(category => (
+                <button
+                  type="button"
+                  key={category}
+                  className={`project-filter ${projectCategory === category ? "active" : ""}`}
+                  onClick={() => setProjectCategory(category)}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+
+            <div className="project-select-filters">
+              <label>
+                TECHNOLOGY
+                <select
+                  value={projectTechnology}
+                  onChange={event => setProjectTechnology(event.target.value)}
+                  aria-label="Filter by technology"
+                >
+                  <option value="ALL">ALL TECHNOLOGIES</option>
+                  {allTechnologies.map(technology => (
+                    <option key={technology} value={technology}>{technology}</option>
+                  ))}
+                </select>
+              </label>
+
+              <label>
+                YEAR
+                <select
+                  value={projectYear}
+                  onChange={event => setProjectYear(event.target.value)}
+                  aria-label="Filter by year"
+                >
+                  <option value="ALL">ALL YEARS</option>
+                  {allYears.map(year => (
+                    <option key={year} value={year}>{year}</option>
+                  ))}
+                </select>
+              </label>
+
+              <label>
+                PROJECT TYPE
+                <select
+                  value={projectType}
+                  onChange={event => setProjectType(event.target.value)}
+                  aria-label="Filter by project type"
+                >
+                  <option value="ALL">ALL TYPES</option>
+                  {allTypes.map(type => (
+                    <option key={type} value={type}>{type}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          </div>
+
           <div className="projects-grid">
-            {projects.map((project, index) => (
+            {filteredProjects.map(({ project, index }) => (
               <article className="project-card panel" key={project.title}>
                 <div className="project-card-top">
                   <span className="project-number">
@@ -1201,19 +1527,25 @@ function App() {
                       </span>
                     </button>
                   ) : (
-                    <img
-                      src={project.image}
-                      alt={`${project.title} project preview`}
-                      className="project-image"
+                    <button
+                      type="button"
+                      className="project-image-button"
+                      aria-label={`View image for ${project.title}`}
                       onClick={() => {
                         playPixelSound(720)
                         setActiveProject(index)
                         setClosingProject(false)
                       }}
-                      onError={(event) => {
-                        event.currentTarget.style.display = 'none'
-                      }}
-                    />
+                    >
+                      <img
+                        src={project.image}
+                        alt={`${project.title} project preview`}
+                        className="project-image"
+                        onError={(event) => {
+                          event.currentTarget.style.display = 'none'
+                        }}
+                      />
+                    </button>
                   )}
                   <div className="project-image-fallback">
                     <span>{project.icon}</span>
@@ -1225,13 +1557,36 @@ function App() {
                   <span className="project-category">{project.category}</span>
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
-                  <div className="project-footer">
+                  <button
+                  type="button"
+                  className="project-detail-button"
+                  onClick={() => openProjectDetails(project.title)}
+                >
+                  VIEW DETAILS ↗
+                </button>
+                <div className="project-footer">
                     <span>{project.icon} STUDENT PROJECT</span>
                     <span className="project-arrow">↗</span>
                   </div>
                 </div>
               </article>
             ))}
+            {filteredProjects.length === 0 && (
+              <div className="project-empty-state">
+                <span>🔍</span>
+                <h3>NO PROJECTS FOUND</h3>
+                <p>Try another keyword or select a different category.</p>
+                <button type="button" onClick={() => {
+                  setProjectSearch("")
+                  setProjectCategory("ALL")
+                  setProjectTechnology("ALL")
+                  setProjectYear("ALL")
+                  setProjectType("ALL")
+                }}>
+                  CLEAR FILTERS
+                </button>
+              </div>
+            )}
           </div>
         </section>
 
@@ -1460,6 +1815,78 @@ function App() {
                 </div>
               </div>
             </div>
+
+            <form className="contact-form" onSubmit={submitContactMessage}>
+              <span className="panel-tag">✉ SEND ME A MESSAGE</span>
+
+              <label htmlFor="contact-name">YOUR NAME</label>
+              <input
+                id="contact-name"
+                type="text"
+                value={contactName}
+                onChange={event => setContactName(event.target.value)}
+                maxLength={80}
+                autoComplete="name"
+                placeholder="Enter your name"
+                required
+              />
+
+              <label htmlFor="contact-email">YOUR EMAIL</label>
+              <input
+                id="contact-email"
+                type="email"
+                value={contactEmail}
+                onChange={event => setContactEmail(event.target.value)}
+                maxLength={254}
+                autoComplete="email"
+                placeholder="you@example.com"
+                required
+              />
+
+              <label htmlFor="contact-subject">SUBJECT</label>
+              <input
+                id="contact-subject"
+                type="text"
+                value={contactSubject}
+                onChange={event => setContactSubject(event.target.value)}
+                maxLength={120}
+                placeholder="What is this about?"
+                required
+              />
+
+              <label htmlFor="contact-message">MESSAGE</label>
+              <textarea
+                id="contact-message"
+                value={contactMessage}
+                onChange={event => setContactMessage(event.target.value)}
+                maxLength={3000}
+                rows={5}
+                placeholder="Write your message here..."
+                required
+              />
+
+              <div className="contact-honeypot" aria-hidden="true">
+                <label htmlFor="contact-website">Leave this field empty</label>
+                <input
+                  id="contact-website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={contactWebsite}
+                  onChange={event => setContactWebsite(event.target.value)}
+                />
+              </div>
+
+              <button className="button" type="submit" disabled={contactBusy}>
+                {contactBusy ? "SENDING..." : "SEND MESSAGE ↗"}
+              </button>
+
+              {contactNotice && (
+                <p className="contact-form-notice" role="status" aria-live="polite">
+                  {contactNotice}
+                </p>
+              )}
+            </form>
           </div>
         </section>
 
