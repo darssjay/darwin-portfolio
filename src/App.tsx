@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import './Theme.css'
 import { Analytics } from '@vercel/analytics/react'
-import { trackVisit, getDailyStats } from './analytics'
+import { trackVisit, getDailyStats, trackCvDownload } from './analytics'
 import Guestbook from './Guestbook'
 
 const skills = [
@@ -553,6 +553,7 @@ function App() {
     visit_date: string
     total_visitors: number
     total_page_views: number
+    total_cv_downloads: number
   }>>([])
 
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
@@ -581,7 +582,8 @@ function App() {
           setDailyActivity(activity.map((item) => ({
             visit_date: item.visit_date,
             total_visitors: Number(item.total_visitors),
-            total_page_views: Number(item.total_page_views)
+            total_page_views: Number(item.total_page_views),
+            total_cv_downloads: Number(item.total_cv_downloads)
           })))
         }
       })
@@ -873,7 +875,7 @@ function App() {
           <a href="#education" onClick={closeMenu}>EDUCATION</a>
           <a href="#projects" onClick={closeMenu}>PROJECTS</a>
           <a href="#pixel-city" onClick={closeMenu}>PIXEL CITY</a>
-          <a href="#resume" onClick={closeMenu}>RESUME</a>
+          <a href="#resume" onClick={closeMenu}>CV</a>
           <a href="#contact" onClick={closeMenu} className="nav-contact">CONTACT</a>
         </div>
 
@@ -1380,7 +1382,7 @@ function App() {
 <section id="resume" className="section-container section-block">
           <div className="section-heading">
             <span className="section-number">06 / MY BACKGROUND</span>
-            <h2>MY <span>RESUME</span></h2>
+            <h2>MY <span>CV</span></h2>
             <p>VIEW OR DOWNLOAD MY CURRICULUM VITAE</p>
           </div>
 
@@ -1389,7 +1391,7 @@ function App() {
               <span className="panel-tag">CURRICULUM VITAE</span>
               <h3>Want to know more about me?</h3>
               <p>
-                View or download my resume to learn more about
+                View or download my CV to learn more about
                 my educational background, skills, and experience.
               </p>
 
@@ -1400,12 +1402,24 @@ function App() {
                   rel="noreferrer"
                   className="button button-primary"
                 >
-                  VIEW RESUME ↗
+                  VIEW CV ↗
                 </a>
 
                 <a
                   href="/documents/resume.pdf"
-                  download="Darwin_John_Ricarte_Resume.pdf"
+                  download="Darwin_John_Ricarte_CV.pdf"
+                  onClick={() => {
+                    void trackCvDownload().then(async (success) => {
+                      if (!success) return
+                      const activity = await getDailyStats()
+                      setDailyActivity(activity.map((item) => ({
+                        visit_date: item.visit_date,
+                        total_visitors: Number(item.total_visitors),
+                        total_page_views: Number(item.total_page_views),
+                        total_cv_downloads: Number(item.total_cv_downloads)
+                      })))
+                    })
+                  }}
                   className="button button-primary"
                 >
                   DOWNLOAD PDF ↓
@@ -1526,6 +1540,13 @@ function App() {
               </h3>
               <p>Total portfolio page loads</p>
             </div>
+            <div className="panel" style={{ padding: '28px', textAlign: 'center' }}>
+              <span className="panel-tag">CV DOWNLOADS · LAST 7 DAYS</span>
+              <h3 style={{ fontSize: 'clamp(2rem, 6vw, 3.5rem)', margin: '15px 0' }}>
+                {dailyActivity.reduce((total, item) => total + item.total_cv_downloads, 0).toLocaleString()}
+              </h3>
+              <p>Recorded CV download clicks</p>
+            </div>
           </div>
         
           <div className="panel daily-activity-panel" style={{ padding: '24px', marginTop: '24px' }}>
@@ -1535,6 +1556,7 @@ function App() {
             <div style={{ display: 'flex', gap: '18px', marginBottom: '18px', flexWrap: 'wrap' }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '7px', fontSize: '0.8rem' }}><i style={{ width: '10px', height: '10px', borderRadius: '3px', background: '#ff5ac8', display: 'inline-block' }} /> Visitors</span>
               <span style={{ display: 'flex', alignItems: 'center', gap: '7px', fontSize: '0.8rem' }}><i style={{ width: '10px', height: '10px', borderRadius: '3px', background: '#8b5cf6', display: 'inline-block' }} /> Page views</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '7px', fontSize: '0.8rem' }}><i style={{ width: '10px', height: '10px', borderRadius: '3px', background: '#22c55e', display: 'inline-block' }} /> CV downloads</span>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, minmax(0, 1fr))', gap: '8px', alignItems: 'end', minHeight: '175px' }}>
               {Array.from({ length: 7 }, (_, index) => {
@@ -1543,22 +1565,25 @@ function App() {
                 const record = dailyActivity.find((item) => item.visit_date === day)
                 const visitors = Number(record?.total_visitors ?? 0)
                 const pageViews = Number(record?.total_page_views ?? 0)
-                const maxValue = Math.max(1, ...dailyActivity.flatMap((item) => [Number(item.total_visitors), Number(item.total_page_views)]))
+                const cvDownloads = Number(record?.total_cv_downloads ?? 0)
+                const maxValue = Math.max(1, ...dailyActivity.flatMap((item) => [Number(item.total_visitors), Number(item.total_page_views), Number(item.total_cv_downloads)]))
                 const visitorHeight = Math.max(3, (visitors / maxValue) * 112)
                 const pageViewHeight = Math.max(3, (pageViews / maxValue) * 112)
+                const cvDownloadHeight = Math.max(3, (cvDownloads / maxValue) * 112)
                 return (
                   <div key={day} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'end', gap: '7px', minWidth: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'end', justifyContent: 'center', gap: '4px', height: '118px', width: '100%' }}>
                       <div title={`${visitors} visitors`} style={{ height: `${visitorHeight}px`, width: '34%', maxWidth: '16px', borderRadius: '5px 5px 2px 2px', background: '#ff5ac8' }} />
-                      <div title={`${pageViews} page views`} style={{ height: `${pageViewHeight}px`, width: '34%', maxWidth: '16px', borderRadius: '5px 5px 2px 2px', background: '#8b5cf6' }} />
+                      <div title={`${pageViews} page views`} style={{ height: `${pageViewHeight}px`, width: '28%', maxWidth: '16px', borderRadius: '5px 5px 2px 2px', background: '#8b5cf6' }} />
+                      <div title={`${cvDownloads} CV downloads`} style={{ height: `${cvDownloadHeight}px`, width: '28%', maxWidth: '16px', borderRadius: '5px 5px 2px 2px', background: '#22c55e' }} />
                     </div>
                     <small style={{ fontSize: '0.68rem', textAlign: 'center' }}>{new Intl.DateTimeFormat('en-PH', { timeZone: 'Asia/Manila', weekday: 'short' }).format(date)}</small>
-                    <small style={{ fontSize: '0.62rem', opacity: 0.75, textAlign: 'center' }}>{visitors} / {pageViews}</small>
+                    <small style={{ fontSize: '0.62rem', opacity: 0.75, textAlign: 'center' }}>{visitors} / {pageViews} / {cvDownloads}</small>
                   </div>
                 )
               })}
             </div>
-            <p style={{ marginTop: '16px', fontSize: '0.75rem' }}>Numbers below each day: visitors / page views.</p>
+            <p style={{ marginTop: '16px', fontSize: '0.75rem' }}>Numbers below each day: visitors / page views / CV downloads.</p>
           </div>
 </section>
 

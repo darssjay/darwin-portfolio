@@ -35,11 +35,29 @@ export async function trackVisit() {
   return data?.[0] ?? null
 }
 
+
+export async function trackCvDownload() {
+  const activityDate = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Manila'
+  }).format(new Date())
+
+  const { error } = await supabase.rpc('track_cv_download', {
+    activity_date: activityDate
+  })
+
+  if (error) {
+    console.error('CV download tracking error:', error.message)
+    return false
+  }
+
+  return true
+}
+
 export async function getDailyStats() {
   const { data, error } = await supabase
     .from('daily_site_stats')
-    .select('visit_date, total_visitors, total_page_views')
-    .order('visit_date', { ascending: true })
+    .select('visit_date, total_visitors, total_page_views, total_cv_downloads')
+    .order('visit_date', { ascending: false })
     .limit(7)
 
   if (error) {
@@ -47,5 +65,5 @@ export async function getDailyStats() {
     return []
   }
 
-  return data ?? []
+  return (data ?? []).reverse()
 }
