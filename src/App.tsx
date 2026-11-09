@@ -950,19 +950,11 @@ function App() {
               <div className="pixel-character">
                 <div className="pixel-spark spark-one">✦</div>
                 <div className="pixel-spark spark-two">✧</div>
-                <div className="pixel-person">
-                  <div className="pixel-hair"></div>
-                  <div className="pixel-face">
-                    <span className="pixel-eye"></span>
-                    <span className="pixel-eye"></span>
-                  </div>
-                  <div className="pixel-neck"></div>
-                  <div className="pixel-body">
-                    <span className="pixel-shirt-detail"></span>
-                  </div>
-                  <div className="pixel-arm left-arm"></div>
-                  <div className="pixel-arm right-arm"></div>
-                </div>
+                <img
+                  src="/images/darwin-profile.jpg"
+                  alt="Darwin John Ricarte"
+                  className="profile-photo"
+                />
                 <div className="character-platform"></div>
               </div>
 
