@@ -16,7 +16,20 @@ const skills = [
   { name: 'CSS', level: 80 },
 ]
 
-const projects = [
+type Project = {
+  title: string
+  year: string
+  type: string
+  technologies: string[]
+  category: string
+  description: string
+  icon: string
+  status: string
+  image: string
+  beforeImage?: string
+}
+
+const projects: Project[] = [
   {
     title: 'DBV Internet Cafe',
     year: 'Unknown',
